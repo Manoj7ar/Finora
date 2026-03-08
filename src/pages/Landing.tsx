@@ -32,14 +32,14 @@ export default function Landing() {
   return (
     <div className="flex flex-col">
       {/* Hero with background image */}
-      <section className="relative min-h-[92vh] overflow-hidden">
+      <section className="relative -mt-20 min-h-screen overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroBg})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
 
-        <div className="container relative z-10 flex min-h-[92vh] flex-col items-center justify-center gap-8 py-24 text-center">
+        <div className="container relative z-10 flex min-h-screen flex-col items-center justify-center gap-8 py-24 text-center">
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
