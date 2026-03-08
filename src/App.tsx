@@ -29,6 +29,7 @@ import LegislationRadar from "@/pages/LegislationRadar";
 import NegotiationCoach from "@/pages/NegotiationCoach";
 import CommunityMap from "@/pages/CommunityMap";
 import AIHub from "@/pages/AIHub";
+import Install from "@/pages/Install";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
