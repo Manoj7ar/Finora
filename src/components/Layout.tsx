@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   LogOut, BookOpen, Zap, LayoutDashboard, Menu, X, Settings,
-  Bot, ClipboardList, Newspaper, Lightbulb, ChevronDown
+  Bot, ClipboardList, Newspaper, Lightbulb, ChevronDown, Target
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import logoImg from "@/assets/logo.png";
@@ -17,6 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const mainNav = [
     { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { to: "/goals", label: "Goals", icon: Target },
     { to: "/simulation", label: "Crisis Sim", icon: Zap },
     { to: "/education", label: "Learn", icon: BookOpen },
   ];
