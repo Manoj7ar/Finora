@@ -303,7 +303,11 @@ export default function Landing() {
         <div className="border-t border-background/10">
           <div className="container flex flex-col items-center justify-between gap-4 py-6 sm:flex-row">
             <p className="font-mono text-xs text-background/35">© {new Date().getFullYear()} Finora. All rights reserved.</p>
-            <p className="font-mono text-xs text-background/35">Built for financial clarity.</p>
+            <div className="flex items-center gap-4">
+              <a href="https://www.linkedin.com/in/manoj07ar/" target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-background/35 hover:text-background transition-colors">LinkedIn</a>
+              <span className="text-background/15">·</span>
+              <p className="font-mono text-xs text-background/35">Built for financial clarity.</p>
+            </div>
           </div>
         </div>
       </footer>
