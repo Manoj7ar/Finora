@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import {
   LogOut, BookOpen, Zap, LayoutDashboard, Menu, X, Settings,
   Bot, ClipboardList, Newspaper, Lightbulb, ChevronDown, Target,
-  Brain, CloudLightning, Crosshair, User, Mic, ScrollText, Handshake, Users
+  Brain, CloudLightning, Crosshair, User, Mic, ScrollText, Handshake, Users, Sparkles
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import logoImg from "@/assets/logo.png";
@@ -27,6 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   ];
 
   const aiNav = [
+    { to: "/ai-hub", label: "AI Hub", icon: Sparkles },
     { to: "/advisor", label: "AI Advisor", icon: Bot },
     { to: "/action-plan", label: "Action Plan", icon: ClipboardList },
     { to: "/news", label: "News Digest", icon: Newspaper },
