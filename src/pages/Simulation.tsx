@@ -103,7 +103,7 @@ export default function Simulation() {
                 } disabled:opacity-50`}
               >
                 <div className="mb-2 flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-foreground/[0.06]">
                     <crisis.icon className="h-4 w-4 text-foreground" />
                   </div>
                   <div>

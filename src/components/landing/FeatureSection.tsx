@@ -40,8 +40,8 @@ export default function FeatureSection({
             {...fadeIn()}
             className={reverse ? "order-2 lg:order-2" : "order-2 lg:order-1"}
           >
-            <div className="mb-5 inline-flex rounded-2xl bg-accent/60 p-3.5">
-              <Icon className="h-6 w-6 text-primary" />
+            <div className="mb-5 inline-flex rounded-2xl bg-foreground/[0.06] p-3.5">
+              <Icon className="h-6 w-6 text-foreground" />
             </div>
             <h2 className="mb-5 font-display text-3xl font-bold text-foreground md:text-4xl lg:text-[2.75rem] lg:leading-[1.15]">
               {title}

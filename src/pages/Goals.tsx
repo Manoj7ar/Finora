@@ -238,8 +238,8 @@ export default function Goals() {
           <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <Card className="shadow-card">
               <CardContent className="flex items-center gap-3 p-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent">
-                  <Target className="h-5 w-5 text-primary" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-foreground/[0.06]">
+                  <Target className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Active Goals</p>
@@ -249,8 +249,8 @@ export default function Goals() {
             </Card>
             <Card className="shadow-card">
               <CardContent className="flex items-center gap-3 p-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent">
-                  <DollarSign className="h-5 w-5 text-primary" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-foreground/[0.06]">
+                  <DollarSign className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Total Saved</p>
@@ -262,8 +262,8 @@ export default function Goals() {
             </Card>
             <Card className="shadow-card">
               <CardContent className="flex items-center gap-3 p-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent">
-                  <TrendingUp className="h-5 w-5 text-primary" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-foreground/[0.06]">
+                  <TrendingUp className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Overall Progress</p>
@@ -282,8 +282,8 @@ export default function Goals() {
         ) : goals.length === 0 ? (
           <Card className="shadow-card">
             <CardContent className="flex flex-col items-center gap-4 py-16">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-accent">
-                <Target className="h-8 w-8 text-primary" />
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/[0.06]">
+                <Target className="h-8 w-8 text-foreground" />
               </div>
               <h3 className="font-display text-lg font-bold text-foreground">No goals yet</h3>
               <p className="max-w-sm text-center text-sm text-muted-foreground">
@@ -318,8 +318,8 @@ export default function Goals() {
                             {(() => {
                               const IconComp = categoryIcons[goal.category] || CircleDot;
                               return (
-                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent">
-                                  <IconComp className="h-4 w-4 text-primary" />
+                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground/[0.06]">
+                                   <IconComp className="h-4 w-4 text-foreground" />
                                 </div>
                               );
                             })()}
@@ -393,8 +393,8 @@ export default function Goals() {
                         {goal.ai_nudge && (
                           <div className="rounded-xl bg-accent/50 p-3">
                             <div className="mb-1 flex items-center gap-1.5">
-                              <Sparkles className="h-3.5 w-3.5 text-primary" />
-                              <span className="text-xs font-semibold text-primary">AI Nudge</span>
+                              <Sparkles className="h-3.5 w-3.5 text-foreground" />
+                              <span className="text-xs font-semibold text-foreground">AI Nudge</span>
                             </div>
                             <p className="text-sm leading-relaxed text-foreground">
                               {goal.ai_nudge}

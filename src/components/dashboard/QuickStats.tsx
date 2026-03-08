@@ -14,10 +14,10 @@ export default function QuickStats({ metricsCount, insightsCount, lessonsComplet
   const navigate = useNavigate();
 
   const stats = [
-    { icon: TrendingUp, label: "Indicators", value: metricsCount || "—", color: "bg-accent", onClick: undefined },
-    { icon: Sparkles, label: "AI Insights", value: insightsCount || "—", color: "bg-accent", onClick: undefined },
-    { icon: BookOpen, label: "Lessons", value: `${lessonsCompleted}/4`, color: "bg-accent", onClick: () => navigate("/education") },
-    { icon: Target, label: "Goals", value: goalsCount || "—", color: "bg-accent", onClick: () => navigate("/goals") },
+    { icon: TrendingUp, label: "Indicators", value: metricsCount || "—", color: "bg-foreground/[0.06]", onClick: undefined },
+    { icon: Sparkles, label: "AI Insights", value: insightsCount || "—", color: "bg-foreground/[0.06]", onClick: undefined },
+    { icon: BookOpen, label: "Lessons", value: `${lessonsCompleted}/4`, color: "bg-foreground/[0.06]", onClick: () => navigate("/education") },
+    { icon: Target, label: "Goals", value: goalsCount || "—", color: "bg-foreground/[0.06]", onClick: () => navigate("/goals") },
   ];
 
   return (
@@ -35,7 +35,7 @@ export default function QuickStats({ metricsCount, insightsCount, lessonsComplet
           >
             <CardContent className="flex items-center gap-3 p-3 sm:p-4">
               <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${color}`}>
-                <Icon className="h-4 w-4 text-primary" />
+                <Icon className="h-4 w-4 text-foreground" />
               </div>
               <div className="min-w-0">
                 <p className="truncate text-xs text-muted-foreground">{label}</p>
@@ -55,8 +55,8 @@ export default function QuickStats({ metricsCount, insightsCount, lessonsComplet
           onClick={() => navigate("/simulation")}
         >
           <CardContent className="flex items-center gap-3 p-3 sm:p-4">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent">
-              <Zap className="h-4 w-4 text-primary" />
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-foreground/[0.06]">
+              <Zap className="h-4 w-4 text-foreground" />
             </div>
             <div className="min-w-0">
               <p className="truncate text-xs text-muted-foreground">Crisis Sim</p>

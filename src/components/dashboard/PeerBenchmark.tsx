@@ -87,8 +87,8 @@ export default function PeerBenchmark({ profile, lessonsCompleted, goalsCount }:
           {/* Header */}
           <div className="mb-5 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent">
-                <Users className="h-4 w-4 text-primary" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-foreground/[0.06]">
+                <Users className="h-4 w-4 text-foreground" />
               </div>
               <div>
                 <h3 className="font-display text-base font-bold text-foreground sm:text-lg">
@@ -198,7 +198,7 @@ export default function PeerBenchmark({ profile, lessonsCompleted, goalsCount }:
             transition={{ delay: 0.9 }}
             className="mt-4 flex items-start gap-2.5 rounded-xl bg-accent/40 p-3"
           >
-            <TrendingUp className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+            <TrendingUp className="mt-0.5 h-4 w-4 shrink-0 text-foreground" />
             <p className="text-xs leading-relaxed text-muted-foreground">
               {percentile >= 75
                 ? `You're in the top quartile of your income bracket. Your financial habits are significantly above average.`
