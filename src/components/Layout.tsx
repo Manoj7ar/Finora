@@ -123,6 +123,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           <div className="flex items-center gap-1">
             <ThemeToggle />
+            {user && (
+              <NotificationBell
+                notifications={notifications}
+                unreadCount={unreadCount}
+                onMarkAllRead={markAllRead}
+                onClearAll={clearAll}
+              />
+            )}
             {user ? (
               <>
                 <button
