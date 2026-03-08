@@ -141,6 +141,26 @@ export default function Settings() {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    if (!user) return;
+    setDeleting(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await supabase.functions.invoke("delete-account", {
+        headers: { Authorization: `Bearer ${session?.access_token}` },
+      });
+      if (res.error) throw new Error(res.error.message || "Failed to delete account");
+      if (res.data?.error) throw new Error(res.data.error);
+      await signOut();
+      navigate("/");
+      toast({ title: "Account deleted", description: "Your account has been permanently removed." });
+    } catch (err: any) {
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="container max-w-2xl py-8">
