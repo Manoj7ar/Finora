@@ -3,7 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   LogOut, BookOpen, Zap, LayoutDashboard, Menu, X, Settings,
-  Bot, ClipboardList, Newspaper, Lightbulb, ChevronDown, Target
+  Bot, ClipboardList, Newspaper, Lightbulb, ChevronDown, Target,
+  Brain, CloudLightning, Crosshair, User, Mic, ScrollText, Handshake, Users
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import logoImg from "@/assets/logo.png";
@@ -23,7 +24,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { to: "/goals", label: "Goals", icon: Target },
     { to: "/simulation", label: "Crisis Sim", icon: Zap },
     { to: "/education", label: "Learn", icon: BookOpen },
-    
   ];
 
   const aiNav = [
@@ -31,6 +31,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { to: "/action-plan", label: "Action Plan", icon: ClipboardList },
     { to: "/news", label: "News Digest", icon: Newspaper },
     { to: "/what-if", label: "What If", icon: Lightbulb },
+    { to: "/bias-mirror", label: "Bias Mirror", icon: Brain },
+    { to: "/weather", label: "Eco Weather", icon: CloudLightning },
+    { to: "/predict", label: "Predict Fed", icon: Crosshair },
+    { to: "/twin", label: "Financial Twin", icon: User },
+    { to: "/briefing", label: "Briefing", icon: Mic },
+    { to: "/legislation", label: "Legislation", icon: ScrollText },
+    { to: "/negotiate", label: "Negotiate", icon: Handshake },
+    { to: "/community", label: "Community", icon: Users },
   ];
 
   const allNav = [...mainNav, ...aiNav, { to: "/settings", label: "Settings", icon: Settings }];
@@ -48,7 +56,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <span className="font-display text-base font-bold text-foreground sm:text-lg">Finora</span>
           </Link>
 
-          {/* Desktop nav */}
           {user && (
             <div className="hidden items-center gap-1 md:flex">
               {mainNav.map(({ to, label, icon: Icon }) => (
@@ -66,7 +73,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </Link>
               ))}
 
-              {/* AI dropdown */}
               <div className="relative">
                 <button
                   onClick={() => setAiMenuOpen(!aiMenuOpen)}
@@ -87,22 +93,24 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
-                      className="absolute right-0 top-full z-50 mt-2 w-48 overflow-hidden rounded-xl border border-border/50 bg-background/95 shadow-card backdrop-blur-xl"
+                      className="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-border/50 bg-background/95 shadow-card backdrop-blur-xl"
                     >
-                      {aiNav.map(({ to, label, icon: Icon }) => (
-                        <Link key={to} to={to} onClick={() => setAiMenuOpen(false)}>
-                          <button
-                            className={`flex w-full items-center gap-2.5 px-4 py-2.5 text-sm font-medium transition-all ${
-                              isActive(to)
-                                ? "bg-primary/90 text-primary-foreground"
-                                : "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
-                            }`}
-                          >
-                            <Icon className="h-3.5 w-3.5" />
-                            {label}
-                          </button>
-                        </Link>
-                      ))}
+                      <div className="grid grid-cols-2 gap-0.5 p-1.5">
+                        {aiNav.map(({ to, label, icon: Icon }) => (
+                          <Link key={to} to={to} onClick={() => setAiMenuOpen(false)}>
+                            <button
+                              className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all ${
+                                isActive(to)
+                                  ? "bg-primary/90 text-primary-foreground"
+                                  : "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
+                              }`}
+                            >
+                              <Icon className="h-3.5 w-3.5 shrink-0" />
+                              {label}
+                            </button>
+                          </Link>
+                        ))}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -159,7 +167,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </nav>
 
-        {/* Mobile menu */}
         <AnimatePresence>
           {mobileOpen && user && (
             <motion.div
@@ -169,7 +176,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               transition={{ duration: 0.2 }}
               className="mt-2 overflow-hidden rounded-2xl border border-border/50 bg-background/95 shadow-card backdrop-blur-xl md:hidden"
             >
-              <div className="flex flex-col gap-1 p-3">
+              <div className="flex flex-col gap-1 p-3 max-h-[70vh] overflow-y-auto">
                 {allNav.map(({ to, label, icon: Icon }) => (
                   <Link key={to} to={to} onClick={() => setMobileOpen(false)}>
                     <button

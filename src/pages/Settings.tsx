@@ -74,6 +74,8 @@ export default function Settings() {
   const [savingsRange, setSavingsRange] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [investmentLevel, setInvestmentLevel] = useState("");
+  const [ageGroup, setAgeGroup] = useState("");
+  const [city, setCity] = useState("");
 
   useEffect(() => {
     if (!user) return;
@@ -97,6 +99,8 @@ export default function Settings() {
     setSavingsRange(data.savings_range || "");
     setZipCode(data.zip_code || "");
     setInvestmentLevel(data.investment_level || "");
+    setAgeGroup((data as any).age_group || "");
+    setCity((data as any).city || "");
     setLoading(false);
   };
 
@@ -111,6 +115,8 @@ export default function Settings() {
         savings_range: savingsRange,
         zip_code: zipCode,
         investment_level: investmentLevel,
+        age_group: ageGroup,
+        city: city,
       } as any).eq("id", user.id);
 
       if (error) throw error;
@@ -275,6 +281,32 @@ export default function Settings() {
                 <p className="text-xs text-muted-foreground sm:text-sm">{description}</p>
               </button>
             ))}
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle className="font-display text-lg">Community Profile</CardTitle>
+            <CardDescription>Optional — used for anonymous community resilience benchmarks</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <Label className="text-sm font-medium">Age Group</Label>
+              <Select value={ageGroup} onValueChange={setAgeGroup}>
+                <SelectTrigger className="w-full mt-1">
+                  <SelectValue placeholder="Select age group" />
+                </SelectTrigger>
+                <SelectContent>
+                  {["18-24", "25-34", "35-44", "45-54", "55-64", "65+"].map((ag) => (
+                    <SelectItem key={ag} value={ag}>{ag}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label className="text-sm font-medium">City</Label>
+              <Input value={city} onChange={(e) => setCity(e.target.value)} placeholder="e.g. New York" className="mt-1" />
+            </div>
           </CardContent>
         </Card>
 

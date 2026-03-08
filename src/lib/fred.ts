@@ -113,6 +113,14 @@ export function calculateImpact(
   }
 }
 
+export async function fetchFredData(): Promise<FredMetric[]> {
+  const { supabase } = await import("@/integrations/supabase/client");
+  const { data, error } = await supabase.functions.invoke("fred-data");
+  if (error) throw new Error(error.message || "Failed to fetch FRED data");
+  if (data?.error) throw new Error(data.error);
+  return data?.metrics || [];
+}
+
 export const FRED_METRICS = [
   { seriesId: "FEDFUNDS", name: "Federal Funds Rate", unit: "%" },
   { seriesId: "CPIAUCSL", name: "Consumer Price Index", unit: "index" },

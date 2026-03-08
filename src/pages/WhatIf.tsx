@@ -61,6 +61,16 @@ export default function WhatIf() {
       if (data?.error) throw new Error(data.error);
       if (!data?.impacts) throw new Error("Analysis incomplete. Please try again.");
       setResult(data);
+
+      // Track cognitive bias event - scenario choice pattern
+      if (user) {
+        await supabase.from("cognitive_bias_events").insert({
+          user_id: user.id,
+          bias_type: "scenario_choice",
+          context: JSON.stringify({ scenario: scenario.substring(0, 100), verdict: data.verdict }),
+          source_page: "what_if",
+        });
+      }
     } catch (err: any) {
       toast({ title: "Scenario Error", description: err.message, variant: "destructive" });
     } finally {
