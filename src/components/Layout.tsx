@@ -116,7 +116,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           )}
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
             {user ? (
               <>
                 <button
