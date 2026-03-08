@@ -16,6 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [aiMenuOpen, setAiMenuOpen] = useState(false);
+  const { notifications, unreadCount, markAllRead, clearAll } = useNotifications();
 
   const mainNav = [
     { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
