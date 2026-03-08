@@ -78,6 +78,8 @@ export default function Settings() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const { signOut } = useAuth();
 
   const [country, setCountry] = useState("US");
   const [incomeRange, setIncomeRange] = useState("");
