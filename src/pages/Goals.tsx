@@ -238,8 +238,8 @@ export default function Goals() {
           <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <Card className="shadow-card">
               <CardContent className="flex items-center gap-3 p-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent">
-                  <Target className="h-5 w-5 text-primary" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-foreground/[0.06]">
+                  <Target className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Active Goals</p>
