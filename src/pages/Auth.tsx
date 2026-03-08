@@ -44,7 +44,7 @@ export default function Auth() {
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-6"
+        className="flex min-h-screen items-center justify-center px-6"
       >
         <Card className="w-full max-w-md text-center shadow-card">
           <CardContent className="space-y-6 p-10">
