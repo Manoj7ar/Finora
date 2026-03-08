@@ -225,7 +225,7 @@ export default function Landing() {
               <br />your economy?
             </h2>
             <p className="mt-6 mx-auto max-w-lg text-lg text-muted-foreground">
-              Join thousands who've transformed how they understand economic data.
+              Start translating economic data into personal financial clarity.
             </p>
             <div className="mt-10">
               <Link to="/auth">

@@ -44,8 +44,9 @@ export default function CommunityMap() {
     }
     setLoading(true);
     try {
+      const { score } = getScoreBreakdown(profile, lessonsCompleted, goalsCount);
       const { data, error } = await supabase.functions.invoke("community-resilience", {
-        body: { userId: user!.id, profile, healthScore: 65 },
+        body: { userId: user!.id, profile, healthScore: score },
       });
       if (error) throw error;
       setUserScore(data.user_score);
