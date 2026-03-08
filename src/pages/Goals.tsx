@@ -318,8 +318,8 @@ export default function Goals() {
                             {(() => {
                               const IconComp = categoryIcons[goal.category] || CircleDot;
                               return (
-                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent">
-                                  <IconComp className="h-4 w-4 text-primary" />
+                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground/[0.06]">
+                                   <IconComp className="h-4 w-4 text-foreground" />
                                 </div>
                               );
                             })()}
