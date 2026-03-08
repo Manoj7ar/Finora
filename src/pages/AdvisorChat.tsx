@@ -180,8 +180,8 @@ export default function AdvisorChat() {
       <div className="flex-1 space-y-3 overflow-y-auto rounded-2xl border border-border bg-card p-3 sm:space-y-4 sm:p-4">
         {messages.length === 0 && historyLoaded && (
           <div className="flex h-full flex-col items-center justify-center gap-5 py-8 sm:gap-6 sm:py-12">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent">
-              <Bot className="h-7 w-7 text-primary" />
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-foreground/[0.06]">
+              <Bot className="h-7 w-7 text-foreground" />
             </div>
             <p className="text-center text-sm text-muted-foreground sm:text-base">
               Hi! I'm your personal financial advisor. Ask me anything about your money.
