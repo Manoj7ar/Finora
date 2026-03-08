@@ -87,8 +87,8 @@ export default function PeerBenchmark({ profile, lessonsCompleted, goalsCount }:
           {/* Header */}
           <div className="mb-5 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent">
-                <Users className="h-4 w-4 text-primary" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-foreground/[0.06]">
+                <Users className="h-4 w-4 text-foreground" />
               </div>
               <div>
                 <h3 className="font-display text-base font-bold text-foreground sm:text-lg">
