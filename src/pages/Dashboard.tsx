@@ -9,6 +9,7 @@ import { RefreshCw, Sparkles, Download, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { type FredMetric, type ProfileData } from "@/lib/fred";
 import { useToast } from "@/hooks/use-toast";
+import { useNotifications } from "@/hooks/use-notifications";
 import { exportDashboardPDF } from "@/lib/pdf-export";
 import QuickStats from "@/components/dashboard/QuickStats";
 import MetricCard from "@/components/dashboard/MetricCard";
