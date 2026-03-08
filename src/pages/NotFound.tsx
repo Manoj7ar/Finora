@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { BarChart3, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import logoImg from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
