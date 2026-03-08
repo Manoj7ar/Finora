@@ -140,7 +140,12 @@ export default function Auth() {
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
+            <div className="mt-6 flex flex-col items-center gap-3">
+              {!isSignUp && (
+                <Link to="/forgot-password" className="text-sm text-muted-foreground hover:text-foreground hover:underline">
+                  Forgot your password?
+                </Link>
+              )}
               <button
                 type="button"
                 className="text-sm text-primary hover:underline"
