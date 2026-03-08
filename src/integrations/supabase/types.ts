@@ -142,6 +142,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          country: string | null
           created_at: string
           debt_types: Json | null
           id: string
@@ -153,6 +154,7 @@ export type Database = {
           zip_code: string | null
         }
         Insert: {
+          country?: string | null
           created_at?: string
           debt_types?: Json | null
           id: string
@@ -164,6 +166,7 @@ export type Database = {
           zip_code?: string | null
         }
         Update: {
+          country?: string | null
           created_at?: string
           debt_types?: Json | null
           id?: string
