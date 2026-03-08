@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { LogOut, BarChart3, BookOpen, Zap, LayoutDashboard, Menu, X } from "lucide-react";
+import { LogOut, BarChart3, BookOpen, Zap, LayoutDashboard, Menu, X, Settings } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
