@@ -78,7 +78,9 @@ export default function Dashboard() {
       const { data, error } = await supabase.functions.invoke("fred-data");
       if (error) throw new Error(error.message || "Failed to fetch economic data");
       if (data?.error) throw new Error(data.error);
-      setMetrics(data?.metrics || []);
+      const m = data?.metrics || [];
+      setMetrics(m);
+      checkAndCreateAlerts(m);
     } catch (err: any) {
       toast({ title: "Data fetch error", description: err.message, variant: "destructive" });
     } finally {
