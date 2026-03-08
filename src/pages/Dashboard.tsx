@@ -14,6 +14,7 @@ import QuickStats from "@/components/dashboard/QuickStats";
 import MetricCard from "@/components/dashboard/MetricCard";
 import InsightCard from "@/components/dashboard/InsightCard";
 import HealthScore from "@/components/dashboard/HealthScore";
+import PeerBenchmark from "@/components/dashboard/PeerBenchmark";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -146,13 +147,20 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <HealthScore
-        profile={profile}
-        lessonsCompleted={lessonsCompleted}
-        goalsCount={goalsCount}
-        metricsCount={metrics.length}
-        insightsCount={insights.length}
-      />
+      <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
+        <HealthScore
+          profile={profile}
+          lessonsCompleted={lessonsCompleted}
+          goalsCount={goalsCount}
+          metricsCount={metrics.length}
+          insightsCount={insights.length}
+        />
+        <PeerBenchmark
+          profile={profile}
+          lessonsCompleted={lessonsCompleted}
+          goalsCount={goalsCount}
+        />
+      </div>
 
       <div className="h-6 sm:h-8" />
 
