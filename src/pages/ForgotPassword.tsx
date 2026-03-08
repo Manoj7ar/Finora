@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { MailCheck, ArrowLeft } from "lucide-react";
+import { MailCheck, ArrowLeft, Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -32,7 +33,11 @@ export default function ForgotPassword() {
 
   if (sent) {
     return (
-      <div className="flex min-h-[80vh] items-center justify-center px-6">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex min-h-[80vh] items-center justify-center px-6"
+      >
         <Card className="w-full max-w-md text-center shadow-card">
           <CardContent className="space-y-6 p-10">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-accent">
@@ -45,18 +50,22 @@ export default function ForgotPassword() {
               </p>
             </div>
             <Link to="/auth">
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full rounded-xl">
                 Back to Sign In
               </Button>
             </Link>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="flex min-h-[80vh] items-center justify-center px-6">
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex min-h-[80vh] items-center justify-center px-6"
+    >
       <Card className="w-full max-w-md shadow-card">
         <CardContent className="space-y-6 p-10">
           <div className="text-center">
@@ -77,15 +86,15 @@ export default function ForgotPassword() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="h-12 rounded-md border-border bg-card text-base"
+                className="h-12 rounded-xl border-border bg-card text-base"
               />
             </div>
             <Button
               type="submit"
               disabled={loading}
-              className="h-12 w-full bg-primary text-base hover:bg-finora-green-hover"
+              className="h-12 w-full rounded-xl bg-primary text-base hover:bg-finora-green-hover"
             >
-              {loading ? "Sending..." : "Send Reset Link"}
+              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Send Reset Link"}
             </Button>
           </form>
 
@@ -96,6 +105,6 @@ export default function ForgotPassword() {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </motion.div>
   );
 }

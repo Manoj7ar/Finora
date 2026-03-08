@@ -71,21 +71,56 @@ export default function Landing() {
       <CTASection />
 
       <footer className="border-t border-border bg-card">
-        <div className="container flex flex-col items-center gap-4 py-8 text-center sm:py-10">
-          <div className="flex items-center gap-2.5">
-            <img src={logoImg} alt="Finora" className="h-8 w-8" />
-            <span className="font-display text-lg font-bold text-foreground">Finora</span>
+        <div className="container py-10 sm:py-14">
+          <div className="grid gap-8 md:grid-cols-3">
+            {/* Brand */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2.5">
+                <img src={logoImg} alt="Finora" className="h-8 w-8" />
+                <span className="font-display text-lg font-bold text-foreground">Finora</span>
+              </div>
+              <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
+                The economy, personalised. Real-time macro data translated into your personal dollar impact.
+              </p>
+              <p className="rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary inline-block">
+                🏆 Built for Hackonomics 2026
+              </p>
+            </div>
+
+            {/* Features */}
+            <div className="space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Features</p>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>Live Economic Dashboard</li>
+                <li>AI-Powered Insights</li>
+                <li>Crisis Simulation Engine</li>
+                <li>Financial Education Hub</li>
+                <li>What-If Scenario Analysis</li>
+                <li>Goal Tracker with AI Nudges</li>
+              </ul>
+            </div>
+
+            {/* Tech */}
+            <div className="space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Powered By</p>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>FRED Economic Data API</li>
+                <li>AI Language Models</li>
+                <li>Real-time Data Processing</li>
+                <li>Personalised Financial Modeling</li>
+              </ul>
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground">
-            The economy, personalised. © {new Date().getFullYear()}
-          </p>
-          <p className="rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary">
-            🏆 Built for Hackonomics 2026
-          </p>
-          <div className="flex gap-6 text-xs text-muted-foreground">
-            <span className="cursor-pointer transition-colors hover:text-foreground">Privacy Policy</span>
-            <span className="cursor-pointer transition-colors hover:text-foreground">Terms of Service</span>
-            <span className="cursor-pointer transition-colors hover:text-foreground">Contact</span>
+
+          <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
+            <p className="text-xs text-muted-foreground">
+              © {new Date().getFullYear()} Finora. All rights reserved.
+            </p>
+            <div className="flex gap-6 text-xs text-muted-foreground">
+              <span className="cursor-pointer transition-colors hover:text-foreground">Privacy Policy</span>
+              <span className="cursor-pointer transition-colors hover:text-foreground">Terms of Service</span>
+              <span className="cursor-pointer transition-colors hover:text-foreground">Contact</span>
+            </div>
           </div>
         </div>
       </footer>
