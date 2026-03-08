@@ -91,6 +91,7 @@ export default function Settings() {
       navigate("/onboarding");
       return;
     }
+    setCountry((data as any).country || "US");
     setIncomeRange(data.income_range || "");
     setDebts((data.debt_types as Record<string, number>) || {});
     setSavingsRange(data.savings_range || "");
