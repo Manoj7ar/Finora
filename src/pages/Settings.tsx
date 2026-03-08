@@ -99,6 +99,8 @@ export default function Settings() {
     setSavingsRange(data.savings_range || "");
     setZipCode(data.zip_code || "");
     setInvestmentLevel(data.investment_level || "");
+    setAgeGroup((data as any).age_group || "");
+    setCity((data as any).city || "");
     setLoading(false);
   };
 
