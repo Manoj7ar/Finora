@@ -117,7 +117,7 @@ export default function Education() {
 
     toast({
       title: `${correct}/${total} correct!`,
-      description: correct === total ? "Perfect score! 🎉" : "Keep learning — you're getting there!",
+      description: correct === total ? "Perfect score!" : "Keep learning — you're getting there!",
     });
   };
 
