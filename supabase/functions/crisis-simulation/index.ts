@@ -15,6 +15,9 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
 
+    if (!crisisId) throw new Error("Please select a crisis to simulate");
+    if (!profile) throw new Error("Profile data is required");
+
     const crisisContext: Record<string, string> = {
       "2008": "2008 Financial Crisis: Housing bubble burst, Lehman Brothers collapse. Fed rate went from 5.25% to near 0%. Unemployment peaked at 10%. S&P 500 fell 57%. Housing prices dropped 33%.",
       "2020": "2020 COVID Crash: Pandemic lockdowns. Unemployment spiked to 14.7%. S&P 500 dropped 34% in weeks. Fed cut rates to 0%. Massive stimulus spending.",
@@ -22,16 +25,18 @@ serve(async (req) => {
       "1970s": "1970s Stagflation: Oil embargo, double-digit inflation (peaked 14.8%). Fed rate hit 20%. Unemployment rose to 9%. Stock market lost 50% in real terms over decade.",
     };
 
+    if (!crisisContext[crisisId]) throw new Error(`Unknown crisis: ${crisisId}`);
+
     const systemPrompt = `You are Finora's crisis simulation engine. Given a user's financial profile and a historical crisis, simulate how their finances would be affected month by month over 12 months.
 
 User profile:
-- Income: ${profile.income_range}
-- Debts: ${JSON.stringify(profile.debt_types)}
-- Savings: ${profile.savings_range}
-- Location ZIP: ${profile.zip_code}
-- Investment level: ${profile.investment_level}
+- Income: ${profile.income_range || "not specified"}
+- Debts: ${JSON.stringify(profile.debt_types || {})}
+- Savings: ${profile.savings_range || "not specified"}
+- Location ZIP: ${profile.zip_code || "not specified"}
+- Investment level: ${profile.investment_level || "not specified"}
 
-Crisis: ${crisisContext[crisisId] || "Unknown crisis"}
+Crisis: ${crisisContext[crisisId]}
 
 Return a JSON object with:
 - months: array of 12 objects, each with: month (string like "Month 1"), netWorthChange (number, cumulative $), debtCostChange (number, monthly $ change), narrative (2-3 sentences describing what happened that month)
@@ -59,16 +64,18 @@ Return ONLY valid JSON.`;
     if (!response.ok) {
       const status = response.status;
       if (status === 429) {
-        return new Response(JSON.stringify({ error: "Rate limit exceeded." }), {
+        return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again in a minute." }), {
           status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       if (status === 402) {
-        return new Response(JSON.stringify({ error: "AI credits exhausted." }), {
+        return new Response(JSON.stringify({ error: "AI credits exhausted. Please add credits in workspace settings." }), {
           status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      throw new Error(`AI gateway error: ${status}`);
+      const text = await response.text();
+      console.error("AI gateway error:", status, text);
+      throw new Error(`AI service temporarily unavailable (${status})`);
     }
 
     const aiData = await response.json();

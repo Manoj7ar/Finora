@@ -15,6 +15,8 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
 
+    if (!topicId) throw new Error("Please select a topic");
+
     const topics: Record<string, string> = {
       "fed-rate": "The Federal Funds Rate — what it is, how the Federal Reserve sets it, how it transmits through the economy to affect borrowing costs, savings rates, and employment",
       "inflation": "Inflation and purchasing power — how CPI is measured, what causes inflation, how it erodes savings, and strategies to protect against it",
@@ -22,7 +24,32 @@ serve(async (req) => {
       "recessions": "How recessions start and unfold — business cycles, leading indicators, how downturns affect employment, debt costs, and asset prices",
     };
 
-    const systemPrompt = `You are Finora's economics teacher. Create a personalized 3-minute lesson about: ${topics[topicId] || topicId}.
+    if (!topics[topicId]) throw new Error(`Unknown topic: ${topicId}`);
+
+    // Fetch live FRED data for more relevant lessons
+    const FRED_API_KEY = Deno.env.get("FRED_API_KEY");
+    let fredContext = "";
+    if (FRED_API_KEY) {
+      try {
+        const seriesForTopic: Record<string, string[]> = {
+          "fed-rate": ["FEDFUNDS"],
+          "inflation": ["CPIAUCSL"],
+          "yield-curve": ["DGS10", "DGS2"],
+          "recessions": ["UNRATE", "FEDFUNDS"],
+        };
+        const series = seriesForTopic[topicId] || [];
+        for (const sid of series) {
+          const res = await fetch(`https://api.stlouisfed.org/fred/series/observations?series_id=${sid}&api_key=${FRED_API_KEY}&file_type=json&sort_order=desc&limit=1`);
+          if (res.ok) {
+            const data = await res.json();
+            const val = data.observations?.[0]?.value;
+            if (val && val !== ".") fredContext += `Current ${sid}: ${val} (as of ${data.observations[0].date}). `;
+          }
+        }
+      } catch { /* continue without FRED data */ }
+    }
+
+    const systemPrompt = `You are Finora's economics teacher. Create a personalized 3-minute lesson about: ${topics[topicId]}.
 
 Personalize to this user:
 - Income: ${profile?.income_range || "not specified"}
@@ -30,8 +57,10 @@ Personalize to this user:
 - Savings: ${profile?.savings_range || "not specified"}
 - Investment level: ${profile?.investment_level || "not specified"}
 
+${fredContext ? `Current real data: ${fredContext}` : ""}
+
 Return a JSON object with:
-- content: string with the full lesson (use concrete dollar examples from their profile, 4-6 paragraphs, plain English, no jargon without explanation)
+- content: string with the full lesson (use concrete dollar examples from their profile, reference real current data if available, 4-6 paragraphs, plain English, no jargon without explanation)
 - quiz: array of 3 objects, each with: question (string), options (array of 4 strings), correctIndex (0-3 integer)
 
 Make quiz questions test understanding, not memorization. Reference the user's numbers in at least 2 questions.
@@ -55,16 +84,18 @@ Return ONLY valid JSON.`;
     if (!response.ok) {
       const status = response.status;
       if (status === 429) {
-        return new Response(JSON.stringify({ error: "Rate limit exceeded." }), {
+        return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again in a minute." }), {
           status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       if (status === 402) {
-        return new Response(JSON.stringify({ error: "AI credits exhausted." }), {
+        return new Response(JSON.stringify({ error: "AI credits exhausted. Please add credits in workspace settings." }), {
           status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      throw new Error(`AI gateway error: ${status}`);
+      const text = await response.text();
+      console.error("AI gateway error:", status, text);
+      throw new Error(`AI service temporarily unavailable (${status})`);
     }
 
     const aiData = await response.json();

@@ -15,6 +15,9 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
 
+    if (!profile) throw new Error("Profile data is required");
+    if (!metrics || metrics.length === 0) throw new Error("Metrics data is required");
+
     const metricsDescription = metrics.map((m: any) =>
       `${m.name}: ${m.value != null ? m.value : 'N/A'} (previous: ${m.previousValue != null ? m.previousValue : 'N/A'})`
     ).join("\n");
@@ -22,13 +25,13 @@ serve(async (req) => {
     const systemPrompt = `You are Finora's AI economic advisor. You analyze macro-economic data and explain impacts in plain English personalized to the user's financial profile.
 
 User profile:
-- Income: ${profile.income_range}
-- Debts: ${JSON.stringify(profile.debt_types)}
-- Savings: ${profile.savings_range}
-- Location ZIP: ${profile.zip_code}
-- Investment level: ${profile.investment_level}
+- Income: ${profile.income_range || "not specified"}
+- Debts: ${JSON.stringify(profile.debt_types || {})}
+- Savings: ${profile.savings_range || "not specified"}
+- Location ZIP: ${profile.zip_code || "not specified"}
+- Investment level: ${profile.investment_level || "not specified"}
 
-Current economic data:
+Current economic data (real FRED API data):
 ${metricsDescription}
 
 Generate 2-3 insight cards. Each insight must be a JSON object with:
@@ -58,26 +61,28 @@ Return ONLY valid JSON array of insight objects.`;
     if (!response.ok) {
       const status = response.status;
       if (status === 429) {
-        return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again later." }), {
+        return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again in a minute." }), {
           status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
       if (status === 402) {
-        return new Response(JSON.stringify({ error: "AI credits exhausted. Please add credits." }), {
+        return new Response(JSON.stringify({ error: "AI credits exhausted. Please add credits in workspace settings." }), {
           status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      throw new Error(`AI gateway error: ${status}`);
+      const text = await response.text();
+      console.error("AI gateway error:", status, text);
+      throw new Error(`AI service temporarily unavailable (${status})`);
     }
 
     const aiData = await response.json();
     const content = aiData.choices?.[0]?.message?.content || "[]";
-    
-    // Parse JSON from response (handle markdown code blocks)
+
     let insights;
     try {
       const cleaned = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
       insights = JSON.parse(cleaned);
+      if (!Array.isArray(insights)) insights = [insights];
     } catch {
       insights = [{ severity: "healthy", headline: "Analysis complete", dollarImpact: "", summary: content, lesson: "" }];
     }

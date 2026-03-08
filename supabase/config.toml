@@ -6,6 +6,18 @@ verify_jwt = false
 [functions.ai-insights]
 verify_jwt = false
 
+[functions.ai-chat]
+verify_jwt = false
+
+[functions.ai-action-plan]
+verify_jwt = false
+
+[functions.ai-news-digest]
+verify_jwt = false
+
+[functions.ai-what-if]
+verify_jwt = false
+
 [functions.crisis-simulation]
 verify_jwt = false
 

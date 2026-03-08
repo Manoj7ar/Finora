@@ -5,6 +5,23 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+const FRED_BASE = "https://api.stlouisfed.org/fred/series/observations";
+const FRED_SERIES = ["FEDFUNDS", "CPIAUCSL", "UNRATE", "DGS10"];
+
+async function fetchFredSnapshot(apiKey: string) {
+  const results: string[] = [];
+  for (const sid of FRED_SERIES) {
+    try {
+      const res = await fetch(`${FRED_BASE}?series_id=${sid}&api_key=${apiKey}&file_type=json&sort_order=desc&limit=1`);
+      if (!res.ok) continue;
+      const data = await res.json();
+      const val = data.observations?.[0]?.value;
+      if (val && val !== ".") results.push(`${sid}: ${val}`);
+    } catch { /* skip */ }
+  }
+  return results.length ? results.join(", ") : "";
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
@@ -12,6 +29,11 @@ serve(async (req) => {
     const { scenario, profile } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
+
+    if (!scenario?.trim()) throw new Error("Please provide a scenario to analyze");
+
+    const FRED_API_KEY = Deno.env.get("FRED_API_KEY");
+    const fredData = FRED_API_KEY ? await fetchFredSnapshot(FRED_API_KEY) : "";
 
     const systemPrompt = `You are Finora's AI financial scenario analyzer. The user wants to explore a "what if" scenario. Analyze the hypothetical and provide a detailed, personalized impact analysis.
 
@@ -21,6 +43,8 @@ User profile:
 - Savings: ${profile?.savings_range || "not specified"}
 - Location ZIP: ${profile?.zip_code || "not specified"}
 - Investment level: ${profile?.investment_level || "not specified"}
+
+${fredData ? `Current economic conditions (FRED data): ${fredData}` : ""}
 
 Return a JSON object with:
 - scenario: string (restate the scenario clearly)
@@ -34,7 +58,7 @@ Return a JSON object with:
 - recommendation: string (2-3 sentences with what the user should consider doing)
 - timeframe: string (how long until the effects are felt)
 
-Use specific dollar amounts based on the user's profile. Return ONLY valid JSON.`;
+Use specific dollar amounts based on the user's profile and current economic conditions. Return ONLY valid JSON.`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -53,9 +77,11 @@ Use specific dollar amounts based on the user's profile. Return ONLY valid JSON.
 
     if (!response.ok) {
       const status = response.status;
-      if (status === 429) return new Response(JSON.stringify({ error: "Rate limit exceeded." }), { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } });
-      if (status === 402) return new Response(JSON.stringify({ error: "AI credits exhausted." }), { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } });
-      throw new Error(`AI gateway error: ${status}`);
+      if (status === 429) return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again in a minute." }), { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      if (status === 402) return new Response(JSON.stringify({ error: "AI credits exhausted. Please add credits in workspace settings." }), { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      const text = await response.text();
+      console.error("AI gateway error:", status, text);
+      throw new Error(`AI service temporarily unavailable (${status})`);
     }
 
     const aiData = await response.json();
