@@ -24,6 +24,7 @@ export default function Dashboard() {
   const [loadingMetrics, setLoadingMetrics] = useState(true);
   const [loadingInsights, setLoadingInsights] = useState(false);
   const [lessonsCompleted, setLessonsCompleted] = useState(0);
+  const [goalsCount, setGoalsCount] = useState(0);
 
   useEffect(() => {
     if (!user) return;
