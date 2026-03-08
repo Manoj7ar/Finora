@@ -37,10 +37,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const isActive = (path: string) => location.pathname === path;
   const isAiActive = aiNav.some((n) => isActive(n.to));
+  const hideNav = location.pathname === "/auth" || location.pathname === "/forgot-password" || location.pathname === "/reset-password";
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="fixed left-1/2 top-3 z-50 w-[calc(100%-1rem)] max-w-5xl -translate-x-1/2 sm:top-4 sm:w-[calc(100%-2rem)]">
+      {!hideNav && <header className="fixed left-1/2 top-3 z-50 w-[calc(100%-1rem)] max-w-5xl -translate-x-1/2 sm:top-4 sm:w-[calc(100%-2rem)]">
         <nav className="flex h-12 items-center justify-between rounded-2xl border border-border/50 bg-background/60 px-3 shadow-card backdrop-blur-xl sm:h-14 sm:px-4">
           <Link to={user ? "/dashboard" : "/"} className="flex items-center gap-2">
             <img src={logoImg} alt="Finora" className="h-6 w-6 sm:h-7 sm:w-7" />
@@ -195,9 +196,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </motion.div>
           )}
         </AnimatePresence>
-      </header>
+      </header>}
 
-      <main className="pt-16 sm:pt-20">{children}</main>
+      <main className={hideNav ? "" : "pt-16 sm:pt-20"}>{children}</main>
     </div>
   );
 }
