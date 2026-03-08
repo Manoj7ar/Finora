@@ -247,19 +247,63 @@ export default function Landing() {
       </section>
 
       {/* ─── FOOTER ─── */}
-      <footer className="border-t border-border py-12">
-        <div className="container">
-          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-            <div className="flex items-center gap-3">
-              <img src={logoImg} alt="Finora" className="h-7 w-7" />
-              <span className="font-display text-lg font-semibold text-foreground">Finora</span>
+      <footer className="border-t border-border bg-foreground text-background">
+        <div className="container py-16 sm:py-20">
+          <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Brand */}
+            <div className="sm:col-span-2 lg:col-span-1">
+              <div className="flex items-center gap-3 mb-4">
+                <img src={logoImg} alt="Finora" className="h-7 w-7 brightness-0 invert" />
+                <span className="font-display text-lg font-bold">Finora</span>
+              </div>
+              <p className="text-sm text-background/55 leading-relaxed max-w-xs">
+                Personal economic intelligence — translating macro data into decisions that matter for your wallet.
+              </p>
             </div>
-            <div className="flex gap-8 text-sm text-muted-foreground">
-              <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
-              <a href="#" className="hover:text-foreground transition-colors">Terms</a>
-              <a href="#" className="hover:text-foreground transition-colors">Contact</a>
+
+            {/* Product */}
+            <div>
+              <h4 className="font-mono text-xs uppercase tracking-widest text-background/40 mb-4">Product</h4>
+              <ul className="space-y-2.5">
+                {["Dashboard", "AI Advisor", "Crisis Simulator", "Goal Tracking"].map((item) => (
+                  <li key={item}>
+                    <Link to="/auth" className="text-sm text-background/60 hover:text-background transition-colors">{item}</Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Finora</p>
+
+            {/* AI Suite */}
+            <div>
+              <h4 className="font-mono text-xs uppercase tracking-widest text-background/40 mb-4">AI Suite</h4>
+              <ul className="space-y-2.5">
+                {["Bias Mirror", "Economic Weather", "Financial Twin", "Legislation Radar"].map((item) => (
+                  <li key={item}>
+                    <Link to="/auth" className="text-sm text-background/60 hover:text-background transition-colors">{item}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h4 className="font-mono text-xs uppercase tracking-widest text-background/40 mb-4">Company</h4>
+              <ul className="space-y-2.5">
+                {["Privacy Policy", "Terms of Service", "Contact", "About"].map((item) => (
+                  <li key={item}>
+                    <a href="#" className="text-sm text-background/60 hover:text-background transition-colors">{item}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-background/10">
+          <div className="container flex flex-col items-center justify-between gap-4 py-6 sm:flex-row">
+            <p className="font-mono text-xs text-background/35">© {new Date().getFullYear()} Finora. All rights reserved.</p>
+            <p className="font-mono text-xs text-background/35">Built for financial clarity.</p>
           </div>
         </div>
       </footer>
