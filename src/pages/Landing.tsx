@@ -7,6 +7,7 @@ import landingVitals from "@/assets/landing-vitals.jpg";
 import landingInsights from "@/assets/landing-insights.jpg";
 import landingCrisis from "@/assets/landing-crisis.jpg";
 import landingEducation from "@/assets/landing-education.jpg";
+import logoImg from "@/assets/logo.png";
 
 export default function Landing() {
   return (
