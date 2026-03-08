@@ -35,7 +35,7 @@ export default function QuickStats({ metricsCount, insightsCount, lessonsComplet
           >
             <CardContent className="flex items-center gap-3 p-3 sm:p-4">
               <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${color}`}>
-                <Icon className="h-4 w-4 text-primary" />
+                <Icon className="h-4 w-4 text-foreground" />
               </div>
               <div className="min-w-0">
                 <p className="truncate text-xs text-muted-foreground">{label}</p>
