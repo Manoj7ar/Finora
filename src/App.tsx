@@ -38,34 +38,36 @@ function PublicOnlyRoute({ children }: { children: React.ReactNode }) {
 }
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<PublicOnlyRoute><Landing /></PublicOnlyRoute>} />
-              <Route path="/auth" element={<PublicOnlyRoute><Auth /></PublicOnlyRoute>} />
-              <Route path="/forgot-password" element={<PublicOnlyRoute><ForgotPassword /></PublicOnlyRoute>} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
-              <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-              <Route path="/advisor" element={<ProtectedRoute><AdvisorChat /></ProtectedRoute>} />
-              <Route path="/action-plan" element={<ProtectedRoute><ActionPlan /></ProtectedRoute>} />
-              <Route path="/news" element={<ProtectedRoute><NewsDigest /></ProtectedRoute>} />
-              <Route path="/what-if" element={<ProtectedRoute><WhatIf /></ProtectedRoute>} />
-              <Route path="/simulation" element={<ProtectedRoute><Simulation /></ProtectedRoute>} />
-              <Route path="/education" element={<ProtectedRoute><Education /></ProtectedRoute>} />
-              <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
-        </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AuthProvider>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<PublicOnlyRoute><Landing /></PublicOnlyRoute>} />
+                <Route path="/auth" element={<PublicOnlyRoute><Auth /></PublicOnlyRoute>} />
+                <Route path="/forgot-password" element={<PublicOnlyRoute><ForgotPassword /></PublicOnlyRoute>} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
+                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path="/advisor" element={<ProtectedRoute><AdvisorChat /></ProtectedRoute>} />
+                <Route path="/action-plan" element={<ProtectedRoute><ActionPlan /></ProtectedRoute>} />
+                <Route path="/news" element={<ProtectedRoute><NewsDigest /></ProtectedRoute>} />
+                <Route path="/what-if" element={<ProtectedRoute><WhatIf /></ProtectedRoute>} />
+                <Route path="/simulation" element={<ProtectedRoute><Simulation /></ProtectedRoute>} />
+                <Route path="/education" element={<ProtectedRoute><Education /></ProtectedRoute>} />
+                <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Layout>
+          </AuthProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ThemeProvider>
 );
 
 export default App;

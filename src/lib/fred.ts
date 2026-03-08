@@ -6,6 +6,7 @@ export interface FredMetric {
   previousValue: number | null;
   unit: string;
   description: string;
+  history?: { date: string; value: number }[];
 }
 
 export interface ProfileData {
