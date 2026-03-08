@@ -8,6 +8,7 @@ import { Users, Shield, Loader2, Lock, TrendingUp, MapPin } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { getScoreBreakdown } from "@/components/dashboard/HealthScore";
 
 export default function CommunityMap() {
   const { user } = useAuth();
