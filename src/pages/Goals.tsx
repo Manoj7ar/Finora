@@ -43,15 +43,15 @@ const CATEGORIES = [
   { value: "other", label: "Other" },
 ];
 
-const categoryIcon: Record<string, string> = {
-  emergency: "🛡️",
-  savings: "💰",
-  retirement: "🏖️",
-  debt: "💳",
-  investment: "📈",
-  purchase: "🏠",
-  education: "🎓",
-  other: "🎯",
+const categoryIcons: Record<string, React.ElementType> = {
+  emergency: Shield,
+  savings: Wallet,
+  retirement: Palmtree,
+  debt: CreditCard,
+  investment: BarChart3,
+  purchase: Home,
+  education: GraduationCap,
+  other: CircleDot,
 };
 
 export default function Goals() {
