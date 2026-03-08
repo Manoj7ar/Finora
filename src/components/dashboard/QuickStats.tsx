@@ -14,10 +14,10 @@ export default function QuickStats({ metricsCount, insightsCount, lessonsComplet
   const navigate = useNavigate();
 
   const stats = [
-    { icon: TrendingUp, label: "Indicators", value: metricsCount || "—", color: "bg-accent", onClick: undefined },
-    { icon: Sparkles, label: "AI Insights", value: insightsCount || "—", color: "bg-accent", onClick: undefined },
-    { icon: BookOpen, label: "Lessons", value: `${lessonsCompleted}/4`, color: "bg-accent", onClick: () => navigate("/education") },
-    { icon: Target, label: "Goals", value: goalsCount || "—", color: "bg-accent", onClick: () => navigate("/goals") },
+    { icon: TrendingUp, label: "Indicators", value: metricsCount || "—", color: "bg-foreground/[0.06]", onClick: undefined },
+    { icon: Sparkles, label: "AI Insights", value: insightsCount || "—", color: "bg-foreground/[0.06]", onClick: undefined },
+    { icon: BookOpen, label: "Lessons", value: `${lessonsCompleted}/4`, color: "bg-foreground/[0.06]", onClick: () => navigate("/education") },
+    { icon: Target, label: "Goals", value: goalsCount || "—", color: "bg-foreground/[0.06]", onClick: () => navigate("/goals") },
   ];
 
   return (
