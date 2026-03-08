@@ -26,7 +26,7 @@ export default function HeroSection() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-5 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary"
           >
-            <Award className="h-3.5 w-3.5" /> Hackonomics 2026 · Macro Intelligence for Everyone
+            <Award className="h-3.5 w-3.5 text-foreground" /> Hackonomics 2026 · Macro Intelligence for Everyone
           </motion.p>
 
           <motion.h1

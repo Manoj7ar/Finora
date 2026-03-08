@@ -140,7 +140,7 @@ export default function WhatIf() {
                   disabled={loading}
                   className="rounded-xl border border-border bg-card p-3 text-left text-xs transition-all hover:border-primary/50 hover:shadow-card disabled:opacity-50 sm:p-4 sm:text-sm"
                 >
-                  <Lightbulb className="mb-2 h-4 w-4 text-primary" />
+                  <Lightbulb className="mb-2 h-4 w-4 text-foreground" />
                   {s}
                 </button>
               ))}

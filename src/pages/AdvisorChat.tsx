@@ -208,8 +208,8 @@ export default function AdvisorChat() {
             className={`flex gap-2 sm:gap-3 ${msg.role === "user" ? "justify-end" : ""}`}
           >
             {msg.role === "assistant" && (
-              <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-accent sm:h-7 sm:w-7">
-                <Bot className="h-3.5 w-3.5 text-primary sm:h-4 sm:w-4" />
+              <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-foreground/[0.06] sm:h-7 sm:w-7">
+                <Bot className="h-3.5 w-3.5 text-foreground sm:h-4 sm:w-4" />
               </div>
             )}
             <div

@@ -179,10 +179,10 @@ export default function Education() {
                     >
                       <div className="mb-3 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent">
-                            <topic.icon className="h-5 w-5 text-primary" />
+                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-foreground/[0.06]">
+                            <topic.icon className="h-5 w-5 text-foreground" />
                           </div>
-                          <BookOpen className="h-5 w-5 text-primary" />
+                          <BookOpen className="h-5 w-5 text-foreground" />
                         </div>
                         {tp && (
                           <Badge

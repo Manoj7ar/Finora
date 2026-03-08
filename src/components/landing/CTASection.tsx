@@ -22,7 +22,7 @@ export default function CTASection() {
       <div className="container relative py-24 sm:py-28 lg:py-36">
         <motion.div {...fadeIn()} className="mx-auto max-w-2xl text-center">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5">
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
+            <Sparkles className="h-3.5 w-3.5 text-foreground" />
             <span className="text-xs font-semibold uppercase tracking-wider text-primary">Free to use</span>
           </div>
           <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl md:text-5xl lg:text-6xl">

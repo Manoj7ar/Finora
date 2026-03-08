@@ -55,8 +55,8 @@ export default function QuickStats({ metricsCount, insightsCount, lessonsComplet
           onClick={() => navigate("/simulation")}
         >
           <CardContent className="flex items-center gap-3 p-3 sm:p-4">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent">
-              <Zap className="h-4 w-4 text-primary" />
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-foreground/[0.06]">
+              <Zap className="h-4 w-4 text-foreground" />
             </div>
             <div className="min-w-0">
               <p className="truncate text-xs text-muted-foreground">Crisis Sim</p>

@@ -83,8 +83,8 @@ export default function ActionPlan() {
       {!plan ? (
         <Card className="shadow-card">
           <CardContent className="flex flex-col items-center justify-center gap-5 p-8 sm:gap-6 sm:p-12">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-accent">
-              <ClipboardList className="h-8 w-8 text-primary" />
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/[0.06]">
+              <ClipboardList className="h-8 w-8 text-foreground" />
             </div>
             <div className="text-center">
               <h2 className="mb-2 font-display text-lg font-semibold text-foreground sm:text-xl">

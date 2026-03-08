@@ -393,8 +393,8 @@ export default function Goals() {
                         {goal.ai_nudge && (
                           <div className="rounded-xl bg-accent/50 p-3">
                             <div className="mb-1 flex items-center gap-1.5">
-                              <Sparkles className="h-3.5 w-3.5 text-primary" />
-                              <span className="text-xs font-semibold text-primary">AI Nudge</span>
+                              <Sparkles className="h-3.5 w-3.5 text-foreground" />
+                              <span className="text-xs font-semibold text-foreground">AI Nudge</span>
                             </div>
                             <p className="text-sm leading-relaxed text-foreground">
                               {goal.ai_nudge}
