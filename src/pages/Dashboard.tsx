@@ -13,6 +13,7 @@ import { exportDashboardPDF } from "@/lib/pdf-export";
 import QuickStats from "@/components/dashboard/QuickStats";
 import MetricCard from "@/components/dashboard/MetricCard";
 import InsightCard from "@/components/dashboard/InsightCard";
+import HealthScore from "@/components/dashboard/HealthScore";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -144,6 +145,16 @@ export default function Dashboard() {
           </Button>
         </div>
       </div>
+
+      <HealthScore
+        profile={profile}
+        lessonsCompleted={lessonsCompleted}
+        goalsCount={goalsCount}
+        metricsCount={metrics.length}
+        insightsCount={insights.length}
+      />
+
+      <div className="h-6 sm:h-8" />
 
       <QuickStats
         metricsCount={metrics.length}

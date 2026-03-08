@@ -20,6 +20,7 @@ import ActionPlan from "@/pages/ActionPlan";
 import NewsDigest from "@/pages/NewsDigest";
 import WhatIf from "@/pages/WhatIf";
 import Goals from "@/pages/Goals";
+import Achievements from "@/pages/Achievements";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -61,6 +62,7 @@ const App = () => (
                 <Route path="/goals" element={<ProtectedRoute><Goals /></ProtectedRoute>} />
                 <Route path="/simulation" element={<ProtectedRoute><Simulation /></ProtectedRoute>} />
                 <Route path="/education" element={<ProtectedRoute><Education /></ProtectedRoute>} />
+                <Route path="/achievements" element={<ProtectedRoute><Achievements /></ProtectedRoute>} />
                 <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
