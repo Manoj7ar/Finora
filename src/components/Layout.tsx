@@ -37,6 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const isActive = (path: string) => location.pathname === path;
   const isAiActive = aiNav.some((n) => isActive(n.to));
+  const hideNav = location.pathname === "/auth" || location.pathname === "/forgot-password" || location.pathname === "/reset-password";
 
   return (
     <div className="min-h-screen bg-background">
