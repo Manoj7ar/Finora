@@ -7,7 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { ClipboardList, Loader2, ArrowUp, ArrowDown, Minus, RefreshCw } from "lucide-react";
+import { ClipboardList, Loader2, ArrowUp, ArrowDown, Minus, RefreshCw, Download } from "lucide-react";
+import { exportActionPlanPDF } from "@/lib/pdf-export";
 
 interface ActionItem {
   priority: string;
