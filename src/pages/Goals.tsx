@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import {
   Target, Plus, Sparkles, Trash2, Pencil, Loader2, TrendingUp, Calendar, DollarSign,
+  Shield, Wallet, Palmtree, CreditCard, BarChart3, Home, GraduationCap, CircleDot,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
