@@ -282,8 +282,8 @@ export default function Goals() {
         ) : goals.length === 0 ? (
           <Card className="shadow-card">
             <CardContent className="flex flex-col items-center gap-4 py-16">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-accent">
-                <Target className="h-8 w-8 text-primary" />
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/[0.06]">
+                <Target className="h-8 w-8 text-foreground" />
               </div>
               <h3 className="font-display text-lg font-bold text-foreground">No goals yet</h3>
               <p className="max-w-sm text-center text-sm text-muted-foreground">
