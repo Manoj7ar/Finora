@@ -115,6 +115,8 @@ export default function Settings() {
         savings_range: savingsRange,
         zip_code: zipCode,
         investment_level: investmentLevel,
+        age_group: ageGroup,
+        city: city,
       } as any).eq("id", user.id);
 
       if (error) throw error;
