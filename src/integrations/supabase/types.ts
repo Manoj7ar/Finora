@@ -14,7 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      lesson_progress: {
+        Row: {
+          completed_at: string
+          id: string
+          score: number
+          topic_id: string
+          total_questions: number
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          id?: string
+          score?: number
+          topic_id: string
+          total_questions?: number
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          id?: string
+          score?: number
+          topic_id?: string
+          total_questions?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          debt_types: Json | null
+          id: string
+          income_range: string | null
+          investment_level: string | null
+          onboarding_completed: boolean | null
+          savings_range: string | null
+          updated_at: string
+          zip_code: string | null
+        }
+        Insert: {
+          created_at?: string
+          debt_types?: Json | null
+          id: string
+          income_range?: string | null
+          investment_level?: string | null
+          onboarding_completed?: boolean | null
+          savings_range?: string | null
+          updated_at?: string
+          zip_code?: string | null
+        }
+        Update: {
+          created_at?: string
+          debt_types?: Json | null
+          id?: string
+          income_range?: string | null
+          investment_level?: string | null
+          onboarding_completed?: boolean | null
+          savings_range?: string | null
+          updated_at?: string
+          zip_code?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
