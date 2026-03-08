@@ -6,11 +6,29 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, Check } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Globe } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+const COUNTRIES = [
+  { code: "US", name: "United States", currency: "USD", symbol: "$" },
+  { code: "GB", name: "United Kingdom", currency: "GBP", symbol: "£" },
+  { code: "CA", name: "Canada", currency: "CAD", symbol: "C$" },
+  { code: "AU", name: "Australia", currency: "AUD", symbol: "A$" },
+  { code: "DE", name: "Germany", currency: "EUR", symbol: "€" },
+  { code: "FR", name: "France", currency: "EUR", symbol: "€" },
+  { code: "IN", name: "India", currency: "INR", symbol: "₹" },
+  { code: "JP", name: "Japan", currency: "JPY", symbol: "¥" },
+  { code: "BR", name: "Brazil", currency: "BRL", symbol: "R$" },
+  { code: "MX", name: "Mexico", currency: "MXN", symbol: "MX$" },
+  { code: "NG", name: "Nigeria", currency: "NGN", symbol: "₦" },
+  { code: "ZA", name: "South Africa", currency: "ZAR", symbol: "R" },
+  { code: "SG", name: "Singapore", currency: "SGD", symbol: "S$" },
+  { code: "AE", name: "UAE", currency: "AED", symbol: "د.إ" },
+  { code: "OTHER", name: "Other", currency: "USD", symbol: "$" },
+];
 
 const INCOME_RANGES = [
   "Under $25,000",
@@ -22,10 +40,10 @@ const INCOME_RANGES = [
 ];
 
 const DEBT_TYPES = [
-  { key: "credit_card", label: "Credit Card", placeholder: "e.g. $5,000" },
-  { key: "student_loan", label: "Student Loans", placeholder: "e.g. $30,000" },
-  { key: "mortgage", label: "Mortgage", placeholder: "e.g. $250,000" },
-  { key: "auto", label: "Auto Loan", placeholder: "e.g. $15,000" },
+  { key: "credit_card", label: "Credit Card", placeholder: "e.g. 5000" },
+  { key: "student_loan", label: "Student Loans", placeholder: "e.g. 30000" },
+  { key: "mortgage", label: "Mortgage", placeholder: "e.g. 250000" },
+  { key: "auto", label: "Auto Loan", placeholder: "e.g. 15000" },
 ];
 
 const SAVINGS_RANGES = [
@@ -43,10 +61,11 @@ const INVESTMENT_LEVELS = [
   { key: "heavy", label: "Heavy investor", description: "Significant portfolio value" },
 ];
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
 
 export default function Onboarding() {
   const [step, setStep] = useState(1);
+  const [country, setCountry] = useState("");
   const [incomeRange, setIncomeRange] = useState("");
   const [debts, setDebts] = useState<Record<string, number>>({});
   const [savingsRange, setSavingsRange] = useState("");
@@ -59,11 +78,12 @@ export default function Onboarding() {
 
   const canProceed = () => {
     switch (step) {
-      case 1: return !!incomeRange;
-      case 2: return true;
-      case 3: return !!savingsRange;
-      case 4: return zipCode.length >= 5;
-      case 5: return !!investmentLevel;
+      case 1: return !!country;
+      case 2: return !!incomeRange;
+      case 3: return true;
+      case 4: return !!savingsRange;
+      case 5: return zipCode.length >= 3;
+      case 6: return !!investmentLevel;
       default: return false;
     }
   };
@@ -74,6 +94,7 @@ export default function Onboarding() {
     try {
       const { error } = await supabase.from("profiles").upsert({
         id: user.id,
+        country,
         income_range: incomeRange,
         debt_types: debts,
         savings_range: savingsRange,
@@ -98,6 +119,9 @@ export default function Onboarding() {
       setStep(step + 1);
     }
   };
+
+  const locationLabel = country === "US" ? "ZIP Code" : "Postal / Area Code";
+  const locationPlaceholder = country === "US" ? "e.g. 10001" : country === "GB" ? "e.g. SW1A 1AA" : "e.g. postal code";
 
   return (
     <motion.div
@@ -124,22 +148,55 @@ export default function Onboarding() {
           <Card className="shadow-card">
             <CardHeader>
               <CardTitle className="font-display text-xl sm:text-2xl">
-                {step === 1 && "What's your annual income range?"}
-                {step === 2 && "Do you have any debts?"}
-                {step === 3 && "How much do you have in savings?"}
-                {step === 4 && "Where do you live?"}
-                {step === 5 && "How do you invest?"}
+                {step === 1 && "Where are you based?"}
+                {step === 2 && "What's your annual income range?"}
+                {step === 3 && "Do you have any debts?"}
+                {step === 4 && "How much do you have in savings?"}
+                {step === 5 && `What's your ${locationLabel.toLowerCase()}?`}
+                {step === 6 && "How do you invest?"}
               </CardTitle>
               <CardDescription className="text-sm">
-                {step === 1 && "This helps us calculate how economic changes affect you."}
-                {step === 2 && "Enter approximate amounts. Skip any that don't apply."}
-                {step === 3 && "Including checking, savings, and emergency funds."}
-                {step === 4 && "We'll use this for local housing and cost-of-living data."}
-                {step === 5 && "This affects how market changes impact your wealth."}
+                {step === 1 && "This helps us tailor currency and economic data to your region."}
+                {step === 2 && "This helps us calculate how economic changes affect you."}
+                {step === 3 && "Enter approximate amounts. Skip any that don't apply."}
+                {step === 4 && "Including checking, savings, and emergency funds."}
+                {step === 5 && "We'll use this for local housing and cost-of-living data."}
+                {step === 6 && "This affects how market changes impact your wealth."}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {step === 1 && (
+                <div className="space-y-3">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                    {COUNTRIES.slice(0, 8).map((c) => (
+                      <button
+                        key={c.code}
+                        onClick={() => setCountry(c.code)}
+                        className={`flex items-center gap-2 rounded-md border p-2.5 text-left text-xs transition-all sm:p-3 sm:text-sm ${
+                          country === c.code
+                            ? "border-primary bg-accent text-accent-foreground"
+                            : "border-border bg-background hover:border-primary/50"
+                        }`}
+                      >
+                        <Globe className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                        <span className="truncate">{c.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <Select value={COUNTRIES.slice(8).some(c => c.code === country) ? country : ""} onValueChange={setCountry}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="More countries..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {COUNTRIES.slice(8).map((c) => (
+                        <SelectItem key={c.code} value={c.code}>{c.name}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+              {step === 2 && (
                 <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   {INCOME_RANGES.map((range) => (
                     <button
@@ -157,7 +214,7 @@ export default function Onboarding() {
                 </div>
               )}
 
-              {step === 2 && (
+              {step === 3 && (
                 <div className="space-y-4">
                   {DEBT_TYPES.map(({ key, label, placeholder }) => (
                     <div key={key} className="space-y-1">
@@ -177,7 +234,7 @@ export default function Onboarding() {
                 </div>
               )}
 
-              {step === 3 && (
+              {step === 4 && (
                 <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   {SAVINGS_RANGES.map((range) => (
                     <button
@@ -195,14 +252,14 @@ export default function Onboarding() {
                 </div>
               )}
 
-              {step === 4 && (
+              {step === 5 && (
                 <div className="space-y-2">
                   <Label className="text-xs uppercase tracking-wider text-muted-foreground">
-                    ZIP Code
+                    {locationLabel}
                   </Label>
                   <Input
                     type="text"
-                    placeholder="e.g. 10001"
+                    placeholder={locationPlaceholder}
                     maxLength={10}
                     value={zipCode}
                     onChange={(e) => setZipCode(e.target.value)}
@@ -210,7 +267,7 @@ export default function Onboarding() {
                 </div>
               )}
 
-              {step === 5 && (
+              {step === 6 && (
                 <div className="space-y-3">
                   {INVESTMENT_LEVELS.map(({ key, label, description }) => (
                     <button
