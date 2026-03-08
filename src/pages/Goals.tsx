@@ -452,7 +452,7 @@ export default function Goals() {
                   <SelectContent>
                     {CATEGORIES.map((c) => (
                       <SelectItem key={c.value} value={c.value}>
-                        {categoryIcon[c.value]} {c.label}
+                        {c.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
