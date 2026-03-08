@@ -153,7 +153,7 @@ export default function Goals() {
       if (error) {
         toast({ title: "Create failed", description: error.message, variant: "destructive" });
       } else {
-        toast({ title: "Goal created! 🎯" });
+        toast({ title: "Goal created!" });
       }
     }
 
