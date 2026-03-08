@@ -105,12 +105,13 @@ export default function Settings() {
     setSaving(true);
     try {
       const { error } = await supabase.from("profiles").update({
+        country,
         income_range: incomeRange,
         debt_types: debts,
         savings_range: savingsRange,
         zip_code: zipCode,
         investment_level: investmentLevel,
-      }).eq("id", user.id);
+      } as any).eq("id", user.id);
 
       if (error) throw error;
       toast({ title: "Profile updated", description: "Your financial info has been saved." });
