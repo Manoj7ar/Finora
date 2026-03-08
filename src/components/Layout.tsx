@@ -41,7 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="fixed left-1/2 top-3 z-50 w-[calc(100%-1rem)] max-w-5xl -translate-x-1/2 sm:top-4 sm:w-[calc(100%-2rem)]">
+      {!hideNav && <header className="fixed left-1/2 top-3 z-50 w-[calc(100%-1rem)] max-w-5xl -translate-x-1/2 sm:top-4 sm:w-[calc(100%-2rem)]">
         <nav className="flex h-12 items-center justify-between rounded-2xl border border-border/50 bg-background/60 px-3 shadow-card backdrop-blur-xl sm:h-14 sm:px-4">
           <Link to={user ? "/dashboard" : "/"} className="flex items-center gap-2">
             <img src={logoImg} alt="Finora" className="h-6 w-6 sm:h-7 sm:w-7" />
