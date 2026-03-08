@@ -26,7 +26,7 @@ export default function MetricCard({ metric, profile, index }: MetricCardProps) 
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.08 }}
     >
-      <Card className="shadow-card transition-shadow hover:shadow-card-hover">
+      <Card className="group shadow-card transition-all hover:shadow-card-hover hover:scale-[1.01]">
         <CardContent className="p-4 sm:p-6">
           <div className="mb-3 flex items-center justify-between">
             <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground sm:text-xs">
