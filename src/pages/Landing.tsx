@@ -32,7 +32,7 @@ export default function Landing() {
   return (
     <div className="flex flex-col">
       {/* Hero with background image */}
-      <section className="relative min-h-[92vh] overflow-hidden">
+      <section className="relative -mt-20 min-h-screen overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${heroBg})` }}
