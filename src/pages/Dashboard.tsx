@@ -21,6 +21,7 @@ export default function Dashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { checkAndCreateAlerts } = useNotifications();
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [metrics, setMetrics] = useState<FredMetric[]>([]);
   const [insights, setInsights] = useState<any[]>([]);
