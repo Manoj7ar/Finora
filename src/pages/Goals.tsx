@@ -262,8 +262,8 @@ export default function Goals() {
             </Card>
             <Card className="shadow-card">
               <CardContent className="flex items-center gap-3 p-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent">
-                  <TrendingUp className="h-5 w-5 text-primary" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-foreground/[0.06]">
+                  <TrendingUp className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Overall Progress</p>
