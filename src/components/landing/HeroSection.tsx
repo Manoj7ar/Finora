@@ -6,8 +6,8 @@ import heroImg from "@/assets/hero-illustration.jpg";
 
 export default function HeroSection() {
   return (
-    <section className="bg-accent/30">
-      <div className="container grid min-h-[90vh] items-center gap-12 py-20 lg:grid-cols-2 lg:gap-16">
+    <section className="-mt-20 bg-background pt-28 sm:pt-32">
+      <div className="container grid min-h-[85vh] items-center gap-12 py-16 lg:grid-cols-2 lg:gap-16">
         {/* Left: Text content */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -19,11 +19,11 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.7 }}
-            className="font-display text-5xl font-bold leading-[1.08] text-foreground md:text-6xl lg:text-7xl"
+            className="font-display text-4xl font-bold leading-[1.1] text-foreground sm:text-5xl md:text-6xl"
           >
-            The economy is moving.
+            Economic Intelligence,
             <span className="mt-2 block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              See what it means for you.
+              Tailored to You
             </span>
           </motion.h1>
 
@@ -31,10 +31,11 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="max-w-lg text-lg leading-relaxed text-muted-foreground"
+            className="max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg"
           >
-            Finora connects real-time economic data to your personal finances —
-            so you always know what's changing and what to do about it.
+            Transform complex macroeconomic data into actionable personal insights. 
+            Finora monitors Federal Reserve policy, inflation trends, and market indicators — 
+            then translates their impact directly to your financial situation.
           </motion.p>
 
           <motion.div
@@ -48,7 +49,7 @@ export default function HeroSection() {
                 size="lg"
                 className="gap-2 rounded-xl bg-primary px-8 text-base text-primary-foreground shadow-lg transition-all hover:bg-finora-green-hover hover:shadow-xl hover:scale-[1.02]"
               >
-                Start Free — 60 Seconds <ArrowRight className="h-5 w-5" />
+                Get Started Free <ArrowRight className="h-5 w-5" />
               </Button>
             </Link>
             <span className="text-sm text-muted-foreground">
@@ -64,9 +65,9 @@ export default function HeroSection() {
             className="flex max-w-md gap-12 border-t border-border/60 pt-8"
           >
             {[
-              { value: "6", label: "Live Indicators" },
+              { value: "6+", label: "Live Indicators" },
               { value: "60s", label: "Setup Time" },
-              { value: "AI", label: "Powered Insights" },
+              { value: "AI", label: "Powered Analysis" },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
