@@ -14,15 +14,15 @@ export default function QuickStats({ metricsCount, insightsCount, lessonsComplet
   const navigate = useNavigate();
 
   const stats = [
-    { icon: TrendingUp, label: "Indicators", value: metricsCount || "—", onClick: undefined },
-    { icon: Sparkles, label: "AI Insights", value: insightsCount || "—", onClick: undefined },
-    { icon: BookOpen, label: "Lessons", value: `${lessonsCompleted}/4`, onClick: () => navigate("/education") },
-    { icon: Target, label: "Goals", value: goalsCount || "—", onClick: () => navigate("/goals") },
+    { icon: TrendingUp, label: "Indicators", value: metricsCount || "—", color: "bg-accent", onClick: undefined },
+    { icon: Sparkles, label: "AI Insights", value: insightsCount || "—", color: "bg-accent", onClick: undefined },
+    { icon: BookOpen, label: "Lessons", value: `${lessonsCompleted}/4`, color: "bg-accent", onClick: () => navigate("/education") },
+    { icon: Target, label: "Goals", value: goalsCount || "—", color: "bg-accent", onClick: () => navigate("/goals") },
   ];
 
   return (
     <div className="mb-8 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5">
-      {stats.map(({ icon: Icon, label, value, onClick }, i) => (
+      {stats.map(({ icon: Icon, label, value, color, onClick }, i) => (
         <motion.div
           key={label}
           initial={{ opacity: 0, y: 12 }}
@@ -30,11 +30,11 @@ export default function QuickStats({ metricsCount, insightsCount, lessonsComplet
           transition={{ delay: i * 0.06 }}
         >
           <Card
-            className={`shadow-card transition-shadow hover:shadow-card-hover ${onClick ? "cursor-pointer" : ""}`}
+            className={`shadow-card transition-all hover:shadow-card-hover ${onClick ? "cursor-pointer hover:scale-[1.02]" : ""}`}
             onClick={onClick}
           >
             <CardContent className="flex items-center gap-3 p-3 sm:p-4">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent">
+              <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${color}`}>
                 <Icon className="h-4 w-4 text-primary" />
               </div>
               <div className="min-w-0">
