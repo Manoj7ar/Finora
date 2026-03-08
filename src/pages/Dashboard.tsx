@@ -9,6 +9,7 @@ import { RefreshCw, Sparkles, Download, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { type FredMetric, type ProfileData } from "@/lib/fred";
 import { useToast } from "@/hooks/use-toast";
+import { useNotifications } from "@/hooks/use-notifications";
 import { exportDashboardPDF } from "@/lib/pdf-export";
 import QuickStats from "@/components/dashboard/QuickStats";
 import MetricCard from "@/components/dashboard/MetricCard";
@@ -20,6 +21,7 @@ export default function Dashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { checkAndCreateAlerts } = useNotifications();
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [metrics, setMetrics] = useState<FredMetric[]>([]);
   const [insights, setInsights] = useState<any[]>([]);
@@ -76,7 +78,9 @@ export default function Dashboard() {
       const { data, error } = await supabase.functions.invoke("fred-data");
       if (error) throw new Error(error.message || "Failed to fetch economic data");
       if (data?.error) throw new Error(data.error);
-      setMetrics(data?.metrics || []);
+      const m = data?.metrics || [];
+      setMetrics(m);
+      checkAndCreateAlerts(m);
     } catch (err: any) {
       toast({ title: "Data fetch error", description: err.message, variant: "destructive" });
     } finally {

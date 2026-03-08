@@ -8,12 +8,15 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import logoImg from "@/assets/logo.png";
 import ThemeToggle from "@/components/ThemeToggle";
+import NotificationBell from "@/components/NotificationBell";
+import { useNotifications } from "@/hooks/use-notifications";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { user, signOut } = useAuth();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [aiMenuOpen, setAiMenuOpen] = useState(false);
+  const { notifications, unreadCount, markAllRead, clearAll } = useNotifications();
 
   const mainNav = [
     { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -120,6 +123,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           <div className="flex items-center gap-1">
             <ThemeToggle />
+            {user && (
+              <NotificationBell
+                notifications={notifications}
+                unreadCount={unreadCount}
+                onMarkAllRead={markAllRead}
+                onClearAll={clearAll}
+              />
+            )}
             {user ? (
               <>
                 <button
