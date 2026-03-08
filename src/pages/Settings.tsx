@@ -7,9 +7,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { Save, ArrowLeft } from "lucide-react";
+import { Save, ArrowLeft, Globe } from "lucide-react";
+
+const COUNTRIES = [
+  { code: "US", name: "United States" },
+  { code: "GB", name: "United Kingdom" },
+  { code: "CA", name: "Canada" },
+  { code: "AU", name: "Australia" },
+  { code: "DE", name: "Germany" },
+  { code: "FR", name: "France" },
+  { code: "IN", name: "India" },
+  { code: "JP", name: "Japan" },
+  { code: "BR", name: "Brazil" },
+  { code: "MX", name: "Mexico" },
+  { code: "NG", name: "Nigeria" },
+  { code: "ZA", name: "South Africa" },
+  { code: "SG", name: "Singapore" },
+  { code: "AE", name: "UAE" },
+  { code: "OTHER", name: "Other" },
+];
 
 const INCOME_RANGES = [
   "Under $25,000",
@@ -49,6 +68,7 @@ export default function Settings() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
+  const [country, setCountry] = useState("US");
   const [incomeRange, setIncomeRange] = useState("");
   const [debts, setDebts] = useState<Record<string, number>>({});
   const [savingsRange, setSavingsRange] = useState("");
@@ -71,6 +91,7 @@ export default function Settings() {
       navigate("/onboarding");
       return;
     }
+    setCountry((data as any).country || "US");
     setIncomeRange(data.income_range || "");
     setDebts((data.debt_types as Record<string, number>) || {});
     setSavingsRange(data.savings_range || "");
@@ -84,12 +105,13 @@ export default function Settings() {
     setSaving(true);
     try {
       const { error } = await supabase.from("profiles").update({
+        country,
         income_range: incomeRange,
         debt_types: debts,
         savings_range: savingsRange,
         zip_code: zipCode,
         investment_level: investmentLevel,
-      }).eq("id", user.id);
+      } as any).eq("id", user.id);
 
       if (error) throw error;
       toast({ title: "Profile updated", description: "Your financial info has been saved." });
@@ -150,6 +172,28 @@ export default function Settings() {
       </p>
 
       <div className="space-y-6 sm:space-y-8">
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle className="font-display text-lg">Country</CardTitle>
+            <CardDescription>Your region for currency and data</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Select value={country} onValueChange={setCountry}>
+              <SelectTrigger className="w-full">
+                <div className="flex items-center gap-2">
+                  <Globe className="h-4 w-4 text-muted-foreground" />
+                  <SelectValue />
+                </div>
+              </SelectTrigger>
+              <SelectContent>
+                {COUNTRIES.map((c) => (
+                  <SelectItem key={c.code} value={c.code}>{c.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </CardContent>
+        </Card>
+
         <Card className="shadow-card">
           <CardHeader>
             <CardTitle className="font-display text-lg">Annual Income</CardTitle>
