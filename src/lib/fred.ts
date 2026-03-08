@@ -129,10 +129,3 @@ export const FRED_METRICS = [
   { seriesId: "DRCCLACBS", name: "Credit Card Delinquency", unit: "%" },
   { seriesId: "CSUSHPINSA", name: "Housing Price Index", unit: "index" },
 ];
-  { seriesId: "FEDFUNDS", name: "Federal Funds Rate", unit: "%" },
-  { seriesId: "CPIAUCSL", name: "Consumer Price Index", unit: "index" },
-  { seriesId: "UNRATE", name: "Unemployment Rate", unit: "%" },
-  { seriesId: "DGS10", name: "10-Year Treasury Yield", unit: "%" },
-  { seriesId: "DRCCLACBS", name: "Credit Card Delinquency", unit: "%" },
-  { seriesId: "CSUSHPINSA", name: "Housing Price Index", unit: "index" },
-];
