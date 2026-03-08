@@ -96,17 +96,39 @@ export default function Landing() {
 
         {/* Hero image */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="absolute right-12 top-1/2 -translate-y-1/2 hidden lg:block"
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:block xl:right-16"
         >
-          <div className="relative h-[480px] w-[480px] rounded-2xl overflow-hidden shadow-2xl shadow-foreground/10">
-            <img
-              src={heroVisual}
-              alt="Financial data visualization with charts and economic indicators"
-              className="h-full w-full object-cover"
-            />
+          <div className="relative">
+            {/* Glow effect behind image */}
+            <div className="absolute -inset-4 rounded-3xl bg-primary/20 blur-2xl" />
+            
+            {/* Main image container */}
+            <div className="relative h-[500px] w-[500px] rounded-2xl overflow-hidden border border-border/50 shadow-2xl">
+              <img
+                src={heroDashboard}
+                alt="Finora dashboard showing financial analytics and economic indicators"
+                className="h-full w-full object-cover"
+              />
+              
+              {/* Subtle overlay gradient for depth */}
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/10 via-transparent to-transparent" />
+            </div>
+            
+            {/* Floating badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="absolute -bottom-4 -left-4 rounded-xl border border-border bg-card px-4 py-3 shadow-lg"
+            >
+              <div className="flex items-center gap-3">
+                <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-sm font-medium text-foreground">Live data</span>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </section>
