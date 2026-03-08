@@ -11,7 +11,7 @@ interface HealthScoreProps {
   insightsCount: number;
 }
 
-function getScoreBreakdown(profile: ProfileData | null, lessons: number, goals: number) {
+export function getScoreBreakdown(profile: ProfileData | null, lessons: number, goals: number) {
   let score = 0;
   const factors: { label: string; points: number; max: number }[] = [];
 
