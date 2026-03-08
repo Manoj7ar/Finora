@@ -38,6 +38,129 @@ export type Database = {
         }
         Relationships: []
       }
+      cognitive_bias_events: {
+        Row: {
+          bias_type: string
+          context: string
+          detected_at: string
+          id: string
+          source_page: string
+          user_id: string
+        }
+        Insert: {
+          bias_type: string
+          context?: string
+          detected_at?: string
+          id?: string
+          source_page?: string
+          user_id: string
+        }
+        Update: {
+          bias_type?: string
+          context?: string
+          detected_at?: string
+          id?: string
+          source_page?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      community_scores: {
+        Row: {
+          age_group: string
+          city: string
+          id: string
+          resilience_score: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          age_group?: string
+          city?: string
+          id?: string
+          resilience_score?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          age_group?: string
+          city?: string
+          id?: string
+          resilience_score?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      economic_forecasts: {
+        Row: {
+          created_at: string
+          details: Json
+          forecast_date: string
+          id: string
+          outlook: string
+          summary: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          details?: Json
+          forecast_date?: string
+          id?: string
+          outlook?: string
+          summary?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          details?: Json
+          forecast_date?: string
+          id?: string
+          outlook?: string
+          summary?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      fed_predictions: {
+        Row: {
+          actual_outcome: string | null
+          created_at: string
+          event_date: string
+          event_type: string
+          explanation: string | null
+          id: string
+          resolved_at: string | null
+          score: number | null
+          user_id: string
+          user_prediction: string
+        }
+        Insert: {
+          actual_outcome?: string | null
+          created_at?: string
+          event_date: string
+          event_type: string
+          explanation?: string | null
+          id?: string
+          resolved_at?: string | null
+          score?: number | null
+          user_id: string
+          user_prediction: string
+        }
+        Update: {
+          actual_outcome?: string | null
+          created_at?: string
+          event_date?: string
+          event_type?: string
+          explanation?: string | null
+          id?: string
+          resolved_at?: string | null
+          score?: number | null
+          user_id?: string
+          user_prediction?: string
+        }
+        Relationships: []
+      }
       financial_goals: {
         Row: {
           ai_nudge: string | null
@@ -80,6 +203,66 @@ export type Database = {
         }
         Relationships: []
       }
+      financial_twin_snapshots: {
+        Row: {
+          created_at: string
+          id: string
+          key_insight: string
+          projections: Json
+          snapshot_date: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key_insight?: string
+          projections?: Json
+          snapshot_date?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key_insight?: string
+          projections?: Json
+          snapshot_date?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      legislation_alerts: {
+        Row: {
+          bill_name: string
+          created_at: string
+          id: string
+          personal_impact: string
+          read: boolean
+          severity: string
+          summary: string
+          user_id: string
+        }
+        Insert: {
+          bill_name: string
+          created_at?: string
+          id?: string
+          personal_impact?: string
+          read?: boolean
+          severity?: string
+          summary?: string
+          user_id: string
+        }
+        Update: {
+          bill_name?: string
+          created_at?: string
+          id?: string
+          personal_impact?: string
+          read?: boolean
+          severity?: string
+          summary?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       lesson_progress: {
         Row: {
           completed_at: string
@@ -103,6 +286,39 @@ export type Database = {
           score?: number
           topic_id?: string
           total_questions?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      negotiation_opportunities: {
+        Row: {
+          created_at: string
+          dismissed: boolean
+          id: string
+          macro_context: string
+          opportunity_type: string
+          script: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          dismissed?: boolean
+          id?: string
+          macro_context?: string
+          opportunity_type: string
+          script?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          dismissed?: boolean
+          id?: string
+          macro_context?: string
+          opportunity_type?: string
+          script?: string
+          title?: string
           user_id?: string
         }
         Relationships: []
@@ -142,6 +358,8 @@ export type Database = {
       }
       profiles: {
         Row: {
+          age_group: string | null
+          city: string | null
           country: string | null
           created_at: string
           debt_types: Json | null
@@ -154,6 +372,8 @@ export type Database = {
           zip_code: string | null
         }
         Insert: {
+          age_group?: string | null
+          city?: string | null
           country?: string | null
           created_at?: string
           debt_types?: Json | null
@@ -166,6 +386,8 @@ export type Database = {
           zip_code?: string | null
         }
         Update: {
+          age_group?: string | null
+          city?: string | null
           country?: string | null
           created_at?: string
           debt_types?: Json | null
@@ -184,7 +406,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_community_stats: {
+        Args: never
+        Returns: {
+          age_group: string
+          avg_score: number
+          city: string
+          user_count: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
