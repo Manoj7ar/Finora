@@ -109,6 +109,9 @@ export default function Dashboard() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Button variant="outline" size="sm" onClick={() => exportDashboardPDF(metrics, insights)} disabled={metrics.length === 0} className="gap-1">
+            <Download className="h-3.5 w-3.5" /> Export PDF
+          </Button>
           <Button variant="outline" size="sm" onClick={fetchMetrics} className="gap-1">
             <RefreshCw className="h-3.5 w-3.5" /> Refresh
           </Button>

@@ -107,9 +107,14 @@ export default function ActionPlan() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="font-display text-2xl">{plan.title}</CardTitle>
-                <Button variant="outline" size="sm" onClick={generatePlan} disabled={loading} className="gap-1">
-                  <RefreshCw className="h-3.5 w-3.5" /> Regenerate
-                </Button>
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" onClick={() => plan && exportActionPlanPDF(plan)} className="gap-1">
+                    <Download className="h-3.5 w-3.5" /> Export PDF
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={generatePlan} disabled={loading} className="gap-1">
+                    <RefreshCw className="h-3.5 w-3.5" /> Regenerate
+                  </Button>
+                </div>
               </div>
               <CardDescription className="text-base">{plan.summary}</CardDescription>
             </CardHeader>
