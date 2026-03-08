@@ -13,6 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { to: "/simulation", label: "Crisis Sim", icon: Zap },
     { to: "/education", label: "Learn", icon: BookOpen },
+    { to: "/settings", label: "Settings", icon: Settings },
   ];
 
   const isActive = (path: string) => location.pathname.startsWith(path);
