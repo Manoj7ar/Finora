@@ -113,6 +113,17 @@ export default function Education() {
         { onConflict: "user_id,topic_id" }
       );
       loadProgress();
+
+      // Track cognitive bias event - answer patterns
+      const safeAnswers = lesson.quiz.filter((q, i) => quizAnswers[i] !== q.correctIndex).length;
+      if (safeAnswers > 0) {
+        await supabase.from("cognitive_bias_events").insert({
+          user_id: user.id,
+          bias_type: "quiz_pattern",
+          context: JSON.stringify({ topic: selectedTopic, correct, total, answers: quizAnswers }),
+          source_page: "education",
+        });
+      }
     } catch {}
 
     toast({

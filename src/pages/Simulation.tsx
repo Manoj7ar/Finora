@@ -55,6 +55,16 @@ export default function Simulation() {
       if (!data?.months || data.months.length === 0) throw new Error("Simulation returned no data. Please try again.");
       setResult(data);
       setShowingResults(true);
+
+      // Track cognitive bias event - crisis selection pattern
+      if (user) {
+        await supabase.from("cognitive_bias_events").insert({
+          user_id: user.id,
+          bias_type: "crisis_selection",
+          context: JSON.stringify({ crisisId: selectedCrisis, resilienceScore: data.resilienceScore }),
+          source_page: "simulation",
+        });
+      }
     } catch (err: any) {
       toast({ title: "Simulation Error", description: err.message, variant: "destructive" });
     } finally {
