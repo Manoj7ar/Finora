@@ -78,6 +78,7 @@ const App = () => (
                 <Route path="/legislation" element={<ProtectedRoute><LegislationRadar /></ProtectedRoute>} />
                 <Route path="/negotiate" element={<ProtectedRoute><NegotiationCoach /></ProtectedRoute>} />
                 <Route path="/community" element={<ProtectedRoute><CommunityMap /></ProtectedRoute>} />
+                <Route path="/ai-hub" element={<ProtectedRoute><AIHub /></ProtectedRoute>} />
                 <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

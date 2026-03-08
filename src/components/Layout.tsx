@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import {
   LogOut, BookOpen, Zap, LayoutDashboard, Menu, X, Settings,
   Bot, ClipboardList, Newspaper, Lightbulb, ChevronDown, Target,
-  Brain, CloudLightning, Crosshair, User, Mic, ScrollText, Handshake, Users
+  Brain, CloudLightning, Crosshair, User, Mic, ScrollText, Handshake, Users, Sparkles
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import logoImg from "@/assets/logo.png";
