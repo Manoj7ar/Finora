@@ -20,6 +20,7 @@ import ActionPlan from "@/pages/ActionPlan";
 import NewsDigest from "@/pages/NewsDigest";
 import WhatIf from "@/pages/WhatIf";
 import Goals from "@/pages/Goals";
+import Achievements from "@/pages/Achievements";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
