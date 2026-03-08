@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import {
-  LogOut, BarChart3, BookOpen, Zap, LayoutDashboard, Menu, X, Settings,
+  LogOut, BookOpen, Zap, LayoutDashboard, Menu, X, Settings,
   Bot, ClipboardList, Newspaper, Lightbulb, ChevronDown
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import logoImg from "@/assets/logo.png";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { user, signOut } = useAuth();
@@ -36,7 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <header className="fixed left-1/2 top-4 z-50 w-[calc(100%-2rem)] max-w-5xl -translate-x-1/2">
         <nav className="flex h-14 items-center justify-between rounded-2xl border border-border/50 bg-background/60 px-4 shadow-card backdrop-blur-xl">
           <Link to={user ? "/dashboard" : "/"} className="flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-primary" />
+            <img src={logoImg} alt="Finora" className="h-7 w-7" />
             <span className="font-display text-lg font-bold text-foreground">Finora</span>
           </Link>
 

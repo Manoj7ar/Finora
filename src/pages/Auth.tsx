@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart3, MailCheck } from "lucide-react";
+import { MailCheck } from "lucide-react";
+import logoImg from "@/assets/logo.png";
 import { useToast } from "@/hooks/use-toast";
 import authSideImg from "@/assets/auth-side.jpg";
 
@@ -89,7 +90,7 @@ export default function Auth() {
         <Card className="w-full max-w-md border-none bg-transparent shadow-none">
           <CardHeader className="text-center lg:text-left">
             <div className="mb-4 inline-flex rounded-md bg-accent p-3 lg:mx-0">
-              <BarChart3 className="h-6 w-6 text-primary" />
+              <img src={logoImg} alt="Finora" className="h-6 w-6" />
             </div>
             <CardTitle className="font-display text-3xl">
               {isSignUp ? "Begin your journey" : "Welcome back"}
