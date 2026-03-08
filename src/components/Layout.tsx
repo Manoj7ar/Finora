@@ -196,9 +196,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </motion.div>
           )}
         </AnimatePresence>
-      </header>
+      </header>}
 
-      <main className="pt-16 sm:pt-20">{children}</main>
+      <main className={hideNav ? "" : "pt-16 sm:pt-20"}>{children}</main>
     </div>
   );
 }
