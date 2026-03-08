@@ -6,11 +6,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TrendingUp, TrendingDown, Minus, RefreshCw, Sparkles, BookOpen, Zap, Trophy } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, RefreshCw, Sparkles, BookOpen, Zap, Trophy, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
 import { calculateImpact, type FredMetric, type ProfileData } from "@/lib/fred";
 import { useToast } from "@/hooks/use-toast";
+import { exportDashboardPDF } from "@/lib/pdf-export";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -108,6 +109,9 @@ export default function Dashboard() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Button variant="outline" size="sm" onClick={() => exportDashboardPDF(metrics, insights)} disabled={metrics.length === 0} className="gap-1">
+            <Download className="h-3.5 w-3.5" /> Export PDF
+          </Button>
           <Button variant="outline" size="sm" onClick={fetchMetrics} className="gap-1">
             <RefreshCw className="h-3.5 w-3.5" /> Refresh
           </Button>
