@@ -74,6 +74,8 @@ export default function Settings() {
   const [savingsRange, setSavingsRange] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [investmentLevel, setInvestmentLevel] = useState("");
+  const [ageGroup, setAgeGroup] = useState("");
+  const [city, setCity] = useState("");
 
   useEffect(() => {
     if (!user) return;
