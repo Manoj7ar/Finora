@@ -101,7 +101,7 @@ export default function Onboarding() {
         zip_code: zipCode,
         investment_level: investmentLevel,
         onboarding_completed: true,
-      });
+      } as any);
       if (error) throw error;
       toast({ title: "Profile saved!", description: "Welcome to your personalised dashboard." });
       navigate("/dashboard");
