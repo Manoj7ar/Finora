@@ -27,29 +27,35 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="container py-24 lg:py-32">
-      <motion.div {...fadeIn()} className="mb-16 text-center">
-        <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-primary">
-          How It Works
-        </p>
-        <h2 className="font-display text-4xl font-bold text-foreground md:text-5xl">
-          Three steps to clarity
-        </h2>
-      </motion.div>
-      <div className="grid gap-12 md:grid-cols-3">
-        {steps.map((item, i) => (
-          <motion.div key={item.step} {...fadeIn(i * 0.15)} className="text-center">
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary">
-              <span className="font-mono text-xl font-bold text-primary-foreground">
-                {item.step}
-              </span>
-            </div>
-            <h3 className="mb-3 font-display text-xl font-semibold text-foreground">
-              {item.title}
-            </h3>
-            <p className="leading-relaxed text-muted-foreground">{item.desc}</p>
-          </motion.div>
-        ))}
+    <section className="bg-background">
+      <div className="container py-20 sm:py-24 lg:py-32">
+        <motion.div {...fadeIn()} className="mb-12 text-center sm:mb-16">
+          <p className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-primary">
+            How It Works
+          </p>
+          <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl md:text-5xl">
+            Three steps to clarity
+          </h2>
+        </motion.div>
+        <div className="grid gap-8 sm:gap-12 md:grid-cols-3">
+          {steps.map((item, i) => (
+            <motion.div
+              key={item.step}
+              {...fadeIn(i * 0.15)}
+              className="group text-center"
+            >
+              <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary transition-transform duration-300 group-hover:scale-110">
+                <span className="font-mono text-xl font-bold text-primary-foreground">
+                  {item.step}
+                </span>
+              </div>
+              <h3 className="mb-3 font-display text-lg font-semibold text-foreground sm:text-xl">
+                {item.title}
+              </h3>
+              <p className="mx-auto max-w-xs leading-relaxed text-muted-foreground">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

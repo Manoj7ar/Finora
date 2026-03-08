@@ -70,22 +70,22 @@ export default function Landing() {
       <HowItWorks />
       <CTASection />
 
-      <footer className="border-t border-border bg-card py-8 sm:py-10">
-        <div className="container flex flex-col items-center gap-4 text-center">
-          <img src={logoImg} alt="Finora" className="h-10 w-10" />
-          <p className="font-display text-lg font-semibold text-foreground">
-            Finora
-          </p>
+      <footer className="border-t border-border bg-card">
+        <div className="container flex flex-col items-center gap-4 py-8 text-center sm:py-10">
+          <div className="flex items-center gap-2.5">
+            <img src={logoImg} alt="Finora" className="h-8 w-8" />
+            <span className="font-display text-lg font-bold text-foreground">Finora</span>
+          </div>
           <p className="text-sm text-muted-foreground">
             The economy, personalised. © {new Date().getFullYear()}
           </p>
-          <p className="rounded-lg border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary">
+          <p className="rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary">
             🏆 Built for Hackonomics 2026
           </p>
           <div className="flex gap-6 text-xs text-muted-foreground">
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <span>Contact</span>
+            <span className="cursor-pointer transition-colors hover:text-foreground">Privacy Policy</span>
+            <span className="cursor-pointer transition-colors hover:text-foreground">Terms of Service</span>
+            <span className="cursor-pointer transition-colors hover:text-foreground">Contact</span>
           </div>
         </div>
       </footer>
