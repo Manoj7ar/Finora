@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   LogOut, BookOpen, Zap, LayoutDashboard, Menu, X, Settings,
-  Bot, ClipboardList, Newspaper, Lightbulb, ChevronDown, Target
+  Bot, ClipboardList, Newspaper, Lightbulb, ChevronDown, Target, Trophy
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import logoImg from "@/assets/logo.png";
