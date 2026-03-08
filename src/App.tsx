@@ -19,6 +19,7 @@ import AdvisorChat from "@/pages/AdvisorChat";
 import ActionPlan from "@/pages/ActionPlan";
 import NewsDigest from "@/pages/NewsDigest";
 import WhatIf from "@/pages/WhatIf";
+import Goals from "@/pages/Goals";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
