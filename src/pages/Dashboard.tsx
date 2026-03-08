@@ -44,11 +44,20 @@ export default function Dashboard() {
       }
       setProfile(data as unknown as ProfileData);
 
-      const { count } = await supabase
-        .from("lesson_progress")
-        .select("*", { count: "exact", head: true })
-        .eq("user_id", user.id);
-      if (!cancelled) setLessonsCompleted(count || 0);
+      const [{ count: lessonCount }, { count: goalCount }] = await Promise.all([
+        supabase
+          .from("lesson_progress")
+          .select("*", { count: "exact", head: true })
+          .eq("user_id", user.id),
+        supabase
+          .from("financial_goals")
+          .select("*", { count: "exact", head: true })
+          .eq("user_id", user.id),
+      ]);
+      if (!cancelled) {
+        setLessonsCompleted(lessonCount || 0);
+        setGoalsCount(goalCount || 0);
+      }
     };
 
     init();
