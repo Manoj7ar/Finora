@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
 import { calculateImpact, type FredMetric, type ProfileData } from "@/lib/fred";
 import { useToast } from "@/hooks/use-toast";
+import { exportDashboardPDF } from "@/lib/pdf-export";
 
 export default function Dashboard() {
   const { user } = useAuth();
