@@ -28,6 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const aiNav = [
     { to: "/ai-hub", label: "AI Hub", icon: Sparkles },
+    { to: "/advisor", label: "AI Advisor", icon: Bot },
     { to: "/action-plan", label: "Action Plan", icon: ClipboardList },
     { to: "/news", label: "News Digest", icon: Newspaper },
     { to: "/what-if", label: "What If", icon: Lightbulb },
