@@ -7,14 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, CheckCircle, ArrowLeft, Loader2, Trophy } from "lucide-react";
+import { BookOpen, CheckCircle, ArrowLeft, Loader2, Trophy, Landmark, TrendingUp, GitBranch, Waves } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 const TOPICS = [
-  { id: "fed-rate", title: "What is the Federal Funds Rate?", description: "How the Fed controls interest rates and why it matters for your wallet", icon: "🏦" },
-  { id: "inflation", title: "How Does Inflation Affect Your Savings?", description: "Understanding purchasing power and protecting your money", icon: "📈" },
-  { id: "yield-curve", title: "What is a Yield Curve?", description: "The bond market's crystal ball for predicting recessions", icon: "📉" },
-  { id: "recessions", title: "How Do Recessions Start?", description: "The economic cycle and what triggers downturns", icon: "🌊" },
+  { id: "fed-rate", title: "What is the Federal Funds Rate?", description: "How the Fed controls interest rates and why it matters for your wallet", icon: Landmark },
+  { id: "inflation", title: "How Does Inflation Affect Your Savings?", description: "Understanding purchasing power and protecting your money", icon: TrendingUp },
+  { id: "yield-curve", title: "What is a Yield Curve?", description: "The bond market's crystal ball for predicting recessions", icon: GitBranch },
+  { id: "recessions", title: "How Do Recessions Start?", description: "The economic cycle and what triggers downturns", icon: Waves },
 ];
 
 interface LessonData {
