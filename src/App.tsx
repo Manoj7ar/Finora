@@ -28,6 +28,7 @@ import MorningBriefing from "@/pages/MorningBriefing";
 import LegislationRadar from "@/pages/LegislationRadar";
 import NegotiationCoach from "@/pages/NegotiationCoach";
 import CommunityMap from "@/pages/CommunityMap";
+import AIHub from "@/pages/AIHub";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
