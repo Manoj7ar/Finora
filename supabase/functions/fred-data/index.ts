@@ -5,7 +5,6 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const FRED_API_KEY = Deno.env.get("FRED_API_KEY");
 const FRED_BASE = "https://api.stlouisfed.org/fred/series/observations";
 
 const SERIES = [
@@ -17,11 +16,9 @@ const SERIES = [
   { seriesId: "CSUSHPINSA", name: "Housing Price Index", unit: "index" },
 ];
 
-async function fetchSeries(seriesId: string) {
-  const apiKey = FRED_API_KEY || "DEMO_KEY";
-  // Fetch last 12 observations for sparkline history
+async function fetchSeries(seriesId: string, apiKey: string) {
   const url = `${FRED_BASE}?series_id=${seriesId}&api_key=${apiKey}&file_type=json&sort_order=desc&limit=12`;
-  
+
   try {
     const res = await fetch(url);
     if (!res.ok) {
@@ -32,8 +29,7 @@ async function fetchSeries(seriesId: string) {
     const obs = data.observations || [];
     const current = obs[0]?.value !== "." ? parseFloat(obs[0]?.value) : null;
     const previous = obs[1]?.value !== "." ? parseFloat(obs[1]?.value) : null;
-    
-    // Build history array (oldest first) for sparkline
+
     const history = obs
       .map((o: any) => ({ date: o.date, value: o.value !== "." ? parseFloat(o.value) : null }))
       .filter((h: any) => h.value !== null)
@@ -52,9 +48,14 @@ serve(async (req) => {
   }
 
   try {
+    const FRED_API_KEY = Deno.env.get("FRED_API_KEY");
+    if (!FRED_API_KEY) {
+      throw new Error("FRED_API_KEY is not configured. Please add it in settings.");
+    }
+
     const results = await Promise.all(
       SERIES.map(async (s) => {
-        const { value, previousValue, history } = await fetchSeries(s.seriesId);
+        const { value, previousValue, history } = await fetchSeries(s.seriesId, FRED_API_KEY);
         return {
           ...s,
           id: s.seriesId,

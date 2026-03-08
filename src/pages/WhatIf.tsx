@@ -57,10 +57,12 @@ export default function WhatIf() {
       const { data, error } = await supabase.functions.invoke("ai-what-if", {
         body: { scenario, profile },
       });
-      if (error) throw error;
+      if (error) throw new Error(error.message || "Failed to analyze scenario");
+      if (data?.error) throw new Error(data.error);
+      if (!data?.impacts) throw new Error("Analysis incomplete. Please try again.");
       setResult(data);
     } catch (err: any) {
-      toast({ title: "Error", description: err.message, variant: "destructive" });
+      toast({ title: "Scenario Error", description: err.message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -101,7 +103,6 @@ export default function WhatIf() {
 
       {!result ? (
         <div className="space-y-6">
-          {/* Custom input */}
           <Card className="shadow-card">
             <CardContent className="p-6">
               <form
@@ -127,7 +128,6 @@ export default function WhatIf() {
             </CardContent>
           </Card>
 
-          {/* Presets */}
           <div>
             <p className="mb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Or try one of these
@@ -138,7 +138,7 @@ export default function WhatIf() {
                   key={s}
                   onClick={() => runScenario(s)}
                   disabled={loading}
-                  className="rounded-xl border border-border bg-card p-4 text-left text-sm transition-all hover:border-primary/50 hover:shadow-card"
+                  className="rounded-xl border border-border bg-card p-4 text-left text-sm transition-all hover:border-primary/50 hover:shadow-card disabled:opacity-50"
                 >
                   <Lightbulb className="mb-2 h-4 w-4 text-primary" />
                   {s}
@@ -158,7 +158,6 @@ export default function WhatIf() {
         </div>
       ) : (
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-          {/* Header */}
           <Card className="shadow-card">
             <CardHeader>
               <div className="flex items-center justify-between">
@@ -172,7 +171,6 @@ export default function WhatIf() {
             </CardHeader>
           </Card>
 
-          {/* Impacts */}
           <div className="space-y-4">
             {result.impacts?.map((impact, i) => (
               <motion.div
@@ -203,7 +201,6 @@ export default function WhatIf() {
             ))}
           </div>
 
-          {/* Recommendation */}
           {result.recommendation && (
             <Card className="border-l-4 border-l-primary shadow-card">
               <CardContent className="p-5">

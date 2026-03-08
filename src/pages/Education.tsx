@@ -43,10 +43,11 @@ export default function Education() {
   }, [user]);
 
   const loadProgress = async () => {
+    if (!user) return;
     const { data } = await supabase
       .from("lesson_progress")
       .select("topic_id, score, total_questions, completed_at")
-      .eq("user_id", user!.id);
+      .eq("user_id", user.id);
     if (data) setProgress(data);
   };
 
@@ -57,6 +58,7 @@ export default function Education() {
   const totalTopics = TOPICS.length;
 
   const loadLesson = async (topicId: string) => {
+    if (!user) return;
     setSelectedTopic(topicId);
     setLesson(null);
     setQuizAnswers({});
@@ -64,26 +66,37 @@ export default function Education() {
     setLoading(true);
 
     try {
-      const { data: profile } = await supabase
+      const { data: profile, error: profileErr } = await supabase
         .from("profiles")
         .select("*")
-        .eq("id", user!.id)
+        .eq("id", user.id)
         .single();
+
+      if (profileErr) throw new Error("Could not load profile");
 
       const { data, error } = await supabase.functions.invoke("education-lesson", {
         body: { topicId, profile },
       });
-      if (error) throw error;
+      if (error) throw new Error(error.message || "Failed to load lesson");
+      if (data?.error) throw new Error(data.error);
+      if (!data?.content) throw new Error("Lesson content is empty. Please try again.");
+
+      // Ensure quiz is valid
+      if (!data.quiz || !Array.isArray(data.quiz) || data.quiz.length === 0) {
+        data.quiz = [{ question: "What did you learn?", options: ["A lot", "Some", "A little", "Nothing"], correctIndex: 0 }];
+      }
+
       setLesson(data);
     } catch (err: any) {
-      toast({ title: "Error loading lesson", description: err.message, variant: "destructive" });
+      toast({ title: "Lesson Error", description: err.message, variant: "destructive" });
+      setSelectedTopic(null);
     } finally {
       setLoading(false);
     }
   };
 
   const submitQuiz = async () => {
-    if (!lesson) return;
+    if (!lesson || !user) return;
     setQuizSubmitted(true);
     const correct = lesson.quiz.filter((q, i) => quizAnswers[i] === q.correctIndex).length;
     const total = lesson.quiz.length;
@@ -91,7 +104,7 @@ export default function Education() {
     try {
       await supabase.from("lesson_progress").upsert(
         {
-          user_id: user!.id,
+          user_id: user.id,
           topic_id: selectedTopic!,
           score: correct,
           total_questions: total,
@@ -99,7 +112,6 @@ export default function Education() {
         },
         { onConflict: "user_id,topic_id" }
       );
-      // Refresh progress
       loadProgress();
     } catch {}
 
@@ -132,7 +144,6 @@ export default function Education() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            {/* Progress overview */}
             <Card className="mb-6 shadow-card">
               <CardContent className="flex items-center gap-4 p-5">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent">
@@ -224,7 +235,6 @@ export default function Education() {
                   </CardContent>
                 </Card>
 
-                {/* Quiz */}
                 <Card className="shadow-card">
                   <CardHeader>
                     <CardTitle className="font-display text-xl">Comprehension Check</CardTitle>
@@ -235,7 +245,7 @@ export default function Education() {
                       <div key={qi} className="space-y-3">
                         <p className="font-medium text-foreground">{q.question}</p>
                         <div className="space-y-2">
-                          {q.options.map((opt, oi) => {
+                          {q.options?.map((opt, oi) => {
                             const isSelected = quizAnswers[qi] === oi;
                             const isCorrect = quizSubmitted && oi === q.correctIndex;
                             const isWrong = quizSubmitted && isSelected && oi !== q.correctIndex;
