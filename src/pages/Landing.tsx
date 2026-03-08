@@ -82,7 +82,9 @@ export default function Landing() {
               <span className="text-sm text-muted-foreground">Free · 60s setup</span>
             </motion.div>
 
-            <motion.div {...fadeUp(0.4)} className="mx-auto mt-20 flex max-w-md justify-between border-t border-border pt-8">
+            <HeroDashboardPreview />
+
+            <motion.div {...fadeUp(0.4)} className="mx-auto mt-12 flex max-w-md justify-between border-t border-border pt-8">
               {[
                 { value: "6", label: "Live indicators" },
                 { value: "12", label: "AI tools" },
