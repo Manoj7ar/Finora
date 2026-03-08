@@ -204,6 +204,24 @@ export default function Dashboard() {
                         ) : "—"}
                       </p>
 
+                      {/* Sparkline */}
+                      {metric.history && metric.history.length > 2 && (
+                        <div className="my-3 h-12">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <LineChart data={metric.history}>
+                              <YAxis domain={["dataMin", "dataMax"]} hide />
+                              <Line
+                                type="monotone"
+                                dataKey="value"
+                                stroke="hsl(var(--primary))"
+                                strokeWidth={2}
+                                dot={false}
+                              />
+                            </LineChart>
+                          </ResponsiveContainer>
+                        </div>
+                      )}
+
                       {impact && (
                         <p className="mt-2 font-mono text-sm font-semibold text-primary">
                           {impact.dollarImpact}
