@@ -8,6 +8,7 @@ import { Users, Shield, Loader2, Lock, TrendingUp, MapPin } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { getScoreBreakdown } from "@/components/dashboard/HealthScore";
 
 export default function CommunityMap() {
   const { user } = useAuth();
@@ -17,6 +18,8 @@ export default function CommunityMap() {
   const [percentile, setPercentile] = useState<number | null>(null);
   const [communityStats, setCommunityStats] = useState<any[]>([]);
   const [profile, setProfile] = useState<any>(null);
+  const [lessonsCompleted, setLessonsCompleted] = useState(0);
+  const [goalsCount, setGoalsCount] = useState(0);
 
   useEffect(() => {
     if (user) loadData();
@@ -25,6 +28,13 @@ export default function CommunityMap() {
   const loadData = async () => {
     const { data: p } = await supabase.from("profiles").select("*").eq("id", user!.id).single();
     setProfile(p);
+
+    const [{ count: lessonCount }, { count: goalCount }] = await Promise.all([
+      supabase.from("lesson_progress").select("*", { count: "exact", head: true }).eq("user_id", user!.id),
+      supabase.from("financial_goals").select("*", { count: "exact", head: true }).eq("user_id", user!.id),
+    ]);
+    setLessonsCompleted(lessonCount || 0);
+    setGoalsCount(goalCount || 0);
   };
 
   const refreshScore = async () => {
@@ -34,8 +44,9 @@ export default function CommunityMap() {
     }
     setLoading(true);
     try {
+      const { score } = getScoreBreakdown(profile, lessonsCompleted, goalsCount);
       const { data, error } = await supabase.functions.invoke("community-resilience", {
-        body: { userId: user!.id, profile, healthScore: 65 },
+        body: { userId: user!.id, profile, healthScore: score },
       });
       if (error) throw error;
       setUserScore(data.user_score);
