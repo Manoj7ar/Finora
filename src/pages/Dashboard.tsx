@@ -147,13 +147,20 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <HealthScore
-        profile={profile}
-        lessonsCompleted={lessonsCompleted}
-        goalsCount={goalsCount}
-        metricsCount={metrics.length}
-        insightsCount={insights.length}
-      />
+      <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
+        <HealthScore
+          profile={profile}
+          lessonsCompleted={lessonsCompleted}
+          goalsCount={goalsCount}
+          metricsCount={metrics.length}
+          insightsCount={insights.length}
+        />
+        <PeerBenchmark
+          profile={profile}
+          lessonsCompleted={lessonsCompleted}
+          goalsCount={goalsCount}
+        />
+      </div>
 
       <div className="h-6 sm:h-8" />
 
