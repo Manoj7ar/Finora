@@ -146,8 +146,8 @@ export default function Education() {
           >
             <Card className="mb-6 shadow-card">
               <CardContent className="flex items-center gap-4 p-4 sm:p-5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent">
-                  <Trophy className="h-5 w-5 text-primary" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-foreground/[0.06]">
+                  <Trophy className="h-5 w-5 text-foreground" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="mb-1 flex items-center justify-between">
