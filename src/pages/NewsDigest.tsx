@@ -45,10 +45,12 @@ export default function NewsDigest() {
       const { data, error } = await supabase.functions.invoke("ai-news-digest", {
         body: { profile },
       });
-      if (error) throw error;
+      if (error) throw new Error(error.message || "Failed to generate digest");
+      if (data?.error) throw new Error(data.error);
+      if (!data?.stories || data.stories.length === 0) throw new Error("No stories generated. Please try again.");
       setDigest(data);
     } catch (err: any) {
-      toast({ title: "Error", description: err.message, variant: "destructive" });
+      toast({ title: "News Digest Error", description: err.message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -116,7 +118,7 @@ export default function NewsDigest() {
                   </h2>
                 </div>
                 <Button variant="outline" size="sm" onClick={loadDigest} disabled={loading} className="gap-1">
-                  <RefreshCw className="h-3.5 w-3.5" /> Refresh
+                  {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="h-3.5 w-3.5" />} Refresh
                 </Button>
               </div>
             </CardContent>

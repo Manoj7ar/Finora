@@ -37,8 +37,8 @@ export default function ActionPlan() {
     const init = async () => {
       const { data: p } = await supabase.from("profiles").select("*").eq("id", user.id).single();
       setProfile(p);
-      const { data: m } = await supabase.functions.invoke("fred-data");
-      setMetrics(m?.metrics || []);
+      const { data: m, error: mErr } = await supabase.functions.invoke("fred-data");
+      if (!mErr && m?.metrics) setMetrics(m.metrics);
     };
     init();
   }, [user]);
@@ -50,10 +50,12 @@ export default function ActionPlan() {
       const { data, error } = await supabase.functions.invoke("ai-action-plan", {
         body: { profile, metrics },
       });
-      if (error) throw error;
+      if (error) throw new Error(error.message || "Failed to generate plan");
+      if (data?.error) throw new Error(data.error);
+      if (!data?.actions || data.actions.length === 0) throw new Error("No actions generated. Please try again.");
       setPlan(data);
     } catch (err: any) {
-      toast({ title: "Error", description: err.message, variant: "destructive" });
+      toast({ title: "Action Plan Error", description: err.message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -112,7 +114,7 @@ export default function ActionPlan() {
                     <Download className="h-3.5 w-3.5" /> Export PDF
                   </Button>
                   <Button variant="outline" size="sm" onClick={generatePlan} disabled={loading} className="gap-1">
-                    <RefreshCw className="h-3.5 w-3.5" /> Regenerate
+                    {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="h-3.5 w-3.5" />} Regenerate
                   </Button>
                 </div>
               </div>

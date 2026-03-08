@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, RotateCcw, ChevronRight } from "lucide-react";
+import { Play, RotateCcw, ChevronRight, Loader2 } from "lucide-react";
 
 const CRISES = [
   { id: "2008", label: "2008 Financial Crisis", emoji: "🔴", years: "2007–2009", description: "Housing bubble burst, bank failures, global recession" },
@@ -39,20 +39,24 @@ export default function Simulation() {
     setShowingResults(false);
 
     try {
-      const { data: profile } = await supabase
+      const { data: profile, error: profileErr } = await supabase
         .from("profiles")
         .select("*")
         .eq("id", user.id)
         .single();
 
+      if (profileErr || !profile) throw new Error("Could not load your profile. Please complete onboarding first.");
+
       const { data, error } = await supabase.functions.invoke("crisis-simulation", {
         body: { crisisId: selectedCrisis, profile },
       });
-      if (error) throw error;
+      if (error) throw new Error(error.message || "Simulation failed");
+      if (data?.error) throw new Error(data.error);
+      if (!data?.months || data.months.length === 0) throw new Error("Simulation returned no data. Please try again.");
       setResult(data);
       setShowingResults(true);
     } catch (err: any) {
-      toast({ title: "Simulation error", description: err.message, variant: "destructive" });
+      toast({ title: "Simulation Error", description: err.message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -89,11 +93,12 @@ export default function Simulation() {
               <button
                 key={crisis.id}
                 onClick={() => setSelectedCrisis(crisis.id)}
+                disabled={loading}
                 className={`rounded-lg border p-6 text-left transition-all ${
                   selectedCrisis === crisis.id
                     ? "border-primary bg-accent shadow-card-hover"
                     : "border-border bg-card shadow-card hover:shadow-card-hover"
-                }`}
+                } disabled:opacity-50`}
               >
                 <div className="mb-2 flex items-center gap-3">
                   <span className="text-2xl">{crisis.emoji}</span>
@@ -114,7 +119,7 @@ export default function Simulation() {
               disabled={!selectedCrisis || loading}
               className="gap-2 bg-primary px-8 hover:bg-finora-green-hover"
             >
-              <Play className="h-4 w-4" />
+              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4" />}
               {loading ? "Running simulation..." : "Run Simulation"}
             </Button>
           </div>
@@ -212,7 +217,7 @@ export default function Simulation() {
             </CardHeader>
             <CardContent>
               <ol className="space-y-3">
-                {result.actionPlan.map((action, i) => (
+                {result.actionPlan?.map((action, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <Badge className="mt-0.5 shrink-0 bg-primary text-primary-foreground">{i + 1}</Badge>
                     <p className="text-muted-foreground">{action}</p>
