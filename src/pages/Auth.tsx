@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MailCheck } from "lucide-react";
+import { MailCheck, Loader2 } from "lucide-react";
 import logoImg from "@/assets/logo.png";
 import { useToast } from "@/hooks/use-toast";
 import authSideImg from "@/assets/auth-side.jpg";
+import { motion } from "framer-motion";
 
 export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(true);
@@ -40,7 +41,11 @@ export default function Auth() {
 
   if (emailSent) {
     return (
-      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-6">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-6"
+      >
         <Card className="w-full max-w-md text-center shadow-card">
           <CardContent className="space-y-6 p-10">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-accent">
@@ -61,7 +66,7 @@ export default function Auth() {
             </Button>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
     );
   }
 
@@ -75,22 +80,29 @@ export default function Auth() {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/20" />
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/80 to-transparent p-10">
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent p-10">
           <p className="font-display text-3xl font-bold text-foreground drop-shadow-md">
             Knowledge is the new currency.
           </p>
-          <p className="mt-2 text-finora-text-secondary drop-shadow-sm">
+          <p className="mt-2 text-muted-foreground drop-shadow-sm">
             Like the great scholars of the Renaissance, understanding the world around you is the first step to mastering it.
           </p>
         </div>
       </div>
 
       {/* Right side — Auth form */}
-      <div className="flex w-full items-center justify-center px-6 py-12 lg:w-1/2">
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex w-full items-center justify-center px-6 py-12 lg:w-1/2"
+      >
         <Card className="w-full max-w-md border-none bg-transparent shadow-none">
           <CardHeader className="text-center lg:text-left">
-            <div className="mb-4 inline-flex rounded-md bg-accent p-3 lg:mx-0">
-              <img src={logoImg} alt="Finora" className="h-6 w-6" />
+            <div className="mb-4 flex justify-center lg:justify-start">
+              <div className="inline-flex rounded-xl bg-accent p-3">
+                <img src={logoImg} alt="Finora" className="h-7 w-7" />
+              </div>
             </div>
             <CardTitle className="font-display text-3xl">
               {isSignUp ? "Begin your journey" : "Welcome back"}
@@ -114,7 +126,7 @@ export default function Auth() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="h-12 rounded-md border-border bg-card text-base"
+                  className="h-12 rounded-xl border-border bg-card text-base"
                 />
               </div>
               <div className="space-y-2">
@@ -129,27 +141,33 @@ export default function Auth() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   minLength={6}
-                  className="h-12 rounded-md border-border bg-card text-base"
+                  className="h-12 rounded-xl border-border bg-card text-base"
                 />
               </div>
               <Button
                 type="submit"
-                className="h-12 w-full bg-primary text-base hover:bg-finora-green-hover"
+                className="h-12 w-full rounded-xl bg-primary text-base shadow-lg transition-all hover:bg-finora-green-hover hover:shadow-xl hover:scale-[1.01]"
                 disabled={loading}
               >
-                {loading ? "Loading..." : isSignUp ? "Create Account" : "Sign In"}
+                {loading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : isSignUp ? (
+                  "Create Account"
+                ) : (
+                  "Sign In"
+                )}
               </Button>
             </form>
 
             <div className="mt-6 flex flex-col items-center gap-3">
               {!isSignUp && (
-                <Link to="/forgot-password" className="text-sm text-muted-foreground hover:text-foreground hover:underline">
+                <Link to="/forgot-password" className="text-sm text-muted-foreground transition-colors hover:text-foreground hover:underline">
                   Forgot your password?
                 </Link>
               )}
               <button
                 type="button"
-                className="text-sm text-primary hover:underline"
+                className="text-sm text-primary transition-colors hover:underline"
                 onClick={() => setIsSignUp(!isSignUp)}
               >
                 {isSignUp ? "Already have an account? Sign in" : "Need an account? Sign up"}
@@ -157,7 +175,7 @@ export default function Auth() {
             </div>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -24,6 +24,7 @@ export default function Dashboard() {
   const [loadingMetrics, setLoadingMetrics] = useState(true);
   const [loadingInsights, setLoadingInsights] = useState(false);
   const [lessonsCompleted, setLessonsCompleted] = useState(0);
+  const [goalsCount, setGoalsCount] = useState(0);
 
   useEffect(() => {
     if (!user) return;
@@ -43,11 +44,20 @@ export default function Dashboard() {
       }
       setProfile(data as unknown as ProfileData);
 
-      const { count } = await supabase
-        .from("lesson_progress")
-        .select("*", { count: "exact", head: true })
-        .eq("user_id", user.id);
-      if (!cancelled) setLessonsCompleted(count || 0);
+      const [{ count: lessonCount }, { count: goalCount }] = await Promise.all([
+        supabase
+          .from("lesson_progress")
+          .select("*", { count: "exact", head: true })
+          .eq("user_id", user.id),
+        supabase
+          .from("financial_goals")
+          .select("*", { count: "exact", head: true })
+          .eq("user_id", user.id),
+      ]);
+      if (!cancelled) {
+        setLessonsCompleted(lessonCount || 0);
+        setGoalsCount(goalCount || 0);
+      }
     };
 
     init();
@@ -139,6 +149,7 @@ export default function Dashboard() {
         metricsCount={metrics.length}
         insightsCount={insights.length}
         lessonsCompleted={lessonsCompleted}
+        goalsCount={goalsCount}
       />
 
       {/* Metric Cards */}
