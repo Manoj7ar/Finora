@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TrendingUp, TrendingDown, Minus, RefreshCw, Sparkles, BookOpen, Zap, Trophy } from "lucide-react";
 import { motion } from "framer-motion";
+import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
 import { calculateImpact, type FredMetric, type ProfileData } from "@/lib/fred";
 import { useToast } from "@/hooks/use-toast";
 
