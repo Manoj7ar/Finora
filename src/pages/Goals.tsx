@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import {
   Target, Plus, Sparkles, Trash2, Pencil, Loader2, TrendingUp, Calendar, DollarSign,
+  Shield, Wallet, Palmtree, CreditCard, BarChart3, Home, GraduationCap, CircleDot,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -42,15 +43,15 @@ const CATEGORIES = [
   { value: "other", label: "Other" },
 ];
 
-const categoryIcon: Record<string, string> = {
-  emergency: "🛡️",
-  savings: "💰",
-  retirement: "🏖️",
-  debt: "💳",
-  investment: "📈",
-  purchase: "🏠",
-  education: "🎓",
-  other: "🎯",
+const categoryIcons: Record<string, React.ElementType> = {
+  emergency: Shield,
+  savings: Wallet,
+  retirement: Palmtree,
+  debt: CreditCard,
+  investment: BarChart3,
+  purchase: Home,
+  education: GraduationCap,
+  other: CircleDot,
 };
 
 export default function Goals() {
@@ -152,7 +153,7 @@ export default function Goals() {
       if (error) {
         toast({ title: "Create failed", description: error.message, variant: "destructive" });
       } else {
-        toast({ title: "Goal created! 🎯" });
+        toast({ title: "Goal created!" });
       }
     }
 
@@ -314,7 +315,14 @@ export default function Goals() {
                       <CardHeader className="pb-3">
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex items-center gap-2">
-                            <span className="text-2xl">{categoryIcon[goal.category] || "🎯"}</span>
+                            {(() => {
+                              const IconComp = categoryIcons[goal.category] || CircleDot;
+                              return (
+                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent">
+                                  <IconComp className="h-4 w-4 text-primary" />
+                                </div>
+                              );
+                            })()}
                             <div>
                               <CardTitle className="text-base font-bold text-foreground">
                                 {goal.name}
@@ -444,7 +452,7 @@ export default function Goals() {
                   <SelectContent>
                     {CATEGORIES.map((c) => (
                       <SelectItem key={c.value} value={c.value}>
-                        {categoryIcon[c.value]} {c.label}
+                        {c.label}
                       </SelectItem>
                     ))}
                   </SelectContent>

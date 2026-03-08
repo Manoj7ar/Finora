@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Award } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function HeroSection() {
@@ -24,9 +24,9 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-block rounded-full border border-primary/20 bg-primary/5 px-5 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary"
+            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-5 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary"
           >
-            🏆 Hackonomics 2026 · Macro Intelligence for Everyone
+            <Award className="h-3.5 w-3.5" /> Hackonomics 2026 · Macro Intelligence for Everyone
           </motion.p>
 
           <motion.h1

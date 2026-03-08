@@ -7,14 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, CheckCircle, ArrowLeft, Loader2, Trophy } from "lucide-react";
+import { BookOpen, CheckCircle, ArrowLeft, Loader2, Trophy, Landmark, TrendingUp, GitBranch, Waves } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 const TOPICS = [
-  { id: "fed-rate", title: "What is the Federal Funds Rate?", description: "How the Fed controls interest rates and why it matters for your wallet", icon: "🏦" },
-  { id: "inflation", title: "How Does Inflation Affect Your Savings?", description: "Understanding purchasing power and protecting your money", icon: "📈" },
-  { id: "yield-curve", title: "What is a Yield Curve?", description: "The bond market's crystal ball for predicting recessions", icon: "📉" },
-  { id: "recessions", title: "How Do Recessions Start?", description: "The economic cycle and what triggers downturns", icon: "🌊" },
+  { id: "fed-rate", title: "What is the Federal Funds Rate?", description: "How the Fed controls interest rates and why it matters for your wallet", icon: Landmark },
+  { id: "inflation", title: "How Does Inflation Affect Your Savings?", description: "Understanding purchasing power and protecting your money", icon: TrendingUp },
+  { id: "yield-curve", title: "What is a Yield Curve?", description: "The bond market's crystal ball for predicting recessions", icon: GitBranch },
+  { id: "recessions", title: "How Do Recessions Start?", description: "The economic cycle and what triggers downturns", icon: Waves },
 ];
 
 interface LessonData {
@@ -117,7 +117,7 @@ export default function Education() {
 
     toast({
       title: `${correct}/${total} correct!`,
-      description: correct === total ? "Perfect score! 🎉" : "Keep learning — you're getting there!",
+      description: correct === total ? "Perfect score!" : "Keep learning — you're getting there!",
     });
   };
 
@@ -179,7 +179,9 @@ export default function Education() {
                     >
                       <div className="mb-3 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <span className="text-2xl sm:text-3xl">{topic.icon}</span>
+                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent">
+                            <topic.icon className="h-5 w-5 text-primary" />
+                          </div>
                           <BookOpen className="h-5 w-5 text-primary" />
                         </div>
                         {tp && (
@@ -284,7 +286,7 @@ export default function Education() {
                           {quizScore}/{lesson.quiz.length}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          {quizScore === lesson.quiz.length ? "Perfect! 🎉" : "Review and try again next time!"}
+                          {quizScore === lesson.quiz.length ? "Perfect!" : "Review and try again next time!"}
                         </p>
                       </div>
                     )}

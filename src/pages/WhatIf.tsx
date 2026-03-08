@@ -163,7 +163,7 @@ export default function WhatIf() {
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <Badge className={verdictColor(result.verdict)}>{result.verdict}</Badge>
                 {result.timeframe && (
-                  <span className="text-xs text-muted-foreground">⏱ {result.timeframe}</span>
+                  <span className="text-xs text-muted-foreground">{result.timeframe}</span>
                 )}
               </div>
               <CardTitle className="font-display text-lg sm:text-xl">{result.scenario}</CardTitle>

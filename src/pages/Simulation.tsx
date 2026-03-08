@@ -7,13 +7,13 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, RotateCcw, ChevronRight, ChevronLeft, Loader2 } from "lucide-react";
+import { Play, RotateCcw, ChevronRight, ChevronLeft, Loader2, AlertTriangle, Flame, TrendingDown as TrendingDownIcon, CircleDot } from "lucide-react";
 
 const CRISES = [
-  { id: "2008", label: "2008 Financial Crisis", emoji: "🔴", years: "2007–2009", description: "Housing bubble burst, bank failures, global recession" },
-  { id: "2020", label: "2020 COVID Crash", emoji: "🟠", years: "2020", description: "Pandemic lockdowns, unemployment spike, market crash" },
-  { id: "2022", label: "2022 Inflation Surge", emoji: "🟡", years: "2021–2023", description: "40-year high inflation, aggressive rate hikes" },
-  { id: "1970s", label: "1970s Stagflation", emoji: "⚫", years: "1973–1982", description: "Oil shocks, double-digit inflation, economic stagnation" },
+  { id: "2008", label: "2008 Financial Crisis", icon: AlertTriangle, years: "2007–2009", description: "Housing bubble burst, bank failures, global recession" },
+  { id: "2020", label: "2020 COVID Crash", icon: Flame, years: "2020", description: "Pandemic lockdowns, unemployment spike, market crash" },
+  { id: "2022", label: "2022 Inflation Surge", icon: TrendingDownIcon, years: "2021–2023", description: "40-year high inflation, aggressive rate hikes" },
+  { id: "1970s", label: "1970s Stagflation", icon: CircleDot, years: "1973–1982", description: "Oil shocks, double-digit inflation, economic stagnation" },
 ];
 
 interface SimResult {
@@ -103,7 +103,9 @@ export default function Simulation() {
                 } disabled:opacity-50`}
               >
                 <div className="mb-2 flex items-center gap-3">
-                  <span className="text-xl sm:text-2xl">{crisis.emoji}</span>
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent">
+                    <crisis.icon className="h-4 w-4 text-foreground" />
+                  </div>
                   <div>
                     <p className="font-display text-base font-semibold text-foreground sm:text-lg">{crisis.label}</p>
                     <p className="text-xs text-muted-foreground">{crisis.years}</p>
