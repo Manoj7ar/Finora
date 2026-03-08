@@ -1,0 +1,13 @@
+project_id = "vqyrqylvkcvfhyetnteh"
+
+[functions.fred-data]
+verify_jwt = false
+
+[functions.ai-insights]
+verify_jwt = false
+
+[functions.crisis-simulation]
+verify_jwt = false
+
+[functions.education-lesson]
+verify_jwt = false
