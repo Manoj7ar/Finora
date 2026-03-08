@@ -71,7 +71,7 @@ export default function Auth() {
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)]">
+    <div className="flex min-h-screen">
       {/* Left side — Renaissance image */}
       <div className="relative hidden w-1/2 lg:block">
         <img
@@ -79,12 +79,12 @@ export default function Auth() {
           alt="Renaissance scholar in a grand library"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/20" />
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent p-10">
-          <p className="font-display text-3xl font-bold text-foreground drop-shadow-md">
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute bottom-0 left-0 right-0 p-10">
+          <p className="font-display text-3xl font-bold text-white drop-shadow-lg">
             Knowledge is the new currency.
           </p>
-          <p className="mt-2 text-muted-foreground drop-shadow-sm">
+          <p className="mt-2 text-white/80 drop-shadow-sm">
             Like the great scholars of the Renaissance, understanding the world around you is the first step to mastering it.
           </p>
         </div>
