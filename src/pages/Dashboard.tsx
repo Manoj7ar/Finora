@@ -149,6 +149,7 @@ export default function Dashboard() {
         metricsCount={metrics.length}
         insightsCount={insights.length}
         lessonsCompleted={lessonsCompleted}
+        goalsCount={goalsCount}
       />
 
       {/* Metric Cards */}
