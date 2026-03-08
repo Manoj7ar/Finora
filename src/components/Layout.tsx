@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import logoImg from "@/assets/logo.png";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { user, signOut } = useAuth();
@@ -115,7 +116,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           )}
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
             {user ? (
               <>
                 <button

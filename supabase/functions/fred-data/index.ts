@@ -19,22 +19,30 @@ const SERIES = [
 
 async function fetchSeries(seriesId: string) {
   const apiKey = FRED_API_KEY || "DEMO_KEY";
-  const url = `${FRED_BASE}?series_id=${seriesId}&api_key=${apiKey}&file_type=json&sort_order=desc&limit=2`;
+  // Fetch last 12 observations for sparkline history
+  const url = `${FRED_BASE}?series_id=${seriesId}&api_key=${apiKey}&file_type=json&sort_order=desc&limit=12`;
   
   try {
     const res = await fetch(url);
     if (!res.ok) {
       console.error(`FRED API error for ${seriesId}: ${res.status}`);
-      return { value: null, previousValue: null };
+      return { value: null, previousValue: null, history: [] };
     }
     const data = await res.json();
     const obs = data.observations || [];
     const current = obs[0]?.value !== "." ? parseFloat(obs[0]?.value) : null;
     const previous = obs[1]?.value !== "." ? parseFloat(obs[1]?.value) : null;
-    return { value: current, previousValue: previous };
+    
+    // Build history array (oldest first) for sparkline
+    const history = obs
+      .map((o: any) => ({ date: o.date, value: o.value !== "." ? parseFloat(o.value) : null }))
+      .filter((h: any) => h.value !== null)
+      .reverse();
+
+    return { value: current, previousValue: previous, history };
   } catch (e) {
     console.error(`Failed to fetch ${seriesId}:`, e);
-    return { value: null, previousValue: null };
+    return { value: null, previousValue: null, history: [] };
   }
 }
 
@@ -46,12 +54,13 @@ serve(async (req) => {
   try {
     const results = await Promise.all(
       SERIES.map(async (s) => {
-        const { value, previousValue } = await fetchSeries(s.seriesId);
+        const { value, previousValue, history } = await fetchSeries(s.seriesId);
         return {
           ...s,
           id: s.seriesId,
           value,
           previousValue,
+          history,
           description: "",
         };
       })

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { Send, Bot, User, Loader2 } from "lucide-react";
+import { Send, Bot, User, Loader2, Trash2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 type Msg = { role: "user" | "assistant"; content: string };
@@ -27,18 +27,41 @@ export default function AdvisorChat() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState<any>(null);
+  const [historyLoaded, setHistoryLoaded] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  // Load profile and chat history
   useEffect(() => {
-    if (user) {
-      supabase.from("profiles").select("*").eq("id", user.id).single()
-        .then(({ data }) => setProfile(data));
-    }
+    if (!user) return;
+    const init = async () => {
+      const [{ data: p }, { data: history }] = await Promise.all([
+        supabase.from("profiles").select("*").eq("id", user.id).single(),
+        supabase.from("chat_messages").select("role, content").eq("user_id", user.id).order("created_at", { ascending: true }).limit(100),
+      ]);
+      setProfile(p);
+      if (history && history.length > 0) {
+        setMessages(history.map((m: any) => ({ role: m.role, content: m.content })));
+      }
+      setHistoryLoaded(true);
+    };
+    init();
   }, [user]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  const saveMessage = async (role: "user" | "assistant", content: string) => {
+    if (!user) return;
+    await supabase.from("chat_messages").insert({ user_id: user.id, role, content });
+  };
+
+  const clearHistory = async () => {
+    if (!user) return;
+    await supabase.from("chat_messages").delete().eq("user_id", user.id);
+    setMessages([]);
+    toast({ title: "Chat cleared" });
+  };
 
   const sendMessage = async (text: string) => {
     if (!text.trim() || isLoading) return;
@@ -47,6 +70,9 @@ export default function AdvisorChat() {
     setMessages(allMessages);
     setInput("");
     setIsLoading(true);
+
+    // Save user message
+    await saveMessage("user", userMsg.content);
 
     let assistantSoFar = "";
 
@@ -107,6 +133,11 @@ export default function AdvisorChat() {
           }
         }
       }
+
+      // Save complete assistant message
+      if (assistantSoFar) {
+        await saveMessage("assistant", assistantSoFar);
+      }
     } catch (err: any) {
       toast({ title: "Chat error", description: err.message, variant: "destructive" });
     } finally {
@@ -116,18 +147,25 @@ export default function AdvisorChat() {
 
   return (
     <div className="container flex max-w-3xl flex-col py-8" style={{ height: "calc(100vh - 5rem)" }}>
-      <div className="mb-6">
-        <h1 className="font-display text-3xl font-bold text-foreground md:text-4xl">
-          AI Financial Advisor
-        </h1>
-        <p className="mt-1 text-muted-foreground">
-          Ask anything about your finances — powered by your real data
-        </p>
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="font-display text-3xl font-bold text-foreground md:text-4xl">
+            AI Financial Advisor
+          </h1>
+          <p className="mt-1 text-muted-foreground">
+            Ask anything about your finances — powered by your real data
+          </p>
+        </div>
+        {messages.length > 0 && (
+          <Button variant="outline" size="sm" onClick={clearHistory} className="gap-1">
+            <Trash2 className="h-3.5 w-3.5" /> Clear
+          </Button>
+        )}
       </div>
 
       {/* Chat messages */}
       <div className="flex-1 space-y-4 overflow-y-auto rounded-2xl border border-border bg-card p-4">
-        {messages.length === 0 && (
+        {messages.length === 0 && historyLoaded && (
           <div className="flex h-full flex-col items-center justify-center gap-6 py-12">
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent">
               <Bot className="h-7 w-7 text-primary" />

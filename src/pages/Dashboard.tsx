@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TrendingUp, TrendingDown, Minus, RefreshCw, Sparkles, BookOpen, Zap, Trophy } from "lucide-react";
 import { motion } from "framer-motion";
+import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
 import { calculateImpact, type FredMetric, type ProfileData } from "@/lib/fred";
 import { useToast } from "@/hooks/use-toast";
 
@@ -202,6 +203,24 @@ export default function Dashboard() {
                           metric.unit === "%" ? `${metric.value.toFixed(2)}%` : metric.value.toFixed(1)
                         ) : "—"}
                       </p>
+
+                      {/* Sparkline */}
+                      {metric.history && metric.history.length > 2 && (
+                        <div className="my-3 h-12">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <LineChart data={metric.history}>
+                              <YAxis domain={["dataMin", "dataMax"]} hide />
+                              <Line
+                                type="monotone"
+                                dataKey="value"
+                                stroke="hsl(var(--primary))"
+                                strokeWidth={2}
+                                dot={false}
+                              />
+                            </LineChart>
+                          </ResponsiveContainer>
+                        </div>
+                      )}
 
                       {impact && (
                         <p className="mt-2 font-mono text-sm font-semibold text-primary">

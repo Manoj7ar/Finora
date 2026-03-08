@@ -7,6 +7,7 @@ import landingVitals from "@/assets/landing-vitals.jpg";
 import landingInsights from "@/assets/landing-insights.jpg";
 import landingCrisis from "@/assets/landing-crisis.jpg";
 import landingEducation from "@/assets/landing-education.jpg";
+import logoImg from "@/assets/logo.png";
 
 export default function Landing() {
   return (
@@ -70,13 +71,19 @@ export default function Landing() {
       <CTASection />
 
       <footer className="border-t border-border bg-card py-10">
-        <div className="container text-center">
+        <div className="container flex flex-col items-center gap-4 text-center">
+          <img src={logoImg} alt="Finora" className="h-10 w-10" />
           <p className="font-display text-lg font-semibold text-foreground">
             Finora
           </p>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             The economy, personalised. © {new Date().getFullYear()}
           </p>
+          <div className="flex gap-6 text-xs text-muted-foreground">
+            <span>Privacy Policy</span>
+            <span>Terms of Service</span>
+            <span>Contact</span>
+          </div>
         </div>
       </footer>
     </div>
