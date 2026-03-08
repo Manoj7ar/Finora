@@ -94,23 +94,21 @@ export default function Landing() {
           </motion.div>
         </div>
 
-        {/* Decorative element */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden lg:block">
-          <div className="relative h-[500px] w-[500px]">
-            <div className="absolute inset-0 rounded-full border border-border/50" />
-            <div className="absolute inset-8 rounded-full border border-border/40" />
-            <div className="absolute inset-16 rounded-full border border-border/30" />
-            <div className="absolute inset-24 rounded-full border border-primary/20" />
-            <div className="absolute inset-32 rounded-full bg-primary/5" />
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0"
-            >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 h-3 w-3 rounded-full bg-primary" />
-            </motion.div>
+        {/* Hero image */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="absolute right-12 top-1/2 -translate-y-1/2 hidden lg:block"
+        >
+          <div className="relative h-[480px] w-[480px] rounded-2xl overflow-hidden shadow-2xl shadow-foreground/10">
+            <img
+              src={heroVisual}
+              alt="Financial data visualization with charts and economic indicators"
+              className="h-full w-full object-cover"
+            />
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
