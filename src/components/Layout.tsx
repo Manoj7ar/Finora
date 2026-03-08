@@ -17,6 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const mainNav = [
     { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { to: "/goals", label: "Goals", icon: Target },
     { to: "/simulation", label: "Crisis Sim", icon: Zap },
     { to: "/education", label: "Learn", icon: BookOpen },
   ];
