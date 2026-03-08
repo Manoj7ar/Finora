@@ -1,4 +1,4 @@
-import { TrendingUp, Brain, Zap, Shield } from "lucide-react";
+import { TrendingUp, Brain, Zap, Shield, Target, Bot } from "lucide-react";
 import HeroSection from "@/components/landing/HeroSection";
 import FeatureSection from "@/components/landing/FeatureSection";
 import HowItWorks from "@/components/landing/HowItWorks";
@@ -7,6 +7,8 @@ import landingVitals from "@/assets/landing-vitals.jpg";
 import landingInsights from "@/assets/landing-insights.jpg";
 import landingCrisis from "@/assets/landing-crisis.jpg";
 import landingEducation from "@/assets/landing-education.jpg";
+import landingAdvisor from "@/assets/landing-advisor.jpg";
+import landingGoals from "@/assets/landing-goals.jpg";
 import logoImg from "@/assets/logo.png";
 
 export default function Landing() {
@@ -24,7 +26,7 @@ export default function Landing() {
           "Unemployment → your income risk level",
         ]}
         image={landingVitals}
-        imageAlt="Ghibli-style Renaissance astronomer's observatory with telescopes and star charts"
+        imageAlt="Renaissance astronomer's observatory with telescopes and star charts"
       />
 
       <FeatureSection
@@ -34,10 +36,10 @@ export default function Landing() {
         bullets={[
           "Severity-coded alerts: green, amber, red",
           "Dollar impact in large, unmissable type",
-          "3-paragraph AI lesson with 'Learn more' expansion",
+          "AI-generated lesson with 'Learn more' expansion",
         ]}
         image={landingInsights}
-        imageAlt="Ghibli-style alchemist's workshop with glowing potions and ancient books"
+        imageAlt="Alchemist's workshop with glowing potions and ancient books"
         reverse
         dark
       />
@@ -49,7 +51,7 @@ export default function Landing() {
         bullets={[]}
         tags={["🔴 2008 Crisis", "🟠 COVID 2020", "🟡 Inflation 2022", "⚫ 1970s Stagflation"]}
         image={landingCrisis}
-        imageAlt="Ghibli-style sailing ship navigating a dramatic ocean storm with lightning"
+        imageAlt="Sailing ship navigating a dramatic ocean storm with lightning"
       />
 
       <FeatureSection
@@ -62,7 +64,35 @@ export default function Landing() {
           "Comprehension quiz to lock in learning",
         ]}
         image={landingEducation}
-        imageAlt="Ghibli-style grand Renaissance library with towering bookshelves and golden light"
+        imageAlt="Grand Renaissance library with towering bookshelves and golden light"
+        reverse
+        dark
+      />
+
+      <FeatureSection
+        icon={Bot}
+        title="AI Financial Advisor"
+        description="Chat with your personal AI advisor who knows your financial profile, current economic conditions, and can give clear, actionable guidance tailored to your situation."
+        bullets={[
+          "Streaming real-time responses",
+          "Context-aware of your income, debts & goals",
+          "Clear recommendations with rationale",
+        ]}
+        image={landingAdvisor}
+        imageAlt="Scholar's desk with glowing crystal orb showing financial charts"
+      />
+
+      <FeatureSection
+        icon={Target}
+        title="Goal Tracking & AI Nudges"
+        description="Set financial goals, track your progress visually, and receive intelligent nudges from AI that adapt to changing economic conditions and your personal trajectory."
+        bullets={[
+          "Visual progress bars with milestones",
+          "AI nudges that respond to market changes",
+          "Category-based organisation",
+        ]}
+        image={landingGoals}
+        imageAlt="Renaissance treasure room with golden goals and progress tracking"
         reverse
         dark
       />
@@ -81,9 +111,6 @@ export default function Landing() {
               </div>
               <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
                 The economy, personalised. Real-time macro data translated into your personal dollar impact.
-              </p>
-              <p className="rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary inline-block">
-                🏆 Built for Hackonomics 2026
               </p>
             </div>
 
