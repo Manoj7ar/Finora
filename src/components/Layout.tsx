@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import {
-  LogOut, BarChart3, BookOpen, Zap, LayoutDashboard, Menu, X, Settings,
+  LogOut, BookOpen, Zap, LayoutDashboard, Menu, X, Settings,
   Bot, ClipboardList, Newspaper, Lightbulb, ChevronDown
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import logoImg from "@/assets/logo.png";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { user, signOut } = useAuth();
