@@ -315,7 +315,14 @@ export default function Goals() {
                       <CardHeader className="pb-3">
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex items-center gap-2">
-                            <span className="text-2xl">{categoryIcon[goal.category] || "🎯"}</span>
+                            {(() => {
+                              const IconComp = categoryIcons[goal.category] || CircleDot;
+                              return (
+                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent">
+                                  <IconComp className="h-4 w-4 text-primary" />
+                                </div>
+                              );
+                            })()}
                             <div>
                               <CardTitle className="text-base font-bold text-foreground">
                                 {goal.name}

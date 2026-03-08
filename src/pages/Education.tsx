@@ -286,7 +286,7 @@ export default function Education() {
                           {quizScore}/{lesson.quiz.length}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          {quizScore === lesson.quiz.length ? "Perfect! 🎉" : "Review and try again next time!"}
+                          {quizScore === lesson.quiz.length ? "Perfect!" : "Review and try again next time!"}
                         </p>
                       </div>
                     )}

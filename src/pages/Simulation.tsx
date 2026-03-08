@@ -103,7 +103,9 @@ export default function Simulation() {
                 } disabled:opacity-50`}
               >
                 <div className="mb-2 flex items-center gap-3">
-                  <span className="text-xl sm:text-2xl">{crisis.emoji}</span>
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent">
+                    <crisis.icon className="h-4 w-4 text-foreground" />
+                  </div>
                   <div>
                     <p className="font-display text-base font-semibold text-foreground sm:text-lg">{crisis.label}</p>
                     <p className="text-xs text-muted-foreground">{crisis.years}</p>
