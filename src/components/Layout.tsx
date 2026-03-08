@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { to: "/goals", label: "Goals", icon: Target },
     { to: "/simulation", label: "Crisis Sim", icon: Zap },
     { to: "/education", label: "Learn", icon: BookOpen },
-    { to: "/achievements", label: "Badges", icon: Trophy },
+    
   ];
 
   const aiNav = [
