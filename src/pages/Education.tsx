@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookOpen, CheckCircle, ArrowLeft, Loader2, Trophy } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 const TOPICS = [
   { id: "fed-rate", title: "What is the Federal Funds Rate?", description: "How the Fed controls interest rates and why it matters for your wallet", icon: "🏦" },
@@ -81,7 +82,6 @@ export default function Education() {
       if (data?.error) throw new Error(data.error);
       if (!data?.content) throw new Error("Lesson content is empty. Please try again.");
 
-      // Ensure quiz is valid
       if (!data.quiz || !Array.isArray(data.quiz) || data.quiz.length === 0) {
         data.quiz = [{ question: "What did you learn?", options: ["A lot", "Some", "A little", "Nothing"], correctIndex: 0 }];
       }
@@ -126,12 +126,12 @@ export default function Education() {
     : 0;
 
   return (
-    <div className="container py-8">
-      <div className="mb-8">
-        <h1 className="font-display text-3xl font-bold text-foreground md:text-4xl">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="container py-6 sm:py-8">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="font-display text-2xl font-bold text-foreground sm:text-3xl md:text-4xl">
           Education Hub
         </h1>
-        <p className="mt-1 text-muted-foreground">
+        <p className="mt-1 text-sm text-muted-foreground sm:text-base">
           Learn macro economics through your own numbers
         </p>
       </div>
@@ -145,11 +145,11 @@ export default function Education() {
             exit={{ opacity: 0 }}
           >
             <Card className="mb-6 shadow-card">
-              <CardContent className="flex items-center gap-4 p-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent">
+              <CardContent className="flex items-center gap-4 p-4 sm:p-5">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent">
                   <Trophy className="h-5 w-5 text-primary" />
                 </div>
-                <div className="flex-1">
+                <div className="min-w-0 flex-1">
                   <div className="mb-1 flex items-center justify-between">
                     <p className="text-sm font-medium text-foreground">
                       {completedCount}/{totalTopics} lessons completed
@@ -163,7 +163,7 @@ export default function Education() {
               </CardContent>
             </Card>
 
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
               {TOPICS.map((topic, i) => {
                 const tp = getTopicProgress(topic.id);
                 return (
@@ -175,11 +175,11 @@ export default function Education() {
                   >
                     <button
                       onClick={() => loadLesson(topic.id)}
-                      className="w-full rounded-lg border border-border bg-card p-6 text-left shadow-card transition-shadow hover:shadow-card-hover"
+                      className="w-full rounded-lg border border-border bg-card p-5 text-left shadow-card transition-shadow hover:shadow-card-hover sm:p-6"
                     >
                       <div className="mb-3 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <span className="text-3xl">{topic.icon}</span>
+                          <span className="text-2xl sm:text-3xl">{topic.icon}</span>
                           <BookOpen className="h-5 w-5 text-primary" />
                         </div>
                         {tp && (
@@ -194,10 +194,10 @@ export default function Education() {
                           </Badge>
                         )}
                       </div>
-                      <h3 className="mb-1 font-display text-lg font-semibold text-foreground">
+                      <h3 className="mb-1 font-display text-base font-semibold text-foreground sm:text-lg">
                         {topic.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground">{topic.description}</p>
+                      <p className="text-xs text-muted-foreground sm:text-sm">{topic.description}</p>
                       <p className="mt-3 text-xs font-medium text-primary">
                         {tp ? "Retake lesson →" : "~3 min read →"}
                       </p>
@@ -220,17 +220,17 @@ export default function Education() {
 
             {loading ? (
               <Card className="shadow-card">
-                <CardContent className="flex items-center justify-center p-12">
+                <CardContent className="flex flex-col items-center justify-center gap-3 p-12">
                   <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                  <p className="ml-3 text-muted-foreground">Generating your personalised lesson...</p>
+                  <p className="text-muted-foreground">Generating your personalised lesson...</p>
                 </CardContent>
               </Card>
             ) : lesson ? (
               <div className="space-y-6">
                 <Card className="shadow-card">
-                  <CardContent className="prose prose-sm max-w-none p-8">
-                    <div className="whitespace-pre-wrap text-muted-foreground leading-relaxed">
-                      {lesson.content}
+                  <CardContent className="p-5 sm:p-8">
+                    <div className="prose prose-sm max-w-none text-muted-foreground leading-relaxed prose-headings:text-foreground prose-strong:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground">
+                      <ReactMarkdown>{lesson.content}</ReactMarkdown>
                     </div>
                   </CardContent>
                 </Card>
@@ -243,7 +243,7 @@ export default function Education() {
                   <CardContent className="space-y-6">
                     {lesson.quiz.map((q, qi) => (
                       <div key={qi} className="space-y-3">
-                        <p className="font-medium text-foreground">{q.question}</p>
+                        <p className="text-sm font-medium text-foreground sm:text-base">{q.question}</p>
                         <div className="space-y-2">
                           {q.options?.map((opt, oi) => {
                             const isSelected = quizAnswers[qi] === oi;
@@ -295,6 +295,6 @@ export default function Education() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }
