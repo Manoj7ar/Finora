@@ -68,6 +68,7 @@ export default function Settings() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
+  const [country, setCountry] = useState("US");
   const [incomeRange, setIncomeRange] = useState("");
   const [debts, setDebts] = useState<Record<string, number>>({});
   const [savingsRange, setSavingsRange] = useState("");
