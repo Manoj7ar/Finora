@@ -18,12 +18,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
+
+      // After email confirmation, redirect to onboarding
+      if (event === "SIGNED_IN" && session?.user) {
+        // Check if profile has onboarding completed
+        setTimeout(async () => {
+          const { data } = await supabase
+            .from("profiles")
+            .select("onboarding_completed")
+            .eq("id", session.user.id)
+            .single();
+
+          if (!data?.onboarding_completed) {
+            navigate("/onboarding");
+          }
+        }, 0);
+      }
     });
 
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -39,7 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: window.location.origin },
+      options: { emailRedirectTo: `${window.location.origin}/onboarding` },
     });
     if (error) throw error;
   };

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart3 } from "lucide-react";
+import { BarChart3, MailCheck } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import authSideImg from "@/assets/auth-side.jpg";
 
@@ -14,6 +14,7 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -24,8 +25,7 @@ export default function Auth() {
     try {
       if (isSignUp) {
         await signUp(email, password);
-        toast({ title: "Account created!", description: "Let's set up your financial profile." });
-        navigate("/onboarding");
+        setEmailSent(true);
       } else {
         await signIn(email, password);
         navigate("/dashboard");
@@ -36,6 +36,33 @@ export default function Auth() {
       setLoading(false);
     }
   };
+
+  if (emailSent) {
+    return (
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-6">
+        <Card className="w-full max-w-md text-center shadow-card">
+          <CardContent className="space-y-6 p-10">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-accent">
+              <MailCheck className="h-8 w-8 text-primary" />
+            </div>
+            <div className="space-y-2">
+              <h2 className="font-display text-2xl font-bold text-foreground">Check your email</h2>
+              <p className="text-muted-foreground">
+                We've sent a confirmation link to <strong className="text-foreground">{email}</strong>. Click the link to verify your account and get started.
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => { setEmailSent(false); setIsSignUp(false); }}
+            >
+              Back to Sign In
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)]">
