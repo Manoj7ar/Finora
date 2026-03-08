@@ -179,7 +179,9 @@ export default function Education() {
                     >
                       <div className="mb-3 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <span className="text-2xl sm:text-3xl">{topic.icon}</span>
+                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent">
+                            <topic.icon className="h-5 w-5 text-primary" />
+                          </div>
                           <BookOpen className="h-5 w-5 text-primary" />
                         </div>
                         {tp && (
