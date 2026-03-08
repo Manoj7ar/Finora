@@ -64,7 +64,8 @@ export default function Dashboard() {
     setLoadingMetrics(true);
     try {
       const { data, error } = await supabase.functions.invoke("fred-data");
-      if (error) throw error;
+      if (error) throw new Error(error.message || "Failed to fetch economic data");
+      if (data?.error) throw new Error(data.error);
       setMetrics(data?.metrics || []);
     } catch (err: any) {
       toast({ title: "Data fetch error", description: err.message, variant: "destructive" });
@@ -80,7 +81,8 @@ export default function Dashboard() {
       const { data, error } = await supabase.functions.invoke("ai-insights", {
         body: { profile, metrics },
       });
-      if (error) throw error;
+      if (error) throw new Error(error.message || "Failed to generate insights");
+      if (data?.error) throw new Error(data.error);
       setInsights(data?.insights || []);
     } catch (err: any) {
       toast({ title: "Insight error", description: err.message, variant: "destructive" });
