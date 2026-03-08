@@ -14,6 +14,10 @@ import Education from "@/pages/Education";
 import Settings from "@/pages/Settings";
 import ForgotPassword from "@/pages/ForgotPassword";
 import ResetPassword from "@/pages/ResetPassword";
+import AdvisorChat from "@/pages/AdvisorChat";
+import ActionPlan from "@/pages/ActionPlan";
+import NewsDigest from "@/pages/NewsDigest";
+import WhatIf from "@/pages/WhatIf";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,6 +51,10 @@ const App = () => (
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/advisor" element={<ProtectedRoute><AdvisorChat /></ProtectedRoute>} />
+              <Route path="/action-plan" element={<ProtectedRoute><ActionPlan /></ProtectedRoute>} />
+              <Route path="/news" element={<ProtectedRoute><NewsDigest /></ProtectedRoute>} />
+              <Route path="/what-if" element={<ProtectedRoute><WhatIf /></ProtectedRoute>} />
               <Route path="/simulation" element={<ProtectedRoute><Simulation /></ProtectedRoute>} />
               <Route path="/education" element={<ProtectedRoute><Education /></ProtectedRoute>} />
               <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
