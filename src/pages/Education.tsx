@@ -64,13 +64,16 @@ export default function Education() {
 
     // Save progress
     try {
-      await supabase.from("lesson_progress").upsert({
-        user_id: user!.id,
-        topic_id: selectedTopic!,
-        score: correct,
-        total_questions: total,
-        completed_at: new Date().toISOString(),
-      });
+      await supabase.from("lesson_progress").upsert(
+        {
+          user_id: user!.id,
+          topic_id: selectedTopic!,
+          score: correct,
+          total_questions: total,
+          completed_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id,topic_id" }
+      );
     } catch {}
 
     toast({
