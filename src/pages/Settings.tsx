@@ -118,13 +118,13 @@ export default function Settings() {
     value: string;
     onChange: (v: string) => void;
   }) => (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-2 gap-2 sm:gap-3">
       {options.map((opt) => (
         <button
           key={opt}
           type="button"
           onClick={() => onChange(opt)}
-          className={`rounded-md border p-3 text-left text-sm transition-all ${
+          className={`rounded-md border p-2.5 text-left text-xs transition-all sm:p-3 sm:text-sm ${
             value === opt
               ? "border-primary bg-accent text-accent-foreground"
               : "border-border bg-background hover:border-primary/50"
@@ -137,121 +137,114 @@ export default function Settings() {
   );
 
   return (
-    <div className="container max-w-2xl py-8">
-      <div className="mb-8 flex items-center gap-4">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="container max-w-2xl px-4 py-6 sm:py-8">
+      <div className="mb-6 flex items-center gap-4 sm:mb-8">
         <Button variant="ghost" size="sm" onClick={() => navigate("/dashboard")} className="gap-1">
           <ArrowLeft className="h-4 w-4" /> Dashboard
         </Button>
       </div>
 
-      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="mb-1 font-display text-3xl font-bold text-foreground">Profile Settings</h1>
-        <p className="mb-8 text-muted-foreground">
-          Update your financial information to keep insights accurate.
-        </p>
+      <h1 className="mb-1 font-display text-2xl font-bold text-foreground sm:text-3xl">Profile Settings</h1>
+      <p className="mb-6 text-sm text-muted-foreground sm:mb-8">
+        Update your financial information to keep insights accurate.
+      </p>
 
-        <div className="space-y-8">
-          {/* Income */}
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle className="font-display text-lg">Annual Income</CardTitle>
-              <CardDescription>Select your current income range</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <OptionGrid options={INCOME_RANGES} value={incomeRange} onChange={setIncomeRange} />
-            </CardContent>
-          </Card>
+      <div className="space-y-6 sm:space-y-8">
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle className="font-display text-lg">Annual Income</CardTitle>
+            <CardDescription>Select your current income range</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <OptionGrid options={INCOME_RANGES} value={incomeRange} onChange={setIncomeRange} />
+          </CardContent>
+        </Card>
 
-          {/* Debts */}
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle className="font-display text-lg">Debts</CardTitle>
-              <CardDescription>Approximate amounts — leave blank if none</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {DEBT_TYPES.map(({ key, label, placeholder }) => (
-                <div key={key} className="space-y-1">
-                  <Label className="text-xs uppercase tracking-wider text-muted-foreground">
-                    {label}
-                  </Label>
-                  <Input
-                    type="number"
-                    placeholder={placeholder}
-                    value={debts[key] || ""}
-                    onChange={(e) =>
-                      setDebts({ ...debts, [key]: Number(e.target.value) || 0 })
-                    }
-                  />
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle className="font-display text-lg">Debts</CardTitle>
+            <CardDescription>Approximate amounts — leave blank if none</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {DEBT_TYPES.map(({ key, label, placeholder }) => (
+              <div key={key} className="space-y-1">
+                <Label className="text-xs uppercase tracking-wider text-muted-foreground">
+                  {label}
+                </Label>
+                <Input
+                  type="number"
+                  placeholder={placeholder}
+                  value={debts[key] || ""}
+                  onChange={(e) =>
+                    setDebts({ ...debts, [key]: Number(e.target.value) || 0 })
+                  }
+                />
+              </div>
+            ))}
+          </CardContent>
+        </Card>
 
-          {/* Savings */}
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle className="font-display text-lg">Savings</CardTitle>
-              <CardDescription>Including checking, savings, and emergency funds</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <OptionGrid options={SAVINGS_RANGES} value={savingsRange} onChange={setSavingsRange} />
-            </CardContent>
-          </Card>
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle className="font-display text-lg">Savings</CardTitle>
+            <CardDescription>Including checking, savings, and emergency funds</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <OptionGrid options={SAVINGS_RANGES} value={savingsRange} onChange={setSavingsRange} />
+          </CardContent>
+        </Card>
 
-          {/* Location */}
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle className="font-display text-lg">Location</CardTitle>
-              <CardDescription>Used for local housing and cost-of-living data</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Input
-                type="text"
-                placeholder="e.g. 10001"
-                maxLength={10}
-                value={zipCode}
-                onChange={(e) => setZipCode(e.target.value)}
-              />
-            </CardContent>
-          </Card>
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle className="font-display text-lg">Location</CardTitle>
+            <CardDescription>Used for local housing and cost-of-living data</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Input
+              type="text"
+              placeholder="e.g. 10001"
+              maxLength={10}
+              value={zipCode}
+              onChange={(e) => setZipCode(e.target.value)}
+            />
+          </CardContent>
+        </Card>
 
-          {/* Investments */}
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle className="font-display text-lg">Investments</CardTitle>
-              <CardDescription>Your current investment activity</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {INVESTMENT_LEVELS.map(({ key, label, description }) => (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => setInvestmentLevel(key)}
-                  className={`w-full rounded-md border p-4 text-left transition-all ${
-                    investmentLevel === key
-                      ? "border-primary bg-accent"
-                      : "border-border bg-background hover:border-primary/50"
-                  }`}
-                >
-                  <p className="font-medium text-foreground">{label}</p>
-                  <p className="text-sm text-muted-foreground">{description}</p>
-                </button>
-              ))}
-            </CardContent>
-          </Card>
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle className="font-display text-lg">Investments</CardTitle>
+            <CardDescription>Your current investment activity</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {INVESTMENT_LEVELS.map(({ key, label, description }) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setInvestmentLevel(key)}
+                className={`w-full rounded-md border p-3 text-left transition-all sm:p-4 ${
+                  investmentLevel === key
+                    ? "border-primary bg-accent"
+                    : "border-border bg-background hover:border-primary/50"
+                }`}
+              >
+                <p className="text-sm font-medium text-foreground sm:text-base">{label}</p>
+                <p className="text-xs text-muted-foreground sm:text-sm">{description}</p>
+              </button>
+            ))}
+          </CardContent>
+        </Card>
 
-          <div className="flex justify-end pb-8">
-            <Button
-              onClick={handleSave}
-              disabled={saving}
-              className="gap-2 bg-primary px-8 hover:bg-finora-green-hover"
-            >
-              <Save className="h-4 w-4" />
-              {saving ? "Saving..." : "Save Changes"}
-            </Button>
-          </div>
+        <div className="flex justify-end pb-8">
+          <Button
+            onClick={handleSave}
+            disabled={saving}
+            className="gap-2 bg-primary px-8 hover:bg-finora-green-hover"
+          >
+            <Save className="h-4 w-4" />
+            {saving ? "Saving..." : "Save Changes"}
+          </Button>
         </div>
-      </motion.div>
-    </div>
+      </div>
+    </motion.div>
   );
 }

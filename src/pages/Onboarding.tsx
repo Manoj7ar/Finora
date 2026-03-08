@@ -60,7 +60,7 @@ export default function Onboarding() {
   const canProceed = () => {
     switch (step) {
       case 1: return !!incomeRange;
-      case 2: return true; // debts optional
+      case 2: return true;
       case 3: return !!savingsRange;
       case 4: return zipCode.length >= 5;
       case 5: return !!investmentLevel;
@@ -100,10 +100,14 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="container flex min-h-[80vh] flex-col items-center justify-center py-12">
-      <div className="mb-8 w-full max-w-lg">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="container flex min-h-[80vh] flex-col items-center justify-center px-4 py-8 sm:py-12"
+    >
+      <div className="mb-6 w-full max-w-lg sm:mb-8">
         <Progress value={(step / TOTAL_STEPS) * 100} className="h-2" />
-        <p className="mt-2 text-center text-sm text-muted-foreground">
+        <p className="mt-2 text-center text-xs text-muted-foreground sm:text-sm">
           Step {step} of {TOTAL_STEPS}
         </p>
       </div>
@@ -119,14 +123,14 @@ export default function Onboarding() {
         >
           <Card className="shadow-card">
             <CardHeader>
-              <CardTitle className="font-display text-2xl">
+              <CardTitle className="font-display text-xl sm:text-2xl">
                 {step === 1 && "What's your annual income range?"}
                 {step === 2 && "Do you have any debts?"}
                 {step === 3 && "How much do you have in savings?"}
                 {step === 4 && "Where do you live?"}
                 {step === 5 && "How do you invest?"}
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-sm">
                 {step === 1 && "This helps us calculate how economic changes affect you."}
                 {step === 2 && "Enter approximate amounts. Skip any that don't apply."}
                 {step === 3 && "Including checking, savings, and emergency funds."}
@@ -136,12 +140,12 @@ export default function Onboarding() {
             </CardHeader>
             <CardContent className="space-y-4">
               {step === 1 && (
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   {INCOME_RANGES.map((range) => (
                     <button
                       key={range}
                       onClick={() => setIncomeRange(range)}
-                      className={`rounded-md border p-3 text-left text-sm transition-all ${
+                      className={`rounded-md border p-2.5 text-left text-xs transition-all sm:p-3 sm:text-sm ${
                         incomeRange === range
                           ? "border-primary bg-accent text-accent-foreground"
                           : "border-border bg-background hover:border-primary/50"
@@ -174,12 +178,12 @@ export default function Onboarding() {
               )}
 
               {step === 3 && (
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   {SAVINGS_RANGES.map((range) => (
                     <button
                       key={range}
                       onClick={() => setSavingsRange(range)}
-                      className={`rounded-md border p-3 text-left text-sm transition-all ${
+                      className={`rounded-md border p-2.5 text-left text-xs transition-all sm:p-3 sm:text-sm ${
                         savingsRange === range
                           ? "border-primary bg-accent text-accent-foreground"
                           : "border-border bg-background hover:border-primary/50"
@@ -212,14 +216,14 @@ export default function Onboarding() {
                     <button
                       key={key}
                       onClick={() => setInvestmentLevel(key)}
-                      className={`w-full rounded-md border p-4 text-left transition-all ${
+                      className={`w-full rounded-md border p-3 text-left transition-all sm:p-4 ${
                         investmentLevel === key
                           ? "border-primary bg-accent"
                           : "border-border bg-background hover:border-primary/50"
                       }`}
                     >
-                      <p className="font-medium text-foreground">{label}</p>
-                      <p className="text-sm text-muted-foreground">{description}</p>
+                      <p className="text-sm font-medium text-foreground sm:text-base">{label}</p>
+                      <p className="text-xs text-muted-foreground sm:text-sm">{description}</p>
                     </button>
                   ))}
                 </div>
@@ -250,6 +254,6 @@ export default function Onboarding() {
           </Card>
         </motion.div>
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }

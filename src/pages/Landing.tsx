@@ -70,7 +70,7 @@ export default function Landing() {
       <HowItWorks />
       <CTASection />
 
-      <footer className="border-t border-border bg-card py-10">
+      <footer className="border-t border-border bg-card py-8 sm:py-10">
         <div className="container flex flex-col items-center gap-4 text-center">
           <img src={logoImg} alt="Finora" className="h-10 w-10" />
           <p className="font-display text-lg font-semibold text-foreground">
@@ -78,6 +78,9 @@ export default function Landing() {
           </p>
           <p className="text-sm text-muted-foreground">
             The economy, personalised. © {new Date().getFullYear()}
+          </p>
+          <p className="rounded-lg border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary">
+            🏆 Built for Hackonomics 2026
           </p>
           <div className="flex gap-6 text-xs text-muted-foreground">
             <span>Privacy Policy</span>
