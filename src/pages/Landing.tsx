@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import logoImg from "@/assets/logo.png";
+import HeroDashboardPreview from "@/components/landing/HeroDashboardPreview";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 20 },
@@ -81,7 +82,9 @@ export default function Landing() {
               <span className="text-sm text-muted-foreground">Free · 60s setup</span>
             </motion.div>
 
-            <motion.div {...fadeUp(0.4)} className="mx-auto mt-20 flex max-w-md justify-between border-t border-border pt-8">
+            <HeroDashboardPreview />
+
+            <motion.div {...fadeUp(0.4)} className="mx-auto mt-12 flex max-w-md justify-between border-t border-border pt-8">
               {[
                 { value: "6", label: "Live indicators" },
                 { value: "12", label: "AI tools" },
