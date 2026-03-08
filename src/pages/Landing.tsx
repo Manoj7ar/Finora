@@ -19,70 +19,70 @@ const fadeIn = (delay = 0) => ({
 export default function Landing() {
   return (
     <div className="flex flex-col">
-      {/* Hero — full background */}
-      <section className="relative -mt-20 min-h-screen overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${heroBg})` }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
-
-        <div className="container relative z-10 flex min-h-screen flex-col items-center justify-center gap-8 py-24 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 32 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl space-y-6"
-          >
-            <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
-              Macro Intelligence for Everyone
-            </p>
-            <h1 className="font-display text-5xl font-bold leading-[1.1] text-foreground drop-shadow-sm md:text-6xl lg:text-7xl">
-              The economy is moving.{" "}
-              <span className="text-primary">See exactly what it means for you.</span>
-            </h1>
-            <p className="mx-auto max-w-xl text-lg text-finora-text-secondary">
-              Finora connects real-time economic data to your personal finances — so you always know
-              what's changing and what to do about it.
-            </p>
+      {/* Hero — split layout: text left, image right */}
+      <section className="-mt-20 min-h-screen">
+        <div className="grid min-h-screen md:grid-cols-2">
+          {/* Left: text on cream background */}
+          <div className="flex flex-col justify-center px-8 pt-28 pb-16 md:px-16 lg:px-24">
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="flex items-center justify-center gap-4 pt-4"
+              transition={{ duration: 0.8 }}
+              className="max-w-lg space-y-6"
             >
-              <Link to="/auth">
-                <Button size="lg" className="gap-2 rounded-xl bg-primary px-8 text-lg text-primary-foreground shadow-lg backdrop-blur-sm hover:bg-finora-green-hover">
-                  Start in 60 Seconds <ArrowRight className="h-5 w-5" />
-                </Button>
-              </Link>
-            </motion.div>
-          </motion.div>
+              <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
+                Macro Intelligence for Everyone
+              </p>
+              <h1 className="font-display text-4xl font-bold leading-[1.1] text-foreground md:text-5xl lg:text-6xl">
+                The economy is moving.{" "}
+                <span className="text-primary">See exactly what it means for you.</span>
+              </h1>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Finora connects real-time economic data to your personal finances — so you always know
+                what's changing and what to do about it.
+              </p>
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="flex items-center gap-4 pt-2"
+              >
+                <Link to="/auth">
+                  <Button size="lg" className="gap-2 rounded-xl bg-primary px-8 text-lg text-primary-foreground shadow-lg hover:bg-finora-green-hover">
+                    Start in 60 Seconds <ArrowRight className="h-5 w-5" />
+                  </Button>
+                </Link>
+              </motion.div>
 
+              {/* Mini stats */}
+              <div className="flex gap-8 pt-6">
+                {[
+                  { value: "6", label: "Live Indicators" },
+                  { value: "60s", label: "Setup" },
+                  { value: "AI", label: "Insights" },
+                ].map((stat) => (
+                  <div key={stat.label}>
+                    <p className="font-mono text-xl font-bold text-primary">{stat.value}</p>
+                    <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right: full image */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-            className="absolute bottom-8"
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="relative hidden md:block"
           >
-            <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }} className="h-8 w-5 rounded-full border-2 border-primary/40 p-1">
-              <div className="mx-auto h-2 w-1 rounded-full bg-primary/60" />
-            </motion.div>
+            <img
+              src={heroBg}
+              alt="Ghibli-style Tuscan countryside at golden hour with rolling hills and a distant village"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
           </motion.div>
-        </div>
-      </section>
-
-      {/* Stats ribbon */}
-      <section className="border-y border-border bg-card py-6">
-        <div className="container flex flex-wrap items-center justify-center gap-8 md:gap-16">
-          {[
-            { value: "6", label: "Live Indicators" },
-            { value: "60s", label: "Setup Time" },
-            { value: "4", label: "Crisis Simulations" },
-            { value: "AI", label: "Powered Insights" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="font-mono text-2xl font-bold text-primary">{stat.value}</p>
-              <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">{stat.label}</p>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -90,7 +90,7 @@ export default function Landing() {
       <section className="container py-24">
         <div className="grid items-center gap-12 md:grid-cols-2">
           <motion.div {...fadeIn()}>
-            <div className="mb-4 inline-flex rounded-xl bg-accent/80 p-3 backdrop-blur-sm">
+            <div className="mb-4 inline-flex rounded-xl bg-accent/80 p-3">
               <TrendingUp className="h-6 w-6 text-primary" />
             </div>
             <h2 className="mb-4 font-display text-4xl font-bold text-foreground">
@@ -125,7 +125,7 @@ export default function Landing() {
             </div>
           </motion.div>
           <motion.div {...fadeIn(0.2)} className="order-1 md:order-2">
-            <div className="mb-4 inline-flex rounded-xl bg-accent/80 p-3 backdrop-blur-sm">
+            <div className="mb-4 inline-flex rounded-xl bg-accent/80 p-3">
               <Brain className="h-6 w-6 text-primary" />
             </div>
             <h2 className="mb-4 font-display text-4xl font-bold text-foreground">
@@ -150,7 +150,7 @@ export default function Landing() {
       <section className="container py-24">
         <div className="grid items-center gap-12 md:grid-cols-2">
           <motion.div {...fadeIn()}>
-            <div className="mb-4 inline-flex rounded-xl bg-accent/80 p-3 backdrop-blur-sm">
+            <div className="mb-4 inline-flex rounded-xl bg-accent/80 p-3">
               <Zap className="h-6 w-6 text-primary" />
             </div>
             <h2 className="mb-4 font-display text-4xl font-bold text-foreground">
@@ -184,7 +184,7 @@ export default function Landing() {
             </div>
           </motion.div>
           <motion.div {...fadeIn(0.2)} className="order-1 md:order-2">
-            <div className="mb-4 inline-flex rounded-xl bg-accent/80 p-3 backdrop-blur-sm">
+            <div className="mb-4 inline-flex rounded-xl bg-accent/80 p-3">
               <Shield className="h-6 w-6 text-primary" />
             </div>
             <h2 className="mb-4 font-display text-4xl font-bold text-foreground">
@@ -218,7 +218,7 @@ export default function Landing() {
             { step: "03", title: "Learn & Prepare", desc: "AI-generated insights, crisis simulations, and lessons — all built around your actual numbers." },
           ].map((item, i) => (
             <motion.div key={item.step} {...fadeIn(i * 0.15)} className="text-center">
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/90 backdrop-blur-sm">
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary">
                 <span className="font-mono text-lg font-bold text-primary-foreground">{item.step}</span>
               </div>
               <h3 className="mb-2 font-display text-xl font-semibold text-foreground">{item.title}</h3>
@@ -228,24 +228,31 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* CTA — full background */}
-      <section className="relative overflow-hidden py-32">
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${ctaBg})` }} />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/75 to-background/85" />
-        <div className="container relative z-10 text-center">
-          <motion.div {...fadeIn()} className="mx-auto max-w-2xl">
-            <h2 className="font-display text-4xl font-bold text-foreground md:text-5xl">
-              Ready to understand your economy?
-            </h2>
-            <p className="mx-auto mt-6 max-w-lg text-lg text-finora-text-secondary">
-              Set up your financial profile in 60 seconds. Finora does the rest — live data, AI insights, and crisis preparedness.
-            </p>
-            <Link to="/auth" className="mt-10 inline-block">
-              <Button size="lg" className="gap-2 rounded-xl bg-primary px-10 text-lg shadow-lg backdrop-blur-sm hover:bg-finora-green-hover">
-                Get Started Free <ArrowRight className="h-5 w-5" />
-              </Button>
-            </Link>
+      {/* CTA — split layout: image left, text right */}
+      <section className="border-t border-border">
+        <div className="grid md:grid-cols-2">
+          <motion.div {...fadeIn()} className="relative min-h-[400px] hidden md:block">
+            <img
+              src={ctaBg}
+              alt="Ghibli-style Renaissance garden pavilion with fountain and valley view"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
           </motion.div>
+          <div className="flex flex-col items-center justify-center bg-card px-8 py-20 text-center md:items-start md:px-16 md:text-left lg:px-24">
+            <motion.div {...fadeIn(0.15)} className="max-w-md">
+              <h2 className="font-display text-4xl font-bold text-foreground md:text-5xl">
+                Ready to understand your economy?
+              </h2>
+              <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+                Set up your financial profile in 60 seconds. Finora does the rest — live data, AI insights, and crisis preparedness.
+              </p>
+              <Link to="/auth" className="mt-10 inline-block">
+                <Button size="lg" className="gap-2 rounded-xl bg-primary px-10 text-lg shadow-lg hover:bg-finora-green-hover">
+                  Get Started Free <ArrowRight className="h-5 w-5" />
+                </Button>
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </section>
 
