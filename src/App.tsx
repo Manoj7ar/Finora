@@ -29,6 +29,7 @@ import LegislationRadar from "@/pages/LegislationRadar";
 import NegotiationCoach from "@/pages/NegotiationCoach";
 import CommunityMap from "@/pages/CommunityMap";
 import AIHub from "@/pages/AIHub";
+import Install from "@/pages/Install";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -80,6 +81,7 @@ const App = () => (
                 <Route path="/community" element={<ProtectedRoute><CommunityMap /></ProtectedRoute>} />
                 <Route path="/ai-hub" element={<ProtectedRoute><AIHub /></ProtectedRoute>} />
                 <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+                <Route path="/install" element={<Install />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>
