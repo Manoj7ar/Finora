@@ -38,6 +38,48 @@ export type Database = {
         }
         Relationships: []
       }
+      financial_goals: {
+        Row: {
+          ai_nudge: string | null
+          category: string
+          created_at: string
+          current_amount: number
+          deadline: string | null
+          id: string
+          name: string
+          nudge_updated_at: string | null
+          target_amount: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_nudge?: string | null
+          category?: string
+          created_at?: string
+          current_amount?: number
+          deadline?: string | null
+          id?: string
+          name: string
+          nudge_updated_at?: string | null
+          target_amount?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_nudge?: string | null
+          category?: string
+          created_at?: string
+          current_amount?: number
+          deadline?: string | null
+          id?: string
+          name?: string
+          nudge_updated_at?: string | null
+          target_amount?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       lesson_progress: {
         Row: {
           completed_at: string
