@@ -174,6 +174,28 @@ export default function Settings() {
       <div className="space-y-6 sm:space-y-8">
         <Card className="shadow-card">
           <CardHeader>
+            <CardTitle className="font-display text-lg">Country</CardTitle>
+            <CardDescription>Your region for currency and data</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Select value={country} onValueChange={setCountry}>
+              <SelectTrigger className="w-full">
+                <div className="flex items-center gap-2">
+                  <Globe className="h-4 w-4 text-muted-foreground" />
+                  <SelectValue />
+                </div>
+              </SelectTrigger>
+              <SelectContent>
+                {COUNTRIES.map((c) => (
+                  <SelectItem key={c.code} value={c.code}>{c.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-card">
+          <CardHeader>
             <CardTitle className="font-display text-lg">Annual Income</CardTitle>
             <CardDescription>Select your current income range</CardDescription>
           </CardHeader>
