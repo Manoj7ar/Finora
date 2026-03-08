@@ -284,6 +284,32 @@ export default function Settings() {
           </CardContent>
         </Card>
 
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle className="font-display text-lg">Community Profile</CardTitle>
+            <CardDescription>Optional — used for anonymous community resilience benchmarks</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <Label className="text-sm font-medium">Age Group</Label>
+              <Select value={ageGroup} onValueChange={setAgeGroup}>
+                <SelectTrigger className="w-full mt-1">
+                  <SelectValue placeholder="Select age group" />
+                </SelectTrigger>
+                <SelectContent>
+                  {["18-24", "25-34", "35-44", "45-54", "55-64", "65+"].map((ag) => (
+                    <SelectItem key={ag} value={ag}>{ag}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label className="text-sm font-medium">City</Label>
+              <Input value={city} onChange={(e) => setCity(e.target.value)} placeholder="e.g. New York" className="mt-1" />
+            </div>
+          </CardContent>
+        </Card>
+
         <div className="flex justify-end pb-8">
           <Button
             onClick={handleSave}
