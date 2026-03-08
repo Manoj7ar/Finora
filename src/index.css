@@ -171,6 +171,129 @@ html {
   animation: float 8s ease-in-out 2s infinite;
 }
 
+/* Gradient animation */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animate-gradient {
+  animation: gradient-shift 3s ease-in-out infinite;
+}
+
+/* Slow pulse for CTA background */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.05); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Gradient mesh blobs */
+.gradient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+  animation: blob-float 8s ease-in-out infinite;
+}
+
+.gradient-blob-1 {
+  width: 600px;
+  height: 600px;
+  background: hsl(var(--primary) / 0.15);
+  top: -200px;
+  right: -100px;
+  animation-delay: 0s;
+}
+
+.gradient-blob-2 {
+  width: 500px;
+  height: 500px;
+  background: hsl(var(--secondary) / 0.12);
+  bottom: -150px;
+  left: -100px;
+  animation-delay: 2s;
+}
+
+.gradient-blob-3 {
+  width: 400px;
+  height: 400px;
+  background: hsl(var(--accent) / 0.1);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: 4s;
+}
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+/* Noise texture */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Grid pattern */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(hsl(var(--border)) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Radial gradient */
+.bg-gradient-radial {
+  background: radial-gradient(circle at center, var(--tw-gradient-from) 0%, var(--tw-gradient-via) 50%, var(--tw-gradient-to) 100%);
+}
+
+/* Conic gradient */
+.bg-gradient-conic {
+  background: conic-gradient(var(--tw-gradient-from) 0deg, var(--tw-gradient-via) 180deg, var(--tw-gradient-to) 360deg);
+}
+
+/* Live ticker */
+.ticker-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.ticker-content {
+  display: flex;
+  animation: ticker-scroll 30s linear infinite;
+  white-space: nowrap;
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Marquee */
+.marquee-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-track {
+  display: flex;
+  animation: marquee-scroll 25s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
