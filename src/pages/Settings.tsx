@@ -7,9 +7,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
-import { Save, ArrowLeft } from "lucide-react";
+import { Save, ArrowLeft, Globe } from "lucide-react";
+
+const COUNTRIES = [
+  { code: "US", name: "United States" },
+  { code: "GB", name: "United Kingdom" },
+  { code: "CA", name: "Canada" },
+  { code: "AU", name: "Australia" },
+  { code: "DE", name: "Germany" },
+  { code: "FR", name: "France" },
+  { code: "IN", name: "India" },
+  { code: "JP", name: "Japan" },
+  { code: "BR", name: "Brazil" },
+  { code: "MX", name: "Mexico" },
+  { code: "NG", name: "Nigeria" },
+  { code: "ZA", name: "South Africa" },
+  { code: "SG", name: "Singapore" },
+  { code: "AE", name: "UAE" },
+  { code: "OTHER", name: "Other" },
+];
 
 const INCOME_RANGES = [
   "Under $25,000",
