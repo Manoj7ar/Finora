@@ -14,6 +14,7 @@ import QuickStats from "@/components/dashboard/QuickStats";
 import MetricCard from "@/components/dashboard/MetricCard";
 import InsightCard from "@/components/dashboard/InsightCard";
 import HealthScore from "@/components/dashboard/HealthScore";
+import PeerBenchmark from "@/components/dashboard/PeerBenchmark";
 
 export default function Dashboard() {
   const { user } = useAuth();
