@@ -6,24 +6,14 @@ import heroImg from "@/assets/hero-illustration.jpg";
 
 export default function HeroSection() {
   return (
-    <section className="-mt-20 relative overflow-hidden bg-background">
-      {/* Full-width hero image */}
-      <div className="absolute inset-0">
-        <img
-          src={heroImg}
-          alt="Renaissance observatory with celestial globe showing economic data"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
-      </div>
-
-      <div className="container relative flex min-h-screen items-center">
+    <section className="bg-accent/30">
+      <div className="container grid min-h-[90vh] items-center gap-12 py-20 lg:grid-cols-2 lg:gap-16">
+        {/* Left: Text content */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-2xl space-y-8 py-32"
+          className="space-y-8"
         >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -94,6 +84,22 @@ export default function HeroSection() {
               </motion.div>
             ))}
           </motion.div>
+        </motion.div>
+
+        {/* Right: Image */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="relative hidden lg:block"
+        >
+          <div className="aspect-square overflow-hidden rounded-3xl shadow-2xl">
+            <img
+              src={heroImg}
+              alt="Renaissance observatory with celestial globe showing economic data"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </motion.div>
       </div>
     </section>
