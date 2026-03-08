@@ -28,6 +28,13 @@ export default function CommunityMap() {
   const loadData = async () => {
     const { data: p } = await supabase.from("profiles").select("*").eq("id", user!.id).single();
     setProfile(p);
+
+    const [{ count: lessonCount }, { count: goalCount }] = await Promise.all([
+      supabase.from("lesson_progress").select("*", { count: "exact", head: true }).eq("user_id", user!.id),
+      supabase.from("financial_goals").select("*", { count: "exact", head: true }).eq("user_id", user!.id),
+    ]);
+    setLessonsCompleted(lessonCount || 0);
+    setGoalsCount(goalCount || 0);
   };
 
   const refreshScore = async () => {
