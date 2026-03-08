@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import logoImg from "@/assets/logo.png";
-import heroVisual from "@/assets/hero-visual.jpg";
+import heroDashboard from "@/assets/hero-dashboard.jpg";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 20 },
