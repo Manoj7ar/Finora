@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, CheckCircle, ArrowLeft, Loader2 } from "lucide-react";
+import { BookOpen, CheckCircle, ArrowLeft, Loader2, Trophy } from "lucide-react";
 
 const TOPICS = [
   { id: "fed-rate", title: "What is the Federal Funds Rate?", description: "How the Fed controls interest rates and why it matters for your wallet", icon: "🏦" },
@@ -21,6 +21,13 @@ interface LessonData {
   quiz: { question: string; options: string[]; correctIndex: number }[];
 }
 
+interface LessonProgress {
+  topic_id: string;
+  score: number;
+  total_questions: number;
+  completed_at: string;
+}
+
 export default function Education() {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -29,6 +36,25 @@ export default function Education() {
   const [loading, setLoading] = useState(false);
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
+  const [progress, setProgress] = useState<LessonProgress[]>([]);
+
+  useEffect(() => {
+    if (user) loadProgress();
+  }, [user]);
+
+  const loadProgress = async () => {
+    const { data } = await supabase
+      .from("lesson_progress")
+      .select("topic_id, score, total_questions, completed_at")
+      .eq("user_id", user!.id);
+    if (data) setProgress(data);
+  };
+
+  const getTopicProgress = (topicId: string) =>
+    progress.find((p) => p.topic_id === topicId);
+
+  const completedCount = progress.length;
+  const totalTopics = TOPICS.length;
 
   const loadLesson = async (topicId: string) => {
     setSelectedTopic(topicId);
@@ -62,7 +88,6 @@ export default function Education() {
     const correct = lesson.quiz.filter((q, i) => quizAnswers[i] === q.correctIndex).length;
     const total = lesson.quiz.length;
 
-    // Save progress
     try {
       await supabase.from("lesson_progress").upsert(
         {
@@ -74,6 +99,8 @@ export default function Education() {
         },
         { onConflict: "user_id,topic_id" }
       );
+      // Refresh progress
+      loadProgress();
     } catch {}
 
     toast({
@@ -104,31 +131,70 @@ export default function Education() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="grid gap-4 md:grid-cols-2"
           >
-            {TOPICS.map((topic, i) => (
-              <motion.div
-                key={topic.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.08 }}
-              >
-                <button
-                  onClick={() => loadLesson(topic.id)}
-                  className="w-full rounded-lg border border-border bg-card p-6 text-left shadow-card transition-shadow hover:shadow-card-hover"
-                >
-                  <div className="mb-3 flex items-center gap-3">
-                    <span className="text-3xl">{topic.icon}</span>
-                    <BookOpen className="h-5 w-5 text-primary" />
+            {/* Progress overview */}
+            <Card className="mb-6 shadow-card">
+              <CardContent className="flex items-center gap-4 p-5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent">
+                  <Trophy className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <div className="mb-1 flex items-center justify-between">
+                    <p className="text-sm font-medium text-foreground">
+                      {completedCount}/{totalTopics} lessons completed
+                    </p>
+                    <span className="text-xs text-muted-foreground">
+                      {Math.round((completedCount / totalTopics) * 100)}%
+                    </span>
                   </div>
-                  <h3 className="mb-1 font-display text-lg font-semibold text-foreground">
-                    {topic.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">{topic.description}</p>
-                  <p className="mt-3 text-xs font-medium text-primary">~3 min read →</p>
-                </button>
-              </motion.div>
-            ))}
+                  <Progress value={(completedCount / totalTopics) * 100} className="h-2" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {TOPICS.map((topic, i) => {
+                const tp = getTopicProgress(topic.id);
+                return (
+                  <motion.div
+                    key={topic.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.08 }}
+                  >
+                    <button
+                      onClick={() => loadLesson(topic.id)}
+                      className="w-full rounded-lg border border-border bg-card p-6 text-left shadow-card transition-shadow hover:shadow-card-hover"
+                    >
+                      <div className="mb-3 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-3xl">{topic.icon}</span>
+                          <BookOpen className="h-5 w-5 text-primary" />
+                        </div>
+                        {tp && (
+                          <Badge
+                            className={
+                              tp.score === tp.total_questions
+                                ? "bg-primary text-primary-foreground"
+                                : "bg-accent text-accent-foreground"
+                            }
+                          >
+                            {tp.score === tp.total_questions ? "✓ Perfect" : `${tp.score}/${tp.total_questions}`}
+                          </Badge>
+                        )}
+                      </div>
+                      <h3 className="mb-1 font-display text-lg font-semibold text-foreground">
+                        {topic.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">{topic.description}</p>
+                      <p className="mt-3 text-xs font-medium text-primary">
+                        {tp ? "Retake lesson →" : "~3 min read →"}
+                      </p>
+                    </button>
+                  </motion.div>
+                );
+              })}
+            </div>
           </motion.div>
         ) : (
           <motion.div

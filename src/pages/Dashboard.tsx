@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,9 +6,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TrendingUp, TrendingDown, Minus, RefreshCw, Sparkles } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, RefreshCw, Sparkles, BookOpen, Zap, Trophy } from "lucide-react";
 import { motion } from "framer-motion";
-import { FRED_METRICS, calculateImpact, type FredMetric, type ProfileData } from "@/lib/fred";
+import { calculateImpact, type FredMetric, type ProfileData } from "@/lib/fred";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Dashboard() {
@@ -21,33 +21,44 @@ export default function Dashboard() {
   const [loadingMetrics, setLoadingMetrics] = useState(true);
   const [loadingInsights, setLoadingInsights] = useState(false);
   const [expandedInsight, setExpandedInsight] = useState<number | null>(null);
+  const [lessonsCompleted, setLessonsCompleted] = useState(0);
 
   useEffect(() => {
     if (!user) return;
-    loadProfile();
+    let cancelled = false;
+
+    const init = async () => {
+      // Load profile
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+      if (cancelled) return;
+      if (error || !data?.onboarding_completed) {
+        navigate("/onboarding");
+        return;
+      }
+      setProfile(data as unknown as ProfileData);
+
+      // Load lesson count
+      const { count } = await supabase
+        .from("lesson_progress")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", user.id);
+      if (!cancelled) setLessonsCompleted(count || 0);
+    };
+
+    init();
+    return () => { cancelled = true; };
   }, [user]);
 
   useEffect(() => {
-    if (profile) {
-      fetchMetrics();
-    }
+    if (profile) fetchMetrics();
   }, [profile]);
 
-  const loadProfile = async () => {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", user!.id)
-      .single();
-
-    if (error || !data?.onboarding_completed) {
-      navigate("/onboarding");
-      return;
-    }
-    setProfile(data as unknown as ProfileData);
-  };
-
-  const fetchMetrics = async () => {
+  const fetchMetrics = useCallback(async () => {
     setLoadingMetrics(true);
     try {
       const { data, error } = await supabase.functions.invoke("fred-data");
@@ -58,7 +69,7 @@ export default function Dashboard() {
     } finally {
       setLoadingMetrics(false);
     }
-  };
+  }, [toast]);
 
   const fetchInsights = async () => {
     if (!profile || metrics.length === 0) return;
@@ -103,6 +114,54 @@ export default function Dashboard() {
             <Sparkles className="h-3.5 w-3.5" /> {loadingInsights ? "Generating..." : "AI Insights"}
           </Button>
         </div>
+      </div>
+
+      {/* Quick Stats */}
+      <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+        <Card className="shadow-card">
+          <CardContent className="flex items-center gap-3 p-4">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent">
+              <TrendingUp className="h-4 w-4 text-primary" />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Indicators</p>
+              <p className="font-mono text-lg font-bold text-foreground">{metrics.length || "—"}</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="shadow-card">
+          <CardContent className="flex items-center gap-3 p-4">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent">
+              <Sparkles className="h-4 w-4 text-primary" />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">AI Insights</p>
+              <p className="font-mono text-lg font-bold text-foreground">{insights.length || "—"}</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="shadow-card">
+          <CardContent className="flex items-center gap-3 p-4">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent">
+              <BookOpen className="h-4 w-4 text-primary" />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Lessons</p>
+              <p className="font-mono text-lg font-bold text-foreground">{lessonsCompleted}/4</p>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="shadow-card cursor-pointer transition-shadow hover:shadow-card-hover" onClick={() => navigate("/simulation")}>
+          <CardContent className="flex items-center gap-3 p-4">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent">
+              <Zap className="h-4 w-4 text-primary" />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Crisis Sim</p>
+              <p className="text-xs font-medium text-primary">Run now →</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Metric Cards */}
