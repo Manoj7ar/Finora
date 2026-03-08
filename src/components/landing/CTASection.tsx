@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import heroBg from "@/assets/landing-hero.jpg";
 
 const fadeIn = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -13,19 +12,8 @@ const fadeIn = (delay = 0) => ({
 
 export default function CTASection() {
   return (
-    <section className="relative overflow-hidden border-t border-border">
-      {/* Background image */}
-      <div className="absolute inset-0">
-        <img
-          src={heroBg}
-          alt=""
-          className="h-full w-full object-cover"
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
-      </div>
-
-      <div className="container relative z-10 py-28 lg:py-36">
+    <section className="border-t border-border bg-background">
+      <div className="container py-28 lg:py-36">
         <motion.div {...fadeIn()} className="mx-auto max-w-2xl text-center">
           <h2 className="font-display text-4xl font-bold text-foreground md:text-5xl lg:text-6xl">
             Ready to understand your economy?
