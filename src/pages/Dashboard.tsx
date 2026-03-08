@@ -146,6 +146,16 @@ export default function Dashboard() {
         </div>
       </div>
 
+      <HealthScore
+        profile={profile}
+        lessonsCompleted={lessonsCompleted}
+        goalsCount={goalsCount}
+        metricsCount={metrics.length}
+        insightsCount={insights.length}
+      />
+
+      <div className="h-6 sm:h-8" />
+
       <QuickStats
         metricsCount={metrics.length}
         insightsCount={insights.length}
