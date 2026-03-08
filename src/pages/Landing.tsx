@@ -83,9 +83,9 @@ export default function Landing() {
 
             <motion.div {...fadeUp(0.4)} className="mx-auto mt-20 flex max-w-md justify-between border-t border-border pt-8">
               {[
-                { value: "12K+", label: "Users" },
+                { value: "6", label: "Live indicators" },
                 { value: "12", label: "AI tools" },
-                { value: "89%", label: "Clarity" },
+                { value: "<2 min", label: "Setup" },
               ].map((stat, i) => (
                 <div key={stat.label} className={i > 0 ? "border-l border-border pl-8" : ""}>
                   <p className="font-mono text-2xl font-bold text-foreground">{stat.value}</p>
