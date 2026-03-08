@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart3, MailCheck } from "lucide-react";
+import { MailCheck } from "lucide-react";
+import logoImg from "@/assets/logo.png";
 import { useToast } from "@/hooks/use-toast";
 import authSideImg from "@/assets/auth-side.jpg";
 
