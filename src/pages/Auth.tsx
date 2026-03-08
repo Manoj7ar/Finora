@@ -90,7 +90,7 @@ export default function Auth() {
         <Card className="w-full max-w-md border-none bg-transparent shadow-none">
           <CardHeader className="text-center lg:text-left">
             <div className="mb-4 inline-flex rounded-md bg-accent p-3 lg:mx-0">
-              <BarChart3 className="h-6 w-6 text-primary" />
+              <img src={logoImg} alt="Finora" className="h-6 w-6" />
             </div>
             <CardTitle className="font-display text-3xl">
               {isSignUp ? "Begin your journey" : "Welcome back"}
