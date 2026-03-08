@@ -18,6 +18,8 @@ export default function CommunityMap() {
   const [percentile, setPercentile] = useState<number | null>(null);
   const [communityStats, setCommunityStats] = useState<any[]>([]);
   const [profile, setProfile] = useState<any>(null);
+  const [lessonsCompleted, setLessonsCompleted] = useState(0);
+  const [goalsCount, setGoalsCount] = useState(0);
 
   useEffect(() => {
     if (user) loadData();
