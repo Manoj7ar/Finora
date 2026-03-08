@@ -12,6 +12,8 @@ import Dashboard from "@/pages/Dashboard";
 import Simulation from "@/pages/Simulation";
 import Education from "@/pages/Education";
 import Settings from "@/pages/Settings";
+import ForgotPassword from "@/pages/ForgotPassword";
+import ResetPassword from "@/pages/ResetPassword";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +43,8 @@ const App = () => (
             <Routes>
               <Route path="/" element={<PublicOnlyRoute><Landing /></PublicOnlyRoute>} />
               <Route path="/auth" element={<PublicOnlyRoute><Auth /></PublicOnlyRoute>} />
+              <Route path="/forgot-password" element={<PublicOnlyRoute><ForgotPassword /></PublicOnlyRoute>} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/simulation" element={<ProtectedRoute><Simulation /></ProtectedRoute>} />

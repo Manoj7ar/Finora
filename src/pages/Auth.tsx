@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -140,7 +140,12 @@ export default function Auth() {
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
+            <div className="mt-6 flex flex-col items-center gap-3">
+              {!isSignUp && (
+                <Link to="/forgot-password" className="text-sm text-muted-foreground hover:text-foreground hover:underline">
+                  Forgot your password?
+                </Link>
+              )}
               <button
                 type="button"
                 className="text-sm text-primary hover:underline"
