@@ -4,8 +4,7 @@ import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Sparkles, Brain, CloudLightning, Crosshair, User, Mic, ScrollText, Handshake, Users, ArrowRight, Sun, Cloud, CloudRain, Zap as Storm, AlertTriangle } from "lucide-react";
+import { Sparkles, Brain, CloudLightning, Users, ArrowRight, Sun, Cloud, CloudRain, Zap as Storm, AlertTriangle } from "lucide-react";
 
 const weatherIcons: Record<string, React.ReactNode> = {
   sunny: <Sun className="h-8 w-8 text-yellow-500" />,
@@ -18,11 +17,6 @@ const weatherIcons: Record<string, React.ReactNode> = {
 const cardMeta = [
   { title: "Bias Mirror", icon: Brain, to: "/bias-mirror", color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-500/10" },
   { title: "Economic Weather", icon: CloudLightning, to: "/weather", color: "text-sky-600 dark:text-sky-400", bg: "bg-sky-500/10" },
-  { title: "Economic IQ", icon: Crosshair, to: "/predict", color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-500/10" },
-  { title: "Financial Twin", icon: User, to: "/twin", color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-500/10" },
-  { title: "Morning Briefing", icon: Mic, to: "/briefing", color: "text-rose-600 dark:text-rose-400", bg: "bg-rose-500/10" },
-  { title: "Legislation Radar", icon: ScrollText, to: "/legislation", color: "text-orange-600 dark:text-orange-400", bg: "bg-orange-500/10" },
-  { title: "Negotiation Coach", icon: Handshake, to: "/negotiate", color: "text-teal-600 dark:text-teal-400", bg: "bg-teal-500/10" },
   { title: "Community Map", icon: Users, to: "/community", color: "text-indigo-600 dark:text-indigo-400", bg: "bg-indigo-500/10" },
 ];
 
@@ -37,15 +31,9 @@ export default function AIHub() {
     Promise.allSettled([
       supabase.from("cognitive_bias_events").select("id", { count: "exact", head: true }).eq("user_id", uid),
       supabase.from("economic_forecasts").select("outlook, summary").eq("user_id", uid).order("created_at", { ascending: false }).limit(1).single(),
-      supabase.from("fed_predictions").select("score").eq("user_id", uid).not("score", "is", null),
-      supabase.from("financial_twin_snapshots").select("key_insight, snapshot_date").eq("user_id", uid).order("created_at", { ascending: false }).limit(1).single(),
-      supabase.from("economic_forecasts").select("details").eq("user_id", uid).order("created_at", { ascending: false }).limit(1).single(),
-      supabase.from("legislation_alerts").select("id", { count: "exact", head: true }).eq("user_id", uid).eq("read", false),
-      supabase.from("negotiation_opportunities").select("id", { count: "exact", head: true }).eq("user_id", uid).eq("dismissed", false),
       supabase.from("community_scores").select("resilience_score").eq("user_id", uid).single(),
-    ]).then(([biasRes, weatherRes, fedRes, twinRes, briefRes, legRes, negRes, comRes]) => {
+    ]).then(([biasRes, weatherRes, comRes]) => {
       const d: Record<string, React.ReactNode> = {};
-
       const val = (r: any) => r.status === "fulfilled" ? r.value : null;
 
       const biasCount = val(biasRes)?.count ?? 0;
@@ -57,32 +45,6 @@ export default function AIHub() {
       d["/weather"] = w
         ? <div className="flex items-center gap-3">{weatherIcons[w.outlook] || <Cloud className="h-8 w-8" />}<span className="text-sm leading-snug line-clamp-2">{w.summary}</span></div>
         : <span className="text-sm text-muted-foreground">Generate your first forecast →</span>;
-
-      const scores = val(fedRes)?.data as { score: number }[] | null;
-      if (scores?.length) {
-        const avg = Math.round(scores.reduce((s, p) => s + p.score, 0) / scores.length);
-        d["/predict"] = <><span className="font-mono text-2xl font-bold text-foreground">{avg}</span><span className="text-sm text-muted-foreground ml-2">avg ({scores.length} predictions)</span></>;
-      } else {
-        d["/predict"] = <span className="text-sm text-muted-foreground">Make your first prediction →</span>;
-      }
-
-      const t = val(twinRes)?.data;
-      d["/twin"] = t ? <span className="text-sm leading-snug line-clamp-2">{t.key_insight}</span> : <span className="text-sm text-muted-foreground">Generate your digital twin →</span>;
-
-      const br = val(briefRes)?.data?.details;
-      d["/briefing"] = br?.full_script
-        ? <span className="text-sm leading-snug line-clamp-2 italic text-muted-foreground">"{br.full_script.slice(0, 120)}…"</span>
-        : <span className="text-sm text-muted-foreground">Get today's briefing →</span>;
-
-      const legCount = val(legRes)?.count ?? 0;
-      d["/legislation"] = legCount > 0
-        ? <div className="flex items-center gap-2"><AlertTriangle className="h-4 w-4 text-orange-500" /><span className="font-mono text-2xl font-bold text-foreground">{legCount}</span><span className="text-sm text-muted-foreground">unread</span></div>
-        : <span className="text-sm text-muted-foreground">Scan for legislation impacts →</span>;
-
-      const negCount = val(negRes)?.count ?? 0;
-      d["/negotiate"] = negCount > 0
-        ? <><span className="font-mono text-2xl font-bold text-foreground">{negCount}</span><span className="text-sm text-muted-foreground ml-2">active opportunities</span></>
-        : <span className="text-sm text-muted-foreground">Find negotiation leverage →</span>;
 
       const comScore = val(comRes)?.data?.resilience_score;
       d["/community"] = comScore != null
