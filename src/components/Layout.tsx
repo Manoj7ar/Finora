@@ -3,8 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   LogOut, BookOpen, Zap, LayoutDashboard, Menu, X, Settings,
-  Bot, ClipboardList, Newspaper, Lightbulb, ChevronDown, Target,
-  Brain, CloudLightning, Crosshair, User, Mic, ScrollText, Handshake, Users, Sparkles
+  Bot, ClipboardList, Newspaper, ChevronDown, Target,
+  Brain, CloudLightning, Users, Sparkles
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import logoImg from "@/assets/logo.png";
@@ -31,14 +31,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { to: "/advisor", label: "AI Advisor", icon: Bot },
     { to: "/action-plan", label: "Action Plan", icon: ClipboardList },
     { to: "/news", label: "News Digest", icon: Newspaper },
-    { to: "/what-if", label: "What If", icon: Lightbulb },
     { to: "/bias-mirror", label: "Bias Mirror", icon: Brain },
     { to: "/weather", label: "Eco Weather", icon: CloudLightning },
-    { to: "/predict", label: "Predict Fed", icon: Crosshair },
-    { to: "/twin", label: "Financial Twin", icon: User },
-    { to: "/briefing", label: "Briefing", icon: Mic },
-    { to: "/legislation", label: "Legislation", icon: ScrollText },
-    { to: "/negotiate", label: "Negotiate", icon: Handshake },
     { to: "/community", label: "Community", icon: Users },
   ];
 

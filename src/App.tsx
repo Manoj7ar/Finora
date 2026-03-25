@@ -18,15 +18,9 @@ import ResetPassword from "@/pages/ResetPassword";
 import AdvisorChat from "@/pages/AdvisorChat";
 import ActionPlan from "@/pages/ActionPlan";
 import NewsDigest from "@/pages/NewsDigest";
-import WhatIf from "@/pages/WhatIf";
 import Goals from "@/pages/Goals";
 import BiasMirror from "@/pages/BiasMirror";
 import EconomicWeather from "@/pages/EconomicWeather";
-import PredictFed from "@/pages/PredictFed";
-import FinancialTwin from "@/pages/FinancialTwin";
-import MorningBriefing from "@/pages/MorningBriefing";
-import LegislationRadar from "@/pages/LegislationRadar";
-import NegotiationCoach from "@/pages/NegotiationCoach";
 import CommunityMap from "@/pages/CommunityMap";
 import AIHub from "@/pages/AIHub";
 import Install from "@/pages/Install";
@@ -67,17 +61,11 @@ const App = () => (
                 <Route path="/advisor" element={<ProtectedRoute><AdvisorChat /></ProtectedRoute>} />
                 <Route path="/action-plan" element={<ProtectedRoute><ActionPlan /></ProtectedRoute>} />
                 <Route path="/news" element={<ProtectedRoute><NewsDigest /></ProtectedRoute>} />
-                <Route path="/what-if" element={<ProtectedRoute><WhatIf /></ProtectedRoute>} />
                 <Route path="/goals" element={<ProtectedRoute><Goals /></ProtectedRoute>} />
                 <Route path="/simulation" element={<ProtectedRoute><Simulation /></ProtectedRoute>} />
                 <Route path="/education" element={<ProtectedRoute><Education /></ProtectedRoute>} />
                 <Route path="/bias-mirror" element={<ProtectedRoute><BiasMirror /></ProtectedRoute>} />
                 <Route path="/weather" element={<ProtectedRoute><EconomicWeather /></ProtectedRoute>} />
-                <Route path="/predict" element={<ProtectedRoute><PredictFed /></ProtectedRoute>} />
-                <Route path="/twin" element={<ProtectedRoute><FinancialTwin /></ProtectedRoute>} />
-                <Route path="/briefing" element={<ProtectedRoute><MorningBriefing /></ProtectedRoute>} />
-                <Route path="/legislation" element={<ProtectedRoute><LegislationRadar /></ProtectedRoute>} />
-                <Route path="/negotiate" element={<ProtectedRoute><NegotiationCoach /></ProtectedRoute>} />
                 <Route path="/community" element={<ProtectedRoute><CommunityMap /></ProtectedRoute>} />
                 <Route path="/ai-hub" element={<ProtectedRoute><AIHub /></ProtectedRoute>} />
                 <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
