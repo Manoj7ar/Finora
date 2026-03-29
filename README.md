@@ -259,7 +259,3 @@ Visit `/install` in the app for platform-specific installation instructions.
 **Manoj** — [LinkedIn](https://www.linkedin.com/in/manoj07ar/)
 
 ---
-
-## 📄 License
-
-This project is private and not licensed for redistribution.
