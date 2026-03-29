@@ -1,73 +1,77 @@
-# Welcome to your Lovable project
+# Finora AI — Your Personal Economic Intelligence Platform
 
-## Project info
+Finora turns complex macroeconomic data into clear, actionable insights tailored to your financial profile. Built with real-time data from the Federal Reserve (FRED API) and AI-powered analysis, Finora helps everyday people understand how the economy affects *them*.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## ✨ Features
 
-## How can I edit this code?
+- **Smart Dashboard** — Health score, peer benchmarks, and personalized metrics updated in real-time
+- **AI Financial Advisor** — Chat with an AI that understands your financial context and current economic conditions
+- **Action Plan** — AI-generated, prioritized steps based on your goals and the macro environment
+- **Economic Weather** — 30-day outlook translating Fed data into plain-language forecasts
+- **Goal Tracker** — Set financial goals with AI nudges that adapt to economic shifts
+- **Bias Mirror** — Detects cognitive biases in your financial decisions
+- **Community Map** — See how your financial resilience compares across demographics
+- **Crisis Simulation** — Test your finances against historical economic crises
+- **News Digest** — AI-curated macro news with personal impact analysis
+- **Financial Education** — Interactive lessons with quizzes on economics and personal finance
 
-There are several ways of editing your application.
+## 🛠 Tech Stack
 
-**Use Lovable**
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18, TypeScript, Vite |
+| Styling | Tailwind CSS, shadcn/ui, Framer Motion |
+| Backend | Lovable Cloud (Supabase) |
+| AI | Lovable AI Gateway (Gemini, GPT) |
+| Data | FRED API (Federal Reserve Economic Data) |
+| Auth | Email/password with email verification |
+| PWA | Installable on mobile via `vite-plugin-pwa` |
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🚀 Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the dev server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The app will be available at `http://localhost:5173`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📁 Project Structure
 
-**Use GitHub Codespaces**
+```
+src/
+├── components/       # Reusable UI components
+│   ├── dashboard/    # Dashboard widgets
+│   ├── landing/      # Landing page sections
+│   └── ui/           # shadcn/ui primitives
+├── contexts/         # Auth context
+├── hooks/            # Custom React hooks
+├── integrations/     # Supabase client & types
+├── lib/              # Utilities (FRED API, PDF export)
+├── pages/            # Route-level page components
+supabase/
+├── functions/        # Edge functions (AI, data processing)
+└── config.toml       # Backend configuration
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🔐 Authentication
 
-## What technologies are used for this project?
+Users sign up with email and password. Email verification is required before access is granted. All data routes are protected — unauthenticated users see only the landing page.
 
-This project is built with:
+## 📱 PWA Support
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Finora is installable as a Progressive Web App on both Android and iOS. Visit `/install` for platform-specific instructions.
 
-## How can I deploy this project?
+## 👤 Author
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+**Manoj** — [LinkedIn](https://www.linkedin.com/in/manoj07ar/)
 
-## Can I connect a custom domain to my Lovable project?
+## 📄 License
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project is private and not licensed for redistribution.
